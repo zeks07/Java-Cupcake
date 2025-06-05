@@ -1,0 +1,17 @@
+<html>
+<body>
+Reports redundant semicolons that can be safely removed.
+<p>
+    This inspection detects redundant semicolons that don't affect the semantics of the code and can be safely removed.
+</p>
+<p>
+    Example:
+</p>
+<pre><code>
+    scan with {:
+        return this.getScanner().next_token();
+    :};
+</code></pre>
+<!-- tooltip end -->
+</body>
+</html>

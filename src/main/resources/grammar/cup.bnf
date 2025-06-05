@@ -1,0 +1,110 @@
+{
+    parserClass="com.zeks.javacupcake.lang.parser.CupPaser"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="Cup"
+    psiImplClassSuffix="Impl"
+    psiPackage="com.zeks.javacupcake.lang.psi"
+    psiImplPackage="com.zeks.javacupcake.lang.psi.impl"
+
+    elementTypeHolderClass="com.zeks.javacupcake.lang.psi.CupTypes"
+    elementTypeClass="com.zeks.javacupcake.lang.psi.CupElementType"
+    tokenTypeClass="com.zeks.javacupcake.lang.psi.CupTokenType"
+
+    tokens=[
+        WHITE_SPACE='whitespace'
+        COMMENT='comment'
+
+        PACKAGE='package'
+        IMPORT='import'
+        CODE='code'
+        ACTION='action'
+        PARSER='parser'
+        WITH='with'
+        INIT='init'
+        SCAN='scan'
+        TERMINAL_='terminal'
+        NON='non'
+        NONTERMINAL='nonterminal'
+        PRECEDENCE='precedence'
+        LEFT='left'
+        RIGHT='right'
+        NONASSOC='nonassoc'
+        START='start'
+        PERCENT_PREC='%prec'
+
+        DOR='.'
+        ASTERISK='*'
+        ASSIGN_OPERATOR='::='
+        BAR='|'
+        LPAREN='('
+        RPAREN=')'
+        LBRACKET='['
+        RBRACKET=']'
+        COMMA=','
+        COLON=':'
+        SEMICOLON=';'
+
+        IDENTIFIER='identifier'
+
+        OPEN_CODE_STRING='{:'
+        CLOSE_CODE_STRING=':}'
+    ]
+}
+
+file ::= line*
+line ::= (packageSpec | importStatement | codeParts | symbolDeclaration | precedenceDeclaration | startSpec | production ) { recoverWhile=file_recovery }
+private file_recovery ::= !(PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR)
+
+packageSpec ::= PACKAGE packageName SEMICOLON { pin=1 recoverWhile=line_recovery }
+
+importStatement ::= IMPORT importName SEMICOLON { pin=1 recoverWhile=line_recovery }
+
+codeParts ::= (actionCodePart | parserCodePart | initCodePart | scanCodePart) codeStringBlock optionalSemicolon { pin=1 recoverWhile=line_recovery }
+actionCodePart ::= ACTION CODE
+parserCodePart ::= PARSER CODE
+initCodePart ::= INIT WITH
+scanCodePart ::= SCAN WITH
+
+symbolDeclaration ::= (terminalDeclaration | nonTerminalDeclaration)
+terminalDeclaration ::= TERMINAL_ (typeName declaredTerminal (COMMA declaredTerminal)* | declaredTerminal (COMMA declaredTerminal)*) SEMICOLON { pin=1 recoverWhile=line_recovery }
+nonTerminalDeclaration ::= (nonTerminalAlternative | NONTERMINAL) (typeName declaredNonTerminal (COMMA declaredNonTerminal)* | declaredNonTerminal (COMMA declaredNonTerminal)*) SEMICOLON { pin=1 recoverWhile=line_recovery }
+private nonTerminalAlternative ::= NON TERMINAL_ { pin=1 }
+
+precedenceDeclaration ::= PRECEDENCE (LEFT | RIGHT | NONASSOC) precedenceSymbol (COMMA precedenceSymbol)* SEMICOLON { pin=1 recoverWhile=line_recovery }
+precedenceSymbol ::= symbol { recoverWhile=list_recovery }
+private list_recovery ::= !(COMMA | SEMICOLON)
+
+startSpec ::= START WITH symbol SEMICOLON { pin=1 recoverWhile=line_recovery }
+
+production ::= symbol ASSIGN_OPERATOR (rightHandSide (BAR rightHandSide)*)? SEMICOLON {
+    extends="com.zeks.javacupcake.lang.psi.CupProductionElement"
+    pin=2 recoverWhile=line_recovery
+}
+rightHandSide ::= (LPAREN className RPAREN)? (symbol (COLON label)? | codeStringBlock)* precedenceClause? { recoverWhile=rightHandSide_recovery}
+precedenceClause ::= PERCENT_PREC symbol
+private rightHandSide_recovery ::= !(BAR | SEMICOLON)
+
+codeStringBlock ::= OPEN_CODE_STRING CODE_STRING* CLOSE_CODE_STRING
+
+packageName ::= IDENTIFIER (DOT IDENTIFIER)*
+importName ::= IDENTIFIER (DOT IDENTIFIER)* (DOT ASTERISK)?
+typeName ::= IDENTIFIER (DOT IDENTIFIER)* (LBRACKET RBRACKET)?
+className ::= IDENTIFIER
+label ::= IDENTIFIER
+symbol ::= IDENTIFIER {
+    extends="com.zeks.javacupcake.lang.psi.CupSymbolElement"
+}
+declaredTerminal ::= IDENTIFIER {
+    extends="com.zeks.javacupcake.lang.psi.CupNamedTerminal"
+    recoverWhile=list_recovery
+}
+declaredNonTerminal ::= IDENTIFIER {
+    extends="com.zeks.javacupcake.lang.psi.CupNamedNonTerminal"
+    recoverWhile=list_recovery
+}
+
+optionalSemicolon ::= SEMICOLON?
+
+private line_recovery ::= !(SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR )

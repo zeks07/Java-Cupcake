@@ -1,0 +1,19 @@
+<html>
+<body>
+Reports name clashing in class names.
+<p>
+    Reports if the class name is already used in the current file or if it has the same name as the production
+    which has more than one right-hand side.
+</p>
+<p>
+    Examples:
+</p>
+<pre><code>
+    ProductionA ::= (Production)
+    ProductionB ::= (Production)
+</code></pre>
+<pre><code>
+    Production ::= (Production) | (ProductionName) ;
+</code></pre>
+</body>
+</html>

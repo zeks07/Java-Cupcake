@@ -1,0 +1,75 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.zeks.JavaCupcake</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>JavaCupcake</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor>Zeks</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description><![CDATA[
+        This plugin introduces support for Java CUP (version 10j)
+    ]]></description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType
+            name="Cup File"
+            implementationClass="com.zeks.javacupcake.file.CupFileType"
+            fieldName="INSTANCE"
+            language="Cup"
+            extensions="cup"/>
+        <lang.parserDefinition
+            language="Cup"
+            implementationClass="com.zeks.javacupcake.lang.parser.CupParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+            language="Cup"
+            implementationClass="com.zeks.javacupcake.highlighting.CupSyntaxHighlighterFactory"/>
+        <annotator
+            language="Cup"
+            implementationClass="com.zeks.javacupcake.annotation.CupAnnotator"/>
+        <completion.contributor
+            language="Cup"
+            implementationClass="com.zeks.javacupcake.completion.CupCompletionContributor"/>
+        <inspectionToolProvider
+            implementation="com.zeks.javacupcake.inspection.CupInspectionProvider"/>
+        <psi.referenceContributor
+            language="Cup"
+            implementation="com.zeks.javacupcake.references.CupReferenceContributor"/>
+        <referencesSearch
+            implementation="com.zeks.javacupcake.references.CupReferenceSearcher"/>
+        <gotoDeclarationHandler
+            implementation="com.zeks.javacupcake.gotodeclaration.CupGoToDeclarationHandler"/>
+        <findUsagesHandlerFactory
+            implementation="com.zeks.javacupcake.usage.CupFindUsagesHandlerFactory"/>
+        <usageTypeProvider
+            implementation="com.zeks.javacupcake.usage.CupUsageTypeProvider"/>
+        <lang.findUsagesProvider
+            language="Cup"
+            implementationClass="com.zeks.javacupcake.usage.CupFindUsagesProvider"/>
+        <lang.namesValidator
+            language="Cup"
+            implementationClass="com.zeks.javacupcake.refactoring.CupNamesValidator"/>
+        <lang.elementManipulator
+            forClass="com.zeks.javacupcake.lang.psi.CupSymbolElement"
+            implementationClass="com.zeks.javacupcake.lang.manipulators.CupSymbolManipulator"/>
+        <lang.braceMatcher
+            language="Cup"
+            implementationClass="com.zeks.javacupcake.lang.braces.CupBraceMatcher"/>
+        <typedHandler
+            implementation="com.zeks.javacupcake.editor.typing.CupTypedHandler"/>
+        <codeInsight.lineMarkerProvider
+            language="Cup"
+            implementationClass="com.zeks.javacupcake.linemarker.CupLineMarker"/>
+    </extensions>
+</idea-plugin>
