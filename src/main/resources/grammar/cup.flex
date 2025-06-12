@@ -1,5 +1,6 @@
 package com.zeks.javacupcake.lang.parser;
 
+import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.TokenType;
 import com.zeks.javacupcake.lang.psi.CupTypes;

@@ -24,6 +24,7 @@ dependencies {
         // Add necessary plugin dependencies for compilation here, example:
         // bundledPlugin("com.intellij.java")
     }
+    testImplementation("io.mockk:mockk:1.13.8")
 }
 
 intellijPlatform {
@@ -51,6 +52,9 @@ tasks {
 
 sourceSets {
     main {
-        java.srcDirs("src/main/java", "src/main/gen")
+        kotlin.srcDirs("src/main/kotlin", "src/main/gen")
+    }
+    test {
+        kotlin.srcDirs("src/test")
     }
 }

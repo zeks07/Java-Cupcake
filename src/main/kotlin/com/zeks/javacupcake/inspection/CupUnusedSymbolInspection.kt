@@ -6,6 +6,7 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
+import com.zeks.javacupcake.analysis.FileAnalyzer
 import com.zeks.javacupcake.file.CupFile
 import com.zeks.javacupcake.lang.psi.CupVisitor
 import com.zeks.javacupcake.lang.psi.impl.CupProductionImpl
@@ -26,8 +27,6 @@ class CupUnusedSymbolInspection : CupInspectionTool() {
 
 private class CupUnusedSymbolInspectionVisitor(private val holder: ProblemsHolder) : CupVisitor() {
     override fun visitFile(file: PsiFile) {
-        val analyser = Analyser(file as CupFile)
-        analyser.analyze()
 
 //        val terminals = PsiTreeUtil.findChildrenOfType(file, CupNamedTerminal::class.java)
 //            .filter { !analyser.found(it)}
@@ -65,7 +64,7 @@ private class CupUnusedSymbolInspectionVisitor(private val holder: ProblemsHolde
 
         val symbols = PsiTreeUtil.findChildrenOfType(file, CupProductionImpl::class.java)
             .map { it.firstChild as CupSymbolImpl }
-            .filter { !analyser.reached(it) }
+            .filter { !FileAnalyzer.reached(it) }
 
         for (symbol in symbols) {
             holder.registerProblem(

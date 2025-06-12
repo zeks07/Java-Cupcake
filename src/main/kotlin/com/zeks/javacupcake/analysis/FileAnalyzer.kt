@@ -10,14 +10,12 @@ import com.zeks.javacupcake.lang.psi.impl.CupProductionImpl
 import com.zeks.javacupcake.lang.psi.impl.CupRightHandSideImpl
 import com.zeks.javacupcake.lang.psi.impl.CupSymbolImpl
 
-object FileAnalyser {
+object FileAnalyzer {
 
     private val fileProductions = mutableListOf<CupProductionImpl>()
     private val visitedNames = mutableSetOf<String>()
 
-    private val analysisProviders = listOf<Analyser>(
-        ReachedSymbolsAnalyzer(),
-    )
+    fun reached(symbol: PsiElement) = symbol in getResults(symbol.containingFile as CupFile).reachedSymbols
 
     private fun getResults(file: CupFile): AnalysisResult = CachedValuesManager.getCachedValue(file) {
         val result = analyze(file)
@@ -39,10 +37,6 @@ object FileAnalyser {
     }
 
     private fun visit(symbol: PsiElement, holder: AnalysisHolder, fromStartingProduction: Boolean = true) {
-        for (analyser in analysisProviders) {
-            analyser.visit(symbol, holder, fromStartingProduction)
-        }
-
         val rules = fileProductions
             .filter { it.name == symbol.text }
             .flatMap { it.rightHandSideList }
@@ -54,29 +48,26 @@ object FileAnalyser {
     }
 
     private fun visit(rule: CupRightHandSideImpl, holder: AnalysisHolder, fromStartingProduction: Boolean = true) {
-        for (analyser in analysisProviders) {
-            analyser.visit(rule, holder, fromStartingProduction)
-        }
-
         val symbols = rule.symbolList.mapNotNull { (it as CupSymbolImpl).reference.resolve() }
             .filter { visitedNames.add(it.text) }
 
         for (symbol in symbols) {
             visit(symbol, holder, fromStartingProduction)
         }
-    }
 
-    data class AnalysisResult(
-        private val reachedSymbols: Set<PsiElement>,
-        private val usedSymbols: Set<PsiElement>,
-    )
+    }
 }
 
-class AnalysisHolder {
-    val reachedSymbols = mutableSetOf<PsiElement>()
-    val usedSymbols = mutableSetOf<PsiElement>()
+data class AnalysisResult(
+    val reachedSymbols: Set<PsiElement>,
+    val usedSymbols: Set<PsiElement>,
+)
 
-    val results get() = FileAnalyser.AnalysisResult(
+class AnalysisHolder {
+    private val reachedSymbols = mutableSetOf<PsiElement>()
+    private val usedSymbols = mutableSetOf<PsiElement>()
+
+    val results get() = AnalysisResult(
         reachedSymbols.toSet(),
         usedSymbols.toSet(),
     )
