@@ -1,7 +1,9 @@
 package com.zeks.javacupcake.lalr.symbol
 
-import com.intellij.psi.PsiElement
-
-class NonTerminal(name: String, element: PsiElement) : Symbol(name, element) {
-    override fun toString() = "<$name>"
+class NonTerminal(
+    name: String,
+    representation: String = name,
+    metadata: SymbolMetadata?,
+) : Symbol(name, representation, metadata) {
+    override fun toString() = "<$representation>"
 }

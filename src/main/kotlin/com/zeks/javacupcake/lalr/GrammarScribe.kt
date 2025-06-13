@@ -3,6 +3,7 @@ package com.zeks.javacupcake.lalr
 import com.intellij.psi.PsiElement
 import com.zeks.javacupcake.lalr.symbol.NonTerminal
 import com.zeks.javacupcake.lalr.symbol.Symbol
+import com.zeks.javacupcake.lalr.symbol.SymbolMetadata
 import com.zeks.javacupcake.lalr.symbol.Terminal
 
 fun grammar(block: GrammarScribe.() -> Unit): Grammar {
@@ -12,40 +13,91 @@ fun grammar(block: GrammarScribe.() -> Unit): Grammar {
 }
 
 class GrammarScribe {
-    private val vocabulary = mutableMapOf<String, Symbol>()
+    private val vocabularyy = mutableMapOf<String, Symbol>()
     private val rules = mutableListOf<Rule>()
     private var start: NonTerminal? = null
 
     private val definedElements = mutableSetOf<String>()
 
-    fun nonTerminal(name: String, element: PsiElement) = addSymbol(NonTerminal(name, element))
+    private val vocabulary = VocabularyRegistrar()
 
-    fun terminal(name: String, element: PsiElement) = addSymbol(Terminal(name, element))
+    fun nonTerminal(block: NonTerminalBuilder.() -> Any) =
+        when (val result = NonTerminalBuilder().block()) {
+            is SymbolInput -> vocabulary.nonTerminal(result.name, result.presentation, result.metadata)
+            is String -> vocabulary.nonTerminal(result)
+            else -> throw IllegalArgumentException("")
+        }
 
-    private fun addSymbol(symbol: Symbol) {
-        check(symbol.name !in definedElements) { "Symbol '${symbol.element.text}' is already defined" }
-        definedElements.add(symbol.name)
-        vocabulary[symbol.name] = symbol
-    }
+    fun terminal(block: TerminalBuilder.() -> Any) =
+        when (val result = TerminalBuilder().block()) {
+            is SymbolInput -> vocabulary.terminal(result.name, result.presentation, result.metadata)
+            is String -> vocabulary.terminal(result)
+            else -> throw IllegalArgumentException("")
+        }
 
     fun production(name: String, rightSide: List<String>, element: PsiElement) {
-        check(name in vocabulary.keys && rightSide.all { it in vocabulary.keys }) { "Rule symbols are not defined" }
-        val nonTerminalSymbol = vocabulary[name]
+        check(name in vocabularyy.keys && rightSide.all { it in vocabularyy.keys }) { "Rule symbols are not defined" }
+        val nonTerminalSymbol = vocabularyy[name]
         if (nonTerminalSymbol !is NonTerminal) throw IllegalStateException("Rule name is not a non-terminal")
-        rules.add(Rule(nonTerminalSymbol, rightSide.map { vocabulary[it]!! }, element))
+        rules.add(Rule(nonTerminalSymbol, rightSide.map { vocabularyy[it]!! }, element))
     }
 
     fun startingNonTerminal(name: String) {
         check(name in definedElements) { "Starting element is not defined" }
-        val symbol = vocabulary[name]
+        val symbol = vocabularyy[name]
         check(symbol is NonTerminal) { "Starting element is not a non-terminal" }
         start = symbol
     }
 
     fun toGrammar(): Grammar {
         check(hasStartingSymbol()) { "Starting element is not defined" }
-        return Grammar(Vocabulary(vocabulary), rules.groupBy { it.left }, start!!)
+        return Grammar(Vocabulary(vocabularyy), rules.groupBy { it.left }, start!!)
     }
 
     private fun hasStartingSymbol() = start != null
+}
+
+class ProductionBuilder {
+
+}
+
+class NonTerminalBuilder {
+    infix fun String.with(metadata: SymbolMetadata) = SymbolInput(this, this, metadata)
+}
+
+class TerminalBuilder {
+    infix fun String.showAs(presentation: String) = SymbolInput(this, presentation)
+    infix fun String.with(metadata: SymbolMetadata) = SymbolInput(this, this, metadata)
+    infix fun SymbolInput.with(metadata: SymbolMetadata) = SymbolInput(name, presentation, metadata)
+}
+
+data class SymbolInput(
+    val name: String,
+    val presentation: String = name,
+    val metadata: SymbolMetadata? = null,
+)
+
+class VocabularyRegistrar {
+    private val nonTerminals = mutableSetOf<NonTerminal>()
+    private val terminals = mutableSetOf<Terminal>()
+
+    private val registered = mutableSetOf<String>()
+
+    fun nonTerminal(name: String, presentation: String = name, metadata: SymbolMetadata? = null) =
+        NonTerminal(name, presentation, metadata).also { nonTerminal ->
+            require(!exists(nonTerminal.name)) { "Symbol with name ${nonTerminal.name} already exists" }
+            nonTerminals.add(nonTerminal)
+        }
+
+
+    fun terminal(name: String, presentation: String = name, metadata: SymbolMetadata? = null) =
+        Terminal(name, presentation, metadata).also { terminal ->
+            require(!exists(terminal.name)) { "Symbol with name ${terminal.name} already exists" }
+            terminals.add(terminal)
+        }
+
+
+    private fun exists(name: String) = name in registered
+
+    fun toVocabulary() = Vocabulary(nonTerminals.toSet(), terminals.toSet())
 }

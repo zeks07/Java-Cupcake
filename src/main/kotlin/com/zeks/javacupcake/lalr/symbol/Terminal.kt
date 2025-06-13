@@ -1,7 +1,9 @@
 package com.zeks.javacupcake.lalr.symbol
 
-import com.intellij.psi.PsiElement
-
-class Terminal(name: String, element: PsiElement) : Symbol(name, element) {
-    override fun toString() = "\"$name\""
+class Terminal(
+    name: String,
+    representation: String = name,
+    metadata: SymbolMetadata?,
+) : Symbol(name, representation, metadata) {
+    override fun toString() = "\"$representation\""
 }

@@ -1,11 +1,9 @@
 package com.zeks.javacupcake.lalr.symbol
 
-import com.intellij.psi.PsiElement
-
-abstract class Symbol(
-    private val identifier: String,
-    private val psiElement: PsiElement
+sealed class Symbol(
+    val name: String,
+    val representation: String = name,
+    val metadata: SymbolMetadata?,
 ) {
-    val name get() = identifier
-    val element get() = psiElement
+
 }

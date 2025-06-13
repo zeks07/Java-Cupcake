@@ -1,25 +1,25 @@
 package com.zeks.javacupcake.lalr
 
-import com.intellij.psi.PsiElement
+import com.zeks.javacupcake.lalr.symbol.SymbolMetadata
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 fun sampleGrammar() = grammar {
-    val element = mockk<PsiElement>(relaxed = true)
+    val element = mockk<SymbolMetadata>(relaxed = true)
 
-    nonTerminal("S", element)
-    nonTerminal("A", element)
-    nonTerminal("B", element)
-    nonTerminal("C", element)
-    nonTerminal("D", element)
-    nonTerminal("E", element)
-    nonTerminal("F", element)
+    nonTerminal { "S" }
+    nonTerminal { "A" }
+    nonTerminal { "B" }
+    nonTerminal { "C" }
+    nonTerminal { "D" }
+    nonTerminal { "E" }
+    nonTerminal { "F" }
 
-    terminal("a", element)
-    terminal("b", element)
-    terminal("c", element)
-    terminal("d", element)
+    terminal { "a" showAs "a" with element }
+    terminal { "b" with element }
+    terminal { "c" showAs "c" }
+    terminal { "d" }
 
     production("S", listOf("a", "A", "B", "C"), element)
     production("S", listOf("b", "C", "E", "S"), element)
