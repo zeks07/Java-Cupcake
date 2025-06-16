@@ -1,14 +1,12 @@
-package com.zeks.javacupcake.lalr
+package com.zeks.javacupcake.lalr.productions
 
-import com.intellij.psi.PsiElement
-import com.zeks.javacupcake.lalr.symbol.NonTerminal
-import com.zeks.javacupcake.lalr.symbol.Symbol
-import com.zeks.javacupcake.lalr.symbol.Terminal
+import com.zeks.javacupcake.lalr.vocabulary.NonTerminal
+import com.zeks.javacupcake.lalr.vocabulary.Symbol
+import com.zeks.javacupcake.lalr.vocabulary.Terminal
 
-class Rule(
+class Production(
     val left: NonTerminal,
     val symbols: List<Symbol>,
-    val element: PsiElement,
 ) {
     fun getFirst() = symbols.first()
 

@@ -1,9 +1,8 @@
-package com.zeks.javacupcake.lalr.symbol
+package com.zeks.javacupcake.lalr.vocabulary
 
 class NonTerminal(
     name: String,
     representation: String = name,
-    metadata: SymbolMetadata?,
-) : Symbol(name, representation, metadata) {
+) : Symbol(name, representation) {
     override fun toString() = "<$representation>"
 }

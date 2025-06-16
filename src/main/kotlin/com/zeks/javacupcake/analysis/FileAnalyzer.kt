@@ -54,7 +54,6 @@ object FileAnalyzer {
         for (symbol in symbols) {
             visit(symbol, holder, fromStartingProduction)
         }
-
     }
 }
 
