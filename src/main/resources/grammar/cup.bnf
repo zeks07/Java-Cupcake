@@ -1,5 +1,5 @@
 {
-    parserClass="com.zeks.javacupcake.lang.parser.CupPaser"
+    parserClass="com.zeks.javacupcake.lang.parser.CupParser"
 
     extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
@@ -34,7 +34,7 @@
         START='start'
         PERCENT_PREC='%prec'
 
-        DOR='.'
+        DOT='.'
         ASTERISK='*'
         ASSIGN_OPERATOR='::='
         BAR='|'

@@ -4,13 +4,10 @@ import com.intellij.codeHighlighting.HighlightDisplayLevel
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
-import com.intellij.psi.PsiFile
-import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.analysis.FileAnalyzer
-import com.zeks.javacupcake.file.CupFile
+import com.zeks.javacupcake.lang.psi.CupDeclaredNonTerminal
+import com.zeks.javacupcake.lang.psi.CupNamedNonTerminal
 import com.zeks.javacupcake.lang.psi.CupVisitor
-import com.zeks.javacupcake.lang.psi.impl.CupProductionImpl
-import com.zeks.javacupcake.lang.psi.impl.CupSymbolImpl
 
 class CupUnusedSymbolInspection : CupInspectionTool() {
     override fun isEnabledByDefault() = true
@@ -26,8 +23,21 @@ class CupUnusedSymbolInspection : CupInspectionTool() {
 }
 
 private class CupUnusedSymbolInspectionVisitor(private val holder: ProblemsHolder) : CupVisitor() {
-    override fun visitFile(file: PsiFile) {
+    override fun visitDeclaredNonTerminal(nonTerminal: CupDeclaredNonTerminal) {
+        FileAnalyzer.getGrammar(nonTerminal.containingFile)
+        val nonTerminal = nonTerminal as CupNamedNonTerminal
 
+        if (nonTerminal.isReachable()) return
+
+        holder.registerProblem(
+            nonTerminal,
+            "Unreachable production",
+            ProblemHighlightType.WARNING
+        )
+    }
+
+//    override fun visitFile(file: PsiFile) {
+//
 //        val terminals = PsiTreeUtil.findChildrenOfType(file, CupNamedTerminal::class.java)
 //            .filter { !analyser.found(it)}
 //
@@ -61,17 +71,17 @@ private class CupUnusedSymbolInspectionVisitor(private val holder: ProblemsHolde
 //                ProblemHighlightType.LIKE_UNUSED_SYMBOL,
 //            )
 //        }
-
-        val symbols = PsiTreeUtil.findChildrenOfType(file, CupProductionImpl::class.java)
-            .map { it.firstChild as CupSymbolImpl }
-            .filter { !FileAnalyzer.reached(it) }
-
-        for (symbol in symbols) {
-            holder.registerProblem(
-                symbol,
-                "Unreachable production",
-                ProblemHighlightType.WARNING
-            )
-        }
-    }
+//
+//        FileAnalyzer.getGrammar(file)
+//
+//
+//
+//        for (symbol in symbols) {
+//            holder.registerProblem(
+//                symbol,
+//                "Unreachable production",
+//                ProblemHighlightType.WARNING
+//            )
+//        }
+//    }
 }

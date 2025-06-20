@@ -1,9 +1,9 @@
 package com.zeks.javacupcake.lalr.productions
 
-abstract class ProductionDelegate {
-    private var production: Production? = null
+import com.zeks.javacupcake.lalr.vocabulary.SymbolDelegate
 
-    fun bindTo(production: Production) {
-        this.production = production
-    }
+interface ProductionDelegate {
+    fun bindTo(production: Production)
+
+    fun getLeft(): SymbolDelegate
 }

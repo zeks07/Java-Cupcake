@@ -1,10 +1,10 @@
 package com.zeks.javacupcake.lang.psi
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
+import com.zeks.javacupcake.lalr.SymbolASTWrapper
 import com.zeks.javacupcake.references.CupSymbolReference
 
-abstract class CupSymbolElement(node: ASTNode) : ASTWrapperPsiElement(node) {
+abstract class CupSymbolElement(node: ASTNode) : SymbolASTWrapper(node) {
     override fun getReference() = CupSymbolReference(this)
 
     fun isInProduction() = parent is CupRightHandSide
@@ -14,4 +14,6 @@ abstract class CupSymbolElement(node: ASTNode) : ASTWrapperPsiElement(node) {
     fun isInStartClause() = parent is CupStartSpec
 
     fun isInPrecedenceClause() = parent is CupPrecedenceSymbol
+
+    override fun getName(): String = text
 }

@@ -1,12 +1,13 @@
 package com.zeks.javacupcake.lang.psi
 
-import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiNameIdentifierOwner
+import com.zeks.javacupcake.lalr.ProductionASTWrapper
+import com.zeks.javacupcake.lalr.vocabulary.SymbolDelegate
 import com.zeks.javacupcake.lang.psi.impl.CupSymbolImpl
 
-abstract class CupProductionElement(node: ASTNode) : ASTWrapperPsiElement(node), PsiNameIdentifierOwner {
+abstract class CupProductionElement(node: ASTNode) : ProductionASTWrapper(node), PsiNameIdentifierOwner {
 
     override fun getName(): String = firstChild.text
 
@@ -21,4 +22,5 @@ abstract class CupProductionElement(node: ASTNode) : ASTWrapperPsiElement(node),
         return this
     }
 
+    override fun getLeft() = firstChild.reference?.resolve() as SymbolDelegate
 }

@@ -2,7 +2,7 @@ package com.zeks.javacupcake.lalr.vocabulary
 
 sealed class Symbol(
     val name: String,
-    val representation: String = name,
+    val presentation: String = name,
 ) {
     var isUsed = false
         private set
@@ -24,4 +24,6 @@ sealed class Symbol(
     fun markAsReachable() {
         isReachable = true
     }
+
+    override fun toString() = presentation
 }

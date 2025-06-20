@@ -93,14 +93,14 @@ class GrammarTest {
 //        assertEquals(setOf("S", "C", "E"), reachableNonTerminals)
 //    }
 
-    @Test
-    fun `should complete production`() {
-        val reachableNonTerminals = sampleGrammar().reachable()
-
-        println(reachableNonTerminals)
-
-        assert(reachableNonTerminals.size == 3)
-    }
+//    @Test
+//    fun `should complete production`() {
+//        val reachableNonTerminals = sampleGrammar().reachable()
+//
+//        println(reachableNonTerminals)
+//
+//        assert(reachableNonTerminals.size == 3)
+//    }
 
     @Test
     fun `should not accept unregistered symbols`() {

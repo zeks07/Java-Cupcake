@@ -22,7 +22,7 @@ class CupParserDefinition : ParserDefinition {
 
     override fun getStringLiteralElements(): TokenSet = TokenSet.EMPTY
 
-    override fun createParser(project: Project) = CupPaser()
+    override fun createParser(project: Project) = CupParser()
 
     override fun getFileNodeType() = FILE
 

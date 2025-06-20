@@ -11,7 +11,6 @@ import com.zeks.javacupcake.lang.psi.CupStartSpec
 import com.zeks.javacupcake.lang.psi.CupVisitor
 import com.zeks.javacupcake.inspection.quickfix.RemoveStartClauseQuickFix
 import com.zeks.javacupcake.lang.psi.CupProduction
-import com.zeks.javacupcake.lang.psi.impl.CupProductionImpl
 import com.zeks.javacupcake.references.CupSymbolReference
 
 class CupSymbolInStartClauseInspection : CupSymbolsInspection() {

@@ -12,7 +12,7 @@ import com.intellij.lang.PsiParser;
 import com.intellij.lang.LightPsiParser;
 
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
-public class CupPaser implements PsiParser, LightPsiParser {
+public class CupParser implements PsiParser, LightPsiParser {
 
   public ASTNode parse(IElementType t, PsiBuilder b) {
     parseLight(t, b);
@@ -69,7 +69,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     p = r; // pin = 1
     r = r && report_error_(b, codeStringBlock(b, l + 1));
     r = p && optionalSemicolon(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, CupPaser::line_recovery);
+    exit_section_(b, l, m, r, p, CupParser::line_recovery);
     return r || p;
   }
 
@@ -116,7 +116,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, DECLARED_NON_TERMINAL, "<declared non terminal>");
     r = consumeToken(b, IDENTIFIER);
-    exit_section_(b, l, m, r, false, CupPaser::list_recovery);
+    exit_section_(b, l, m, r, false, CupParser::list_recovery);
     return r;
   }
 
@@ -127,7 +127,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, DECLARED_TERMINAL, "<declared terminal>");
     r = consumeToken(b, IDENTIFIER);
-    exit_section_(b, l, m, r, false, CupPaser::list_recovery);
+    exit_section_(b, l, m, r, false, CupParser::list_recovery);
     return r;
   }
 
@@ -237,7 +237,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     p = r; // pin = 1
     r = r && report_error_(b, importName(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupPaser::line_recovery);
+    exit_section_(b, l, m, r, p, CupParser::line_recovery);
     return r || p;
   }
 
@@ -278,7 +278,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     if (!r) r = precedenceDeclaration(b, l + 1);
     if (!r) r = startSpec(b, l + 1);
     if (!r) r = production(b, l + 1);
-    exit_section_(b, l, m, r, false, CupPaser::file_recovery);
+    exit_section_(b, l, m, r, false, CupParser::file_recovery);
     return r;
   }
 
@@ -358,7 +358,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     p = r; // pin = 1
     r = r && report_error_(b, nonTerminalDeclaration_1(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupPaser::line_recovery);
+    exit_section_(b, l, m, r, p, CupParser::line_recovery);
     return r || p;
   }
 
@@ -503,7 +503,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     p = r; // pin = 1
     r = r && report_error_(b, packageName(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupPaser::line_recovery);
+    exit_section_(b, l, m, r, p, CupParser::line_recovery);
     return r || p;
   }
 
@@ -544,7 +544,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     r = p && report_error_(b, precedenceSymbol(b, l + 1)) && r;
     r = p && report_error_(b, precedenceDeclaration_3(b, l + 1)) && r;
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupPaser::line_recovery);
+    exit_section_(b, l, m, r, p, CupParser::line_recovery);
     return r || p;
   }
 
@@ -587,7 +587,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PRECEDENCE_SYMBOL, "<precedence symbol>");
     r = symbol(b, l + 1);
-    exit_section_(b, l, m, r, false, CupPaser::list_recovery);
+    exit_section_(b, l, m, r, false, CupParser::list_recovery);
     return r;
   }
 
@@ -602,7 +602,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     p = r; // pin = 2
     r = r && report_error_(b, production_2(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupPaser::line_recovery);
+    exit_section_(b, l, m, r, p, CupParser::line_recovery);
     return r || p;
   }
 
@@ -655,7 +655,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     r = rightHandSide_0(b, l + 1);
     r = r && rightHandSide_1(b, l + 1);
     r = r && rightHandSide_2(b, l + 1);
-    exit_section_(b, l, m, r, false, CupPaser::rightHandSide_recovery);
+    exit_section_(b, l, m, r, false, CupParser::rightHandSide_recovery);
     return r;
   }
 
@@ -778,7 +778,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     p = r; // pin = 1
     r = r && report_error_(b, symbol(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupPaser::line_recovery);
+    exit_section_(b, l, m, r, p, CupParser::line_recovery);
     return r || p;
   }
 
@@ -816,7 +816,7 @@ public class CupPaser implements PsiParser, LightPsiParser {
     p = r; // pin = 1
     r = r && report_error_(b, terminalDeclaration_1(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupPaser::line_recovery);
+    exit_section_(b, l, m, r, p, CupParser::line_recovery);
     return r || p;
   }
 

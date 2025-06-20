@@ -6,7 +6,7 @@ import com.zeks.javacupcake.lalr.vocabulary.Symbol
 import com.zeks.javacupcake.lalr.vocabulary.SymbolDelegate
 
 abstract class SymbolASTWrapper(node: ASTNode) : ASTWrapperPsiElement(node), SymbolDelegate {
-    private var symbol: Symbol? = null
+    override var symbol: Symbol? = null
 
     final override fun bindTo(symbol: Symbol) {
         this.symbol = symbol
@@ -16,6 +16,9 @@ abstract class SymbolASTWrapper(node: ASTNode) : ASTWrapperPsiElement(node), Sym
 
     fun isAlive() = symbol?.isAlive ?: false
 
-    fun isReachable() = symbol?.markAsUsed() ?: false
+    fun isReachable() = symbol?.isReachable ?: false
 
+    abstract override fun getName(): String
+
+    override fun getRepresentation() = name
 }

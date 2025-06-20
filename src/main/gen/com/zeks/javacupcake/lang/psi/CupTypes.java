@@ -46,8 +46,7 @@ public interface CupTypes {
   IElementType COLON = new CupTokenType(":");
   IElementType COMMA = new CupTokenType(",");
   IElementType COMMENT = new CupTokenType("comment");
-  IElementType DOR = new CupTokenType(".");
-  IElementType DOT = new CupTokenType("DOT");
+  IElementType DOT = new CupTokenType(".");
   IElementType IDENTIFIER = new CupTokenType("identifier");
   IElementType IMPORT = new CupTokenType("import");
   IElementType INIT = new CupTokenType("init");

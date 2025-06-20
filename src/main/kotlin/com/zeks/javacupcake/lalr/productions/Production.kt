@@ -4,7 +4,7 @@ import com.zeks.javacupcake.lalr.vocabulary.NonTerminal
 import com.zeks.javacupcake.lalr.vocabulary.Symbol
 import com.zeks.javacupcake.lalr.vocabulary.Terminal
 
-class Production(
+data class Production(
     val left: NonTerminal,
     val symbols: List<Symbol>,
 ) {
@@ -18,7 +18,5 @@ class Production(
 
     operator fun iterator() = symbols.iterator()
 
-    override fun toString(): String {
-        return "$left -> ${if (symbols.isNotEmpty()) symbols.joinToString(" ") else "ε"}"
-    }
+    override fun toString() = "$left → ${if (symbols.isNotEmpty()) symbols.joinToString(" ") else "ε"}"
 }

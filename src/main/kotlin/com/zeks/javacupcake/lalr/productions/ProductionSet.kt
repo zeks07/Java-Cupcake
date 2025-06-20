@@ -44,4 +44,6 @@ class ProductionSet(
             )
         }
     }
+
+    operator fun get(symbol: NonTerminal) = all[symbol] ?: emptyList()
 }

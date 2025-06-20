@@ -1,5 +1,7 @@
 package com.zeks.javacupcake.lalr.vocabulary
 
 interface SymbolSet {
-    operator fun contains(symbol: Symbol): Boolean
+    fun findSymbol(name: String): Symbol?
+    fun findNonTerminal(name: String): NonTerminal?
+    operator fun contains(symbol: Symbol?): Boolean
 }

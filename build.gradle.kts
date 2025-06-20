@@ -2,6 +2,7 @@ plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.9.25"
     id("org.jetbrains.intellij.platform") version "2.3.0"
+    id("org.jetbrains.grammarkit") version "2022.3.2.2"
 }
 
 group = "com.zeks"
@@ -53,6 +54,7 @@ tasks {
 sourceSets {
     main {
         kotlin.srcDirs("src/main/kotlin", "src/main/gen")
+        java.srcDirs("src/main/gen")
     }
     test {
         kotlin.srcDirs("src/test")
