@@ -1,7 +1,6 @@
 package com.zeks.javacupcake.lang.psi
 
 import com.intellij.psi.tree.TokenSet
-import com.zeks.javacupcake.lang.psi.CupTypes
 
 object CupTokenSets {
     @JvmStatic
