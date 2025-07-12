@@ -71,5 +71,10 @@
         <codeInsight.lineMarkerProvider
             language="Cup"
             implementationClass="com.zeks.javacupcake.linemarker.CupLineMarker"/>
+        <lang.formatter
+            language="Cup"
+            implementationClass="com.zeks.javacupcake.formatter.CupFormattingModelBuilder"/>
+        <codeStyleSettingsProvider implementation="com.zeks.javacupcake.formatter.CupCodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsProvider implementation="com.zeks.javacupcake.formatter.CupLanguageCodeStyleSettingsProvider"/>
     </extensions>
 </idea-plugin>

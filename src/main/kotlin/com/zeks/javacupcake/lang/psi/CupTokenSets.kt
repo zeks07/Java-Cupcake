@@ -21,17 +21,17 @@ object CupTokenSets {
         CupTypes.RIGHT,
         CupTypes.NONASSOC,
         CupTypes.START,
-        CupTypes.PERCENT_PREC
+        CupTypes.PERCENT_PREC,
     )
 
     @JvmStatic
     val IDENTIFIERS = TokenSet.create(
-        CupTypes.IDENTIFIER
+        CupTypes.IDENTIFIER,
     )
 
     @JvmStatic
     val COMMENTS = TokenSet.create(
-        CupTypes.COMMENT
+        CupTypes.COMMENT,
     )
 
     @JvmStatic
@@ -45,7 +45,27 @@ object CupTokenSets {
         CupTypes.RPAREN,
         CupTypes.LBRACKET,
         CupTypes.RBRACKET,
-        CupTypes.COLON
+        CupTypes.COLON,
+    )
+
+    @JvmStatic
+    val CODE_PART_FIRST = TokenSet.create(
+        CupTypes.ACTION,
+        CupTypes.PARSER,
+        CupTypes.INIT,
+        CupTypes.SCAN,
+    )
+
+    @JvmStatic
+    val CODE_PART_SECOND = TokenSet.create(
+        CupTypes.CODE,
+        CupTypes.WITH,
+    )
+
+    val NON_TERMINAL_DECLARATION = TokenSet.create(
+        CupTypes.NON,
+        CupTypes.TERMINAL_,
+        CupTypes.NONTERMINAL,
     )
 
 }
