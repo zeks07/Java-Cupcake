@@ -34,7 +34,7 @@ intellijPlatform {
         name = "Java Cupcake"
         version = project.version as String
         ideaVersion {
-            sinceBuild = "251"
+            sinceBuild = "242"
             untilBuild = provider { null }
         }
         description =
