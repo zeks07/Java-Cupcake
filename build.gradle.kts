@@ -1,12 +1,12 @@
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "1.9.25"
-    id("org.jetbrains.intellij.platform") version "2.3.0"
+    id("org.jetbrains.intellij.platform") version "2.6.0"
     id("org.jetbrains.grammarkit") version "2022.3.2.2"
 }
 
 group = "com.zeks"
-version = "1.0-SNAPSHOT"
+version = "1.01-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -30,13 +30,24 @@ dependencies {
 
 intellijPlatform {
     pluginConfiguration {
+        id = "com.zeks.javacupcake"
+        name = "Java Cupcake"
+        version = project.version as String
         ideaVersion {
-            sinceBuild = "242"
+            sinceBuild = "251"
+            untilBuild = provider { null }
         }
+        description =
+            "Enhances Java CUP file editing with smart code completion and language support for easier parser development"
 
         changeNotes = """
       Initial version
     """.trimIndent()
+    }
+
+    publishing {
+        token = (project.properties["org.jetbrains.intellij.publish.token"] as String)
+        channels = listOf("beta")
     }
 }
 
@@ -48,6 +59,9 @@ tasks {
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = "21"
+    }
+    buildSearchableOptions {
+        enabled = false
     }
 }
 
