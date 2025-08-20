@@ -25,7 +25,7 @@ class CupUnusedSymbolInspection : CupInspectionTool() {
 private class CupUnusedSymbolInspectionVisitor(private val holder: ProblemsHolder) : CupVisitor() {
     override fun visitDeclaredNonTerminal(nonTerminal: CupDeclaredNonTerminal) {
         val query = ReferencesSearch.search(nonTerminal)
-        for (reference in query) {
+        for (reference in query.findAll()) {
             if ((reference.element as CupSymbolElement).isInDefinition()) continue
             return
         }

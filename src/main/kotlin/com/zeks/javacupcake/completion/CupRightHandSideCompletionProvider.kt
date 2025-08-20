@@ -5,14 +5,13 @@ import com.intellij.codeInsight.completion.CompletionProvider
 import com.intellij.codeInsight.completion.CompletionResultSet
 import com.intellij.util.ProcessingContext
 
-class CupCompletionProvider : CompletionProvider<CompletionParameters>() {
-
+class CupRightHandSideCompletionProvider : CompletionProvider<CompletionParameters>() {
     override fun addCompletions(
         parameters: CompletionParameters,
         processingContext: ProcessingContext,
         result: CompletionResultSet
     ) {
-        CupLineCompletion().addCompletions(parameters, result)
+        CupSymbolCompletion().addAll(parameters, result)
     }
 
 }

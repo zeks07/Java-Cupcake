@@ -54,18 +54,18 @@
 }
 
 file ::= line*
-line ::= (packageSpec | importStatement | codeParts | symbolDeclaration | precedenceDeclaration | startSpec | production ) { recoverWhile=file_recovery }
-private file_recovery ::= !(PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR)
+line ::= packageSpec | importStatement | codeParts | symbolDeclaration | precedenceDeclaration | startSpec | production { recoverWhile=file_recovery }
+private file_recovery ::= !(PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER)
 
 packageSpec ::= PACKAGE packageName SEMICOLON { pin=1 recoverWhile=line_recovery }
 
 importStatement ::= IMPORT importName SEMICOLON { pin=1 recoverWhile=line_recovery }
 
-codeParts ::= (actionCodePart | parserCodePart | initCodePart | scanCodePart) codeStringBlock optionalSemicolon { pin=1 recoverWhile=line_recovery }
-actionCodePart ::= ACTION CODE
-parserCodePart ::= PARSER CODE
-initCodePart ::= INIT WITH
-scanCodePart ::= SCAN WITH
+codeParts ::= (actionCodePart | parserCodePart | initCodePart | scanCodePart) codeStringBlock optionalSemicolon? { pin=1 recoverWhile=line_recovery }
+actionCodePart ::= ACTION CODE { pin=1 }
+parserCodePart ::= PARSER CODE { pin=1 }
+initCodePart ::= INIT WITH { pin=1 }
+scanCodePart ::= SCAN WITH { pin=1 }
 
 symbolDeclaration ::= (terminalDeclaration | nonTerminalDeclaration)
 terminalDeclaration ::= TERMINAL_ (typeName declaredTerminal (COMMA declaredTerminal)* | declaredTerminal (COMMA declaredTerminal)*) SEMICOLON { pin=1 recoverWhile=line_recovery }
@@ -80,7 +80,7 @@ startSpec ::= START WITH symbol SEMICOLON { pin=1 recoverWhile=line_recovery }
 
 production ::= symbol ASSIGN_OPERATOR (rightHandSide (BAR rightHandSide)*)? SEMICOLON {
     extends="com.zeks.javacupcake.lang.psi.CupProductionElement"
-    pin=2 recoverWhile=line_recovery
+    pin=1 recoverWhile=line_recovery
 }
 rightHandSide ::= (LPAREN className RPAREN)? (symbol (COLON label)? | codeStringBlock)* precedenceClause? { recoverWhile=rightHandSide_recovery}
 precedenceClause ::= PERCENT_PREC symbol
@@ -94,6 +94,7 @@ typeName ::= IDENTIFIER (DOT IDENTIFIER)* (LBRACKET RBRACKET)?
 className ::= IDENTIFIER
 label ::= IDENTIFIER
 symbol ::= IDENTIFIER {
+    pin=1
     extends="com.zeks.javacupcake.lang.psi.CupSymbolElement"
 }
 declaredTerminal ::= IDENTIFIER {
@@ -105,6 +106,6 @@ declaredNonTerminal ::= IDENTIFIER {
     recoverWhile=list_recovery
 }
 
-optionalSemicolon ::= SEMICOLON?
+optionalSemicolon ::= SEMICOLON
 
-private line_recovery ::= !(SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR )
+private line_recovery ::= !(SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER )
