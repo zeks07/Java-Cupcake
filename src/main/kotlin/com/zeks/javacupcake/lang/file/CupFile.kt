@@ -1,4 +1,4 @@
-package com.zeks.javacupcake.file
+package com.zeks.javacupcake.lang.file
 
 import com.intellij.extapi.psi.PsiFileBase
 import com.intellij.psi.FileViewProvider

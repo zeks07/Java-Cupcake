@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.zeks.javacupcake.lang.psi.CupPrecedenceDeclarationLine;
 import com.zeks.javacupcake.lang.psi.*;
 
-public class CupPrecedenceDeclarationImpl extends ASTWrapperPsiElement implements CupPrecedenceDeclaration {
+public class CupPrecedenceDeclarationImpl extends CupPrecedenceDeclarationLine implements CupPrecedenceDeclaration {
 
   public CupPrecedenceDeclarationImpl(@NotNull ASTNode node) {
     super(node);

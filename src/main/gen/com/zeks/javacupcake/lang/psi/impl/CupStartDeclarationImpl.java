@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.zeks.javacupcake.lang.psi.CupStartLine;
 import com.zeks.javacupcake.lang.psi.*;
 
-public class CupStartSpecImpl extends ASTWrapperPsiElement implements CupStartSpec {
+public class CupStartDeclarationImpl extends CupStartLine implements CupStartDeclaration {
 
-  public CupStartSpecImpl(@NotNull ASTNode node) {
+  public CupStartDeclarationImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull CupVisitor visitor) {
-    visitor.visitStartSpec(this);
+    visitor.visitStartDeclaration(this);
   }
 
   @Override

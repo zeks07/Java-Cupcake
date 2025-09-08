@@ -6,10 +6,10 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.util.PsiTreeUtil
-import com.zeks.javacupcake.file.CupFileUtil
+import com.zeks.javacupcake.lang.file.CupFileUtil
+import com.zeks.javacupcake.lang.file.LineType
 import com.zeks.javacupcake.lang.psi.CupElementFactory
 import com.zeks.javacupcake.lang.psi.CupLine
-import com.zeks.javacupcake.lang.psi.CupTypes
 
 class InsertTerminalDeclarationQuickFix(private val name: String) : LocalQuickFix {
     override fun getFamilyName() = "Insert terminal declaration"
@@ -31,9 +31,9 @@ class InsertTerminalDeclarationQuickFix(private val name: String) : LocalQuickFi
 
         val lines = PsiTreeUtil.findChildrenOfType(file, CupLine::class.java)
         for (line in lines) {
-            val currentType = CupFileUtil.getElementType(line) ?: continue
+            val currentType = CupFileUtil.getElementLineType(line) ?: continue
             val currentTypeIndex = CupFileUtil.expectedOrder.indexOf(currentType)
-            if (currentTypeIndex > CupFileUtil.expectedOrder.indexOf(CupTypes.SYMBOL_DECLARATION)) {
+            if (currentTypeIndex > CupFileUtil.expectedOrder.indexOf(LineType.SYMBOL_DECLARATION)) {
                 nextLine = line
                 break
             }

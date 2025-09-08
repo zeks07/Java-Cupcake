@@ -3,7 +3,6 @@ package com.zeks.javacupcake.lang.psi
 import com.intellij.psi.tree.TokenSet
 
 object CupTokenSets {
-    @JvmStatic
     val KEYWORDS = TokenSet.create(
         CupTypes.IMPORT,
         CupTypes.PACKAGE,
@@ -24,17 +23,14 @@ object CupTokenSets {
         CupTypes.PERCENT_PREC,
     )
 
-    @JvmStatic
     val IDENTIFIERS = TokenSet.create(
         CupTypes.IDENTIFIER,
     )
 
-    @JvmStatic
     val COMMENTS = TokenSet.create(
         CupTypes.COMMENT,
     )
 
-    @JvmStatic
     val SEPARATORS = TokenSet.create(
         CupTypes.OPEN_CODE_STRING,
         CupTypes.CLOSE_CODE_STRING,
@@ -48,7 +44,6 @@ object CupTokenSets {
         CupTypes.COLON,
     )
 
-    @JvmStatic
     val CODE_PART_FIRST = TokenSet.create(
         CupTypes.ACTION,
         CupTypes.PARSER,
@@ -56,7 +51,6 @@ object CupTokenSets {
         CupTypes.SCAN,
     )
 
-    @JvmStatic
     val CODE_PART_SECOND = TokenSet.create(
         CupTypes.CODE,
         CupTypes.WITH,
@@ -68,4 +62,36 @@ object CupTokenSets {
         CupTypes.NONTERMINAL,
     )
 
+    val SYMBOL_DECLARATION_START = TokenSet.create(
+        CupTypes.NON,
+        CupTypes.TERMINAL_,
+        CupTypes.NONTERMINAL,
+    )
+
+    val PRECEDENCE = TokenSet.create(
+        CupTypes.LEFT,
+        CupTypes.RIGHT,
+        CupTypes.NONASSOC,
+    )
+
+    val CODE_PARTS = TokenSet.create(
+        CupTypes.ACTION_CODE_PART,
+        CupTypes.PARSER_CODE_PART,
+        CupTypes.INIT_CODE_PART,
+        CupTypes.SCAN_CODE_PART,
+    )
+
+    val LINE = TokenSet.create(
+        CupTypes.PACKAGE_SPEC,
+        CupTypes.IMPORT_STATEMENT,
+        CupTypes.ACTION_CODE_PART,
+        CupTypes.PARSER_CODE_PART,
+        CupTypes.INIT_CODE_PART,
+        CupTypes.SCAN_CODE_PART,
+        CupTypes.TERMINAL_DECLARATION,
+        CupTypes.NON_TERMINAL_DECLARATION,
+        CupTypes.PRECEDENCE_DECLARATION,
+        CupTypes.START_DECLARATION,
+        CupTypes.PRODUCTION,
+    )
 }

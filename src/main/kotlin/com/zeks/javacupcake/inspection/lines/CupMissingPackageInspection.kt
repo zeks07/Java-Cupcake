@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.bundle.CupBundle
-import com.zeks.javacupcake.lang.psi.CupPackageSpec
 import com.zeks.javacupcake.lang.psi.CupVisitor
 import com.zeks.javacupcake.inspection.quickfix.InsertPackageDeclarationQuickFix
+import com.zeks.javacupcake.lang.psi.CupPackageSpecLine
 
 class CupMissingPackageInspection : CupLinesInspection() {
     override fun isEnabledByDefault() = true
@@ -25,7 +25,7 @@ class CupMissingPackageInspection : CupLinesInspection() {
 
 private class CupMissingPackageInspectionVisitor(private val holder: ProblemsHolder) : CupVisitor() {
     override fun visitFile(file: PsiFile) {
-        val packageDeclaration = PsiTreeUtil.findChildrenOfType(file, CupPackageSpec::class.java)
+        val packageDeclaration = PsiTreeUtil.findChildrenOfType(file, CupPackageSpecLine::class.java)
         if (packageDeclaration.isNotEmpty()) return
         holder.registerProblem(
             file,

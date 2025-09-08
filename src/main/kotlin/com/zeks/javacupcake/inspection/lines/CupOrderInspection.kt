@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.bundle.CupBundle
-import com.zeks.javacupcake.file.CupFileUtil
+import com.zeks.javacupcake.lang.file.CupFileUtil
 import com.zeks.javacupcake.lang.psi.CupLine
 import com.zeks.javacupcake.lang.psi.CupVisitor
 
@@ -30,7 +30,7 @@ private class CupOrderInspectionVisitor(private val holder: ProblemsHolder) : Cu
         var lastSeenTypeIndex = -1
 
         for (line in lines) {
-            val currentType = CupFileUtil.getElementType(line) ?: continue
+            val currentType = CupFileUtil.getElementLineType(line) ?: continue
             val currentTypeIndex = CupFileUtil.expectedOrder.indexOf(currentType)
             if (currentTypeIndex < lastSeenTypeIndex) {
                 val message = CupBundle.message(

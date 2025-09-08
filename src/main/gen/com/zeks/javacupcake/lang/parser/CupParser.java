@@ -37,15 +37,36 @@ public class CupParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // ACTION CODE
+  static boolean actionCode(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "actionCode")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeTokens(b, 1, ACTION, CODE);
+    p = r; // pin = 1
+    exit_section_(b, l, m, r, p, CupParser::codePartRecovery);
+    return r || p;
+  }
+
+  /* ********************************************************** */
+  // actionCode codeStringBlock optionalSemicolon?
   public static boolean actionCodePart(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "actionCodePart")) return false;
     if (!nextTokenIs(b, ACTION)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, ACTION_CODE_PART, null);
-    r = consumeTokens(b, 1, ACTION, CODE);
+    r = actionCode(b, l + 1);
     p = r; // pin = 1
+    r = r && report_error_(b, codeStringBlock(b, l + 1));
+    r = p && actionCodePart_2(b, l + 1) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;
+  }
+
+  // optionalSemicolon?
+  private static boolean actionCodePart_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "actionCodePart_2")) return false;
+    optionalSemicolon(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
@@ -61,35 +82,48 @@ public class CupParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (actionCodePart | parserCodePart | initCodePart | scanCodePart) codeStringBlock optionalSemicolon?
-  public static boolean codeParts(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "codeParts")) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, CODE_PARTS, "<code parts>");
-    r = codeParts_0(b, l + 1);
-    p = r; // pin = 1
-    r = r && report_error_(b, codeStringBlock(b, l + 1));
-    r = p && codeParts_2(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, CupParser::line_recovery);
-    return r || p;
+  // !(codeStringBlock | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR)
+  static boolean codePartRecovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "codePartRecovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !codePartRecovery_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
+  // codeStringBlock | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR
+  private static boolean codePartRecovery_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "codePartRecovery_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = codeStringBlock(b, l + 1);
+    if (!r) r = consumeToken(b, PACKAGE);
+    if (!r) r = consumeToken(b, IMPORT);
+    if (!r) r = consumeToken(b, ACTION);
+    if (!r) r = consumeToken(b, PARSER);
+    if (!r) r = consumeToken(b, INIT);
+    if (!r) r = consumeToken(b, SCAN);
+    if (!r) r = consumeToken(b, TERMINAL_);
+    if (!r) r = consumeToken(b, NON);
+    if (!r) r = consumeToken(b, NONTERMINAL);
+    if (!r) r = consumeToken(b, PRECEDENCE);
+    if (!r) r = consumeToken(b, START);
+    if (!r) r = parseTokens(b, 0, IDENTIFIER, ASSIGN_OPERATOR);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // actionCodePart | parserCodePart | initCodePart | scanCodePart
-  private static boolean codeParts_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "codeParts_0")) return false;
+  static boolean codeParts(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "codeParts")) return false;
     boolean r;
     r = actionCodePart(b, l + 1);
     if (!r) r = parserCodePart(b, l + 1);
     if (!r) r = initCodePart(b, l + 1);
     if (!r) r = scanCodePart(b, l + 1);
     return r;
-  }
-
-  // optionalSemicolon?
-  private static boolean codeParts_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "codeParts_2")) return false;
-    optionalSemicolon(b, l + 1);
-    return true;
   }
 
   /* ********************************************************** */
@@ -152,36 +186,6 @@ public class CupParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !(PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER)
-  static boolean file_recovery(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "file_recovery")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !file_recovery_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER
-  private static boolean file_recovery_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "file_recovery_0")) return false;
-    boolean r;
-    r = consumeToken(b, PACKAGE);
-    if (!r) r = consumeToken(b, IMPORT);
-    if (!r) r = consumeToken(b, ACTION);
-    if (!r) r = consumeToken(b, PARSER);
-    if (!r) r = consumeToken(b, INIT);
-    if (!r) r = consumeToken(b, SCAN);
-    if (!r) r = consumeToken(b, TERMINAL_);
-    if (!r) r = consumeToken(b, NON);
-    if (!r) r = consumeToken(b, NONTERMINAL);
-    if (!r) r = consumeToken(b, PRECEDENCE);
-    if (!r) r = consumeToken(b, START);
-    if (!r) r = consumeToken(b, IDENTIFIER);
-    return r;
-  }
-
-  /* ********************************************************** */
   // IDENTIFIER (DOT IDENTIFIER)* (DOT ASTERISK)?
   public static boolean importName(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "importName")) return false;
@@ -237,26 +241,49 @@ public class CupParser implements PsiParser, LightPsiParser {
   // IMPORT importName SEMICOLON
   public static boolean importStatement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "importStatement")) return false;
+    if (!nextTokenIs(b, IMPORT)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, IMPORT_STATEMENT, "<import statement>");
+    Marker m = enter_section_(b, l, _NONE_, IMPORT_STATEMENT, null);
     r = consumeToken(b, IMPORT);
     p = r; // pin = 1
     r = r && report_error_(b, importName(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupParser::line_recovery);
+    exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
   /* ********************************************************** */
-  // INIT WITH
+  // initWith codeStringBlock optionalSemicolon?
   public static boolean initCodePart(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "initCodePart")) return false;
     if (!nextTokenIs(b, INIT)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, INIT, WITH);
-    exit_section_(b, m, INIT_CODE_PART, r);
-    return r;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, INIT_CODE_PART, null);
+    r = initWith(b, l + 1);
+    p = r; // pin = 1
+    r = r && report_error_(b, codeStringBlock(b, l + 1));
+    r = p && initCodePart_2(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // optionalSemicolon?
+  private static boolean initCodePart_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "initCodePart_2")) return false;
+    optionalSemicolon(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // INIT WITH
+  static boolean initWith(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "initWith")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeTokens(b, 1, INIT, WITH);
+    p = r; // pin = 1
+    exit_section_(b, l, m, r, p, CupParser::codePartRecovery);
+    return r || p;
   }
 
   /* ********************************************************** */
@@ -272,24 +299,24 @@ public class CupParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // packageSpec | importStatement | codeParts | symbolDeclaration | precedenceDeclaration | startSpec | production
-  public static boolean line(PsiBuilder b, int l) {
+  // packageSpec | importStatement | codeParts | symbolDeclaration | precedenceDeclaration | startDeclarationLine | production
+  static boolean line(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "line")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, LINE, "<line>");
+    Marker m = enter_section_(b, l, _NONE_);
     r = packageSpec(b, l + 1);
     if (!r) r = importStatement(b, l + 1);
     if (!r) r = codeParts(b, l + 1);
     if (!r) r = symbolDeclaration(b, l + 1);
     if (!r) r = precedenceDeclaration(b, l + 1);
-    if (!r) r = startSpec(b, l + 1);
+    if (!r) r = startDeclarationLine(b, l + 1);
     if (!r) r = production(b, l + 1);
-    exit_section_(b, l, m, r, false, CupParser::file_recovery);
+    exit_section_(b, l, m, r, false, CupParser::line_recovery);
     return r;
   }
 
   /* ********************************************************** */
-  // !(SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER )
+  // !(PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR)
   static boolean line_recovery(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "line_recovery")) return false;
     boolean r;
@@ -299,11 +326,45 @@ public class CupParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER
+  // PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR
   private static boolean line_recovery_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "line_recovery_0")) return false;
     boolean r;
-    r = consumeToken(b, SEMICOLON);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, PACKAGE);
+    if (!r) r = consumeToken(b, IMPORT);
+    if (!r) r = consumeToken(b, ACTION);
+    if (!r) r = consumeToken(b, PARSER);
+    if (!r) r = consumeToken(b, INIT);
+    if (!r) r = consumeToken(b, SCAN);
+    if (!r) r = consumeToken(b, TERMINAL_);
+    if (!r) r = consumeToken(b, NON);
+    if (!r) r = consumeToken(b, NONTERMINAL);
+    if (!r) r = consumeToken(b, PRECEDENCE);
+    if (!r) r = consumeToken(b, START);
+    if (!r) r = parseTokens(b, 0, IDENTIFIER, ASSIGN_OPERATOR);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // !(COMMA | SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR)
+  static boolean list_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "list_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !list_recovery_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // COMMA | SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR
+  private static boolean list_recovery_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "list_recovery_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    if (!r) r = consumeToken(b, SEMICOLON);
     if (!r) r = consumeToken(b, PACKAGE);
     if (!r) r = consumeToken(b, IMPORT);
     if (!r) r = consumeToken(b, ACTION);
@@ -315,27 +376,8 @@ public class CupParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, NONTERMINAL);
     if (!r) r = consumeToken(b, PRECEDENCE);
     if (!r) r = consumeToken(b, START);
-    if (!r) r = consumeToken(b, IDENTIFIER);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // !(COMMA | SEMICOLON)
-  static boolean list_recovery(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "list_recovery")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !list_recovery_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // COMMA | SEMICOLON
-  private static boolean list_recovery_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "list_recovery_0")) return false;
-    boolean r;
-    r = consumeToken(b, COMMA);
-    if (!r) r = consumeToken(b, SEMICOLON);
+    if (!r) r = parseTokens(b, 0, IDENTIFIER, ASSIGN_OPERATOR);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -362,7 +404,7 @@ public class CupParser implements PsiParser, LightPsiParser {
     p = r; // pin = 1
     r = r && report_error_(b, nonTerminalDeclaration_1(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupParser::line_recovery);
+    exit_section_(b, l, m, r, p, CupParser::symbolDeclaration_recovery);
     return r || p;
   }
 
@@ -503,25 +545,71 @@ public class CupParser implements PsiParser, LightPsiParser {
   // PACKAGE packageName SEMICOLON
   public static boolean packageSpec(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "packageSpec")) return false;
+    if (!nextTokenIs(b, PACKAGE)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, PACKAGE_SPEC, "<package spec>");
+    Marker m = enter_section_(b, l, _NONE_, PACKAGE_SPEC, null);
     r = consumeToken(b, PACKAGE);
     p = r; // pin = 1
     r = r && report_error_(b, packageName(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupParser::line_recovery);
+    exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
   /* ********************************************************** */
   // PARSER CODE
+  static boolean parserCode(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "parserCode")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeTokens(b, 1, PARSER, CODE);
+    p = r; // pin = 1
+    exit_section_(b, l, m, r, p, CupParser::codePartRecovery);
+    return r || p;
+  }
+
+  /* ********************************************************** */
+  // parserCode codeStringBlock optionalSemicolon?
   public static boolean parserCodePart(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "parserCodePart")) return false;
     if (!nextTokenIs(b, PARSER)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, PARSER_CODE_PART, null);
+    r = parserCode(b, l + 1);
+    p = r; // pin = 1
+    r = r && report_error_(b, codeStringBlock(b, l + 1));
+    r = p && parserCodePart_2(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // optionalSemicolon?
+  private static boolean parserCodePart_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "parserCodePart_2")) return false;
+    optionalSemicolon(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // PRECEDENCE (LEFT | RIGHT | NONASSOC)
+  static boolean precedence(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "precedence")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeToken(b, PRECEDENCE);
+    p = r; // pin = 1
+    r = r && precedence_1(b, l + 1);
+    exit_section_(b, l, m, r, p, CupParser::precedenceDeclaration_recovery);
+    return r || p;
+  }
+
+  // LEFT | RIGHT | NONASSOC
+  private static boolean precedence_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "precedence_1")) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, PARSER, CODE);
-    exit_section_(b, m, PARSER_CODE_PART, r);
+    r = consumeToken(b, LEFT);
+    if (!r) r = consumeToken(b, RIGHT);
+    if (!r) r = consumeToken(b, NONASSOC);
     return r;
   }
 
@@ -539,49 +627,74 @@ public class CupParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // PRECEDENCE (LEFT | RIGHT | NONASSOC) precedenceSymbol (COMMA precedenceSymbol)* SEMICOLON
+  // precedence precedenceSymbol (COMMA precedenceSymbol)* SEMICOLON
   public static boolean precedenceDeclaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "precedenceDeclaration")) return false;
+    if (!nextTokenIs(b, PRECEDENCE)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, PRECEDENCE_DECLARATION, "<precedence declaration>");
-    r = consumeToken(b, PRECEDENCE);
+    Marker m = enter_section_(b, l, _NONE_, PRECEDENCE_DECLARATION, null);
+    r = precedence(b, l + 1);
     p = r; // pin = 1
-    r = r && report_error_(b, precedenceDeclaration_1(b, l + 1));
-    r = p && report_error_(b, precedenceSymbol(b, l + 1)) && r;
-    r = p && report_error_(b, precedenceDeclaration_3(b, l + 1)) && r;
+    r = r && report_error_(b, precedenceSymbol(b, l + 1));
+    r = p && report_error_(b, precedenceDeclaration_2(b, l + 1)) && r;
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupParser::line_recovery);
+    exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
-  // LEFT | RIGHT | NONASSOC
-  private static boolean precedenceDeclaration_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "precedenceDeclaration_1")) return false;
-    boolean r;
-    r = consumeToken(b, LEFT);
-    if (!r) r = consumeToken(b, RIGHT);
-    if (!r) r = consumeToken(b, NONASSOC);
-    return r;
-  }
-
   // (COMMA precedenceSymbol)*
-  private static boolean precedenceDeclaration_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "precedenceDeclaration_3")) return false;
+  private static boolean precedenceDeclaration_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "precedenceDeclaration_2")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!precedenceDeclaration_3_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "precedenceDeclaration_3", c)) break;
+      if (!precedenceDeclaration_2_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "precedenceDeclaration_2", c)) break;
     }
     return true;
   }
 
   // COMMA precedenceSymbol
-  private static boolean precedenceDeclaration_3_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "precedenceDeclaration_3_0")) return false;
+  private static boolean precedenceDeclaration_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "precedenceDeclaration_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, COMMA);
     r = r && precedenceSymbol(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // !(IDENTIFIER | COMMA | SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR)
+  static boolean precedenceDeclaration_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "precedenceDeclaration_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !precedenceDeclaration_recovery_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // IDENTIFIER | COMMA | SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR
+  private static boolean precedenceDeclaration_recovery_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "precedenceDeclaration_recovery_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    if (!r) r = consumeToken(b, COMMA);
+    if (!r) r = consumeToken(b, SEMICOLON);
+    if (!r) r = consumeToken(b, PACKAGE);
+    if (!r) r = consumeToken(b, IMPORT);
+    if (!r) r = consumeToken(b, ACTION);
+    if (!r) r = consumeToken(b, PARSER);
+    if (!r) r = consumeToken(b, INIT);
+    if (!r) r = consumeToken(b, SCAN);
+    if (!r) r = consumeToken(b, TERMINAL_);
+    if (!r) r = consumeToken(b, NON);
+    if (!r) r = consumeToken(b, NONTERMINAL);
+    if (!r) r = consumeToken(b, PRECEDENCE);
+    if (!r) r = consumeToken(b, START);
+    if (!r) r = parseTokens(b, 0, IDENTIFIER, ASSIGN_OPERATOR);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -601,14 +714,15 @@ public class CupParser implements PsiParser, LightPsiParser {
   // symbol ASSIGN_OPERATOR (rightHandSide (BAR rightHandSide)*)? SEMICOLON
   public static boolean production(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "production")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, PRODUCTION, "<production>");
+    Marker m = enter_section_(b, l, _NONE_, PRODUCTION, null);
     r = symbol(b, l + 1);
-    p = r; // pin = 1
-    r = r && report_error_(b, consumeToken(b, ASSIGN_OPERATOR));
-    r = p && report_error_(b, production_2(b, l + 1)) && r;
+    r = r && consumeToken(b, ASSIGN_OPERATOR);
+    p = r; // pin = 2
+    r = r && report_error_(b, production_2(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupParser::line_recovery);
+    exit_section_(b, l, m, r, p, null);
     return r || p;
   }
 
@@ -763,29 +877,104 @@ public class CupParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // SCAN WITH
+  // scanWith codeStringBlock optionalSemicolon?
   public static boolean scanCodePart(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "scanCodePart")) return false;
     if (!nextTokenIs(b, SCAN)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, SCAN, WITH);
-    exit_section_(b, m, SCAN_CODE_PART, r);
-    return r;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, SCAN_CODE_PART, null);
+    r = scanWith(b, l + 1);
+    p = r; // pin = 1
+    r = r && report_error_(b, codeStringBlock(b, l + 1));
+    r = p && scanCodePart_2(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // optionalSemicolon?
+  private static boolean scanCodePart_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "scanCodePart_2")) return false;
+    optionalSemicolon(b, l + 1);
+    return true;
   }
 
   /* ********************************************************** */
-  // START WITH symbol SEMICOLON
-  public static boolean startSpec(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "startSpec")) return false;
+  // SCAN WITH
+  static boolean scanWith(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "scanWith")) return false;
     boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, START_SPEC, "<start spec>");
-    r = consumeTokens(b, 1, START, WITH);
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeTokens(b, 1, SCAN, WITH);
+    p = r; // pin = 1
+    exit_section_(b, l, m, r, p, CupParser::codePartRecovery);
+    return r || p;
+  }
+
+  /* ********************************************************** */
+  // startWith symbol SEMICOLON
+  public static boolean startDeclaration(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "startDeclaration")) return false;
+    if (!nextTokenIs(b, START)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, START_DECLARATION, null);
+    r = startWith(b, l + 1);
     p = r; // pin = 1
     r = r && report_error_(b, symbol(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupParser::line_recovery);
+    exit_section_(b, l, m, r, p, null);
     return r || p;
+  }
+
+  /* ********************************************************** */
+  // startDeclaration
+  static boolean startDeclarationLine(PsiBuilder b, int l) {
+    return startDeclaration(b, l + 1);
+  }
+
+  /* ********************************************************** */
+  // START WITH
+  static boolean startWith(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "startWith")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_);
+    r = consumeTokens(b, 1, START, WITH);
+    p = r; // pin = 1
+    exit_section_(b, l, m, r, p, CupParser::startWith_recovery);
+    return r || p;
+  }
+
+  /* ********************************************************** */
+  // !(IDENTIFIER | SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR)
+  static boolean startWith_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "startWith_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !startWith_recovery_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // IDENTIFIER | SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR
+  private static boolean startWith_recovery_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "startWith_recovery_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    if (!r) r = consumeToken(b, SEMICOLON);
+    if (!r) r = consumeToken(b, PACKAGE);
+    if (!r) r = consumeToken(b, IMPORT);
+    if (!r) r = consumeToken(b, ACTION);
+    if (!r) r = consumeToken(b, PARSER);
+    if (!r) r = consumeToken(b, INIT);
+    if (!r) r = consumeToken(b, SCAN);
+    if (!r) r = consumeToken(b, TERMINAL_);
+    if (!r) r = consumeToken(b, NON);
+    if (!r) r = consumeToken(b, NONTERMINAL);
+    if (!r) r = consumeToken(b, PRECEDENCE);
+    if (!r) r = consumeToken(b, START);
+    if (!r) r = parseTokens(b, 0, IDENTIFIER, ASSIGN_OPERATOR);
+    exit_section_(b, m, null, r);
+    return r;
   }
 
   /* ********************************************************** */
@@ -802,13 +991,48 @@ public class CupParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // terminalDeclaration | nonTerminalDeclaration
-  public static boolean symbolDeclaration(PsiBuilder b, int l) {
+  static boolean symbolDeclaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "symbolDeclaration")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, SYMBOL_DECLARATION, "<symbol declaration>");
+    Marker m = enter_section_(b);
     r = terminalDeclaration(b, l + 1);
     if (!r) r = nonTerminalDeclaration(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // !(IDENTIFIER | COMMA | SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR)
+  static boolean symbolDeclaration_recovery(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "symbolDeclaration_recovery")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !symbolDeclaration_recovery_0(b, l + 1);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // IDENTIFIER | COMMA | SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR
+  private static boolean symbolDeclaration_recovery_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "symbolDeclaration_recovery_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    if (!r) r = consumeToken(b, COMMA);
+    if (!r) r = consumeToken(b, SEMICOLON);
+    if (!r) r = consumeToken(b, PACKAGE);
+    if (!r) r = consumeToken(b, IMPORT);
+    if (!r) r = consumeToken(b, ACTION);
+    if (!r) r = consumeToken(b, PARSER);
+    if (!r) r = consumeToken(b, INIT);
+    if (!r) r = consumeToken(b, SCAN);
+    if (!r) r = consumeToken(b, TERMINAL_);
+    if (!r) r = consumeToken(b, NON);
+    if (!r) r = consumeToken(b, NONTERMINAL);
+    if (!r) r = consumeToken(b, PRECEDENCE);
+    if (!r) r = consumeToken(b, START);
+    if (!r) r = parseTokens(b, 0, IDENTIFIER, ASSIGN_OPERATOR);
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -822,7 +1046,7 @@ public class CupParser implements PsiParser, LightPsiParser {
     p = r; // pin = 1
     r = r && report_error_(b, terminalDeclaration_1(b, l + 1));
     r = p && consumeToken(b, SEMICOLON) && r;
-    exit_section_(b, l, m, r, p, CupParser::line_recovery);
+    exit_section_(b, l, m, r, p, CupParser::symbolDeclaration_recovery);
     return r || p;
   }
 

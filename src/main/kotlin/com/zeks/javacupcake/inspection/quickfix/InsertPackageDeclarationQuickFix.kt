@@ -10,7 +10,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.codeStyle.CodeStyleManager
 import com.intellij.psi.util.PsiTreeUtil
-import com.zeks.javacupcake.file.CupFile
+import com.zeks.javacupcake.lang.file.CupFile
 import com.zeks.javacupcake.lang.psi.CupElementFactory
 import com.zeks.javacupcake.lang.psi.CupPackageName
 

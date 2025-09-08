@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import com.zeks.javacupcake.lang.psi.CupPackageSpecLine;
 import com.zeks.javacupcake.lang.psi.*;
 
-public class CupPackageSpecImpl extends ASTWrapperPsiElement implements CupPackageSpec {
+public class CupPackageSpecImpl extends CupPackageSpecLine implements CupPackageSpec {
 
   public CupPackageSpecImpl(@NotNull ASTNode node) {
     super(node);

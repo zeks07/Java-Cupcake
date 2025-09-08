@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.IFileElementType
 import com.intellij.psi.tree.TokenSet
 import com.zeks.javacupcake.lang.CupLanguage
-import com.zeks.javacupcake.file.CupFile
+import com.zeks.javacupcake.lang.file.CupFile
 import com.zeks.javacupcake.lang.psi.CupTokenSets
 import com.zeks.javacupcake.lang.psi.CupTypes
 

@@ -11,7 +11,7 @@ abstract class CupSymbolElement(node: ASTNode) : ASTWrapperPsiElement(node) {
 
     fun isInDefinition() = parent is CupProduction
 
-    fun isInStartClause() = parent is CupStartSpec
+    fun isInStartClause() = parent is CupStartDeclaration
 
     fun isInPrecedenceClause() = parent is CupPrecedenceSymbol
 

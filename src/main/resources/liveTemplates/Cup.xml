@@ -1,0 +1,72 @@
+<templateSet group="Cup">
+    <template
+            name="ac"
+            value="action code {:$CODE_STRING$:}"
+            key="live.template.ac.description"
+            resource-bundle="messages.CupBundle"
+            toReformat="true">
+        <variable
+                name="CODE_STRING"
+                expression="complete()"
+                defaultValue=""
+                alwaysStopAt="true"/>
+        <context>
+            <option name="CUP_TOPLEVEL_ACTION_CODE" value="true"/>
+        </context>
+    </template>
+
+    <template
+            name="pc"
+            key="live.template.pc.description" resource-bundle="messages.CupBundle"
+            value="parser code {:$CODE_STRING$:}"
+            toReformat="true">
+        <variable
+                name="CODE_STRING"
+                defaultValue=""
+                alwaysStopAt="true"/>
+        <context>
+            <option name="CUP_TOPLEVEL_PARSER_CODE" value="true"/>
+        </context>
+    </template>
+
+    <template
+            name="iw"
+            value="parser code {:$END$:}" key="live.template.iw.description"
+            resource-bundle="messages.CupBundle"
+            toReformat="true">
+        <context>
+            <option name="CUP_TOPLEVEL_INIT_WITH" value="true"/>
+        </context>
+    </template>
+
+    <template
+        name="sw"
+        key="live.template.sw.description" resource-bundle="messages.CupBundle"
+        value="scan with {:$CODE_STRING$:}"
+        toReformat="true">
+        <variable
+                name="CODE_STRING"
+                expression="complete()"
+                defaultValue=""
+                alwaysStopAt="true"/>
+        <context>
+            <option name="CUP_TOPLEVEL_SCAN_WITH" value="true"/>
+        </context>
+    </template>
+
+    <template
+        name="start"
+        value="start with $NON_TERMINAL$;"
+        key="live.template.start.description" resource-bundle="messages.CupBundle"
+        toReformat="true">
+        <variable
+            name="NON_TERMINAL"
+            expression="complete()"
+            defaultValue=""
+            alwaysStopAt="true"/>
+        <context>
+            <option name="CUP_TOPLEVEL_START_WITH" value="true"/>
+        </context>
+    </template>
+
+</templateSet>

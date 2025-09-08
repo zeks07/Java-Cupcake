@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.bundle.CupBundle
-import com.zeks.javacupcake.lang.psi.CupStartSpec
+import com.zeks.javacupcake.lang.psi.CupStartDeclaration
 import com.zeks.javacupcake.lang.psi.CupVisitor
 import com.zeks.javacupcake.inspection.quickfix.RemoveStartClauseQuickFix
 import com.zeks.javacupcake.lang.psi.CupProduction
@@ -25,7 +25,7 @@ class CupSymbolInStartClauseInspection : CupSymbolsInspection() {
 }
 
 private class CupSymbolInStartClauseInspectionVisitor(private val holder: ProblemsHolder) : CupVisitor() {
-    override fun visitStartSpec(startSpec: CupStartSpec) {
+    override fun visitStartDeclaration(startSpec: CupStartDeclaration) {
         val symbol = startSpec.symbol ?: return
         val reference = symbol.reference as CupSymbolReference
 

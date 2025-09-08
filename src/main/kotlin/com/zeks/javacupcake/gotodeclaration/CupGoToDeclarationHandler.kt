@@ -9,8 +9,7 @@ class CupGoToDeclarationHandler : GotoDeclarationHandler {
 
     override fun getGotoDeclarationTargets(sourceElement: PsiElement?, offset: Int, edito: Editor?): Array<PsiElement>? {
         if (sourceElement == null) return null
-        val element = sourceElement.parent
-        return when (element) {
+        return when (val element = sourceElement.parent) {
             is CupSymbolElement -> {
                 val reference = element.reference
                 return reference.multiResolve(false)

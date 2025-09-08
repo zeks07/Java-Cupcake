@@ -8,7 +8,7 @@ import com.intellij.psi.ResolveResult
 import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.lang.psi.CupNamedNonTerminal
 import com.zeks.javacupcake.lang.psi.CupNamedTerminal
-import com.zeks.javacupcake.lang.psi.CupProductionElement
+import com.zeks.javacupcake.lang.psi.CupProductionLine
 import com.zeks.javacupcake.lang.psi.CupSymbolElement
 
 class CupSymbolReference(element: CupSymbolElement) : PsiPolyVariantReferenceBase<CupSymbolElement>(element) {
@@ -31,7 +31,7 @@ class CupSymbolReference(element: CupSymbolElement) : PsiPolyVariantReferenceBas
 
     private fun findDefinitions(name: String): List<PsiNamedElement> {
         val scope = element.containingFile
-        val result = PsiTreeUtil.findChildrenOfType(scope, CupProductionElement::class.java)
+        val result = PsiTreeUtil.findChildrenOfType(scope, CupProductionLine::class.java)
 
         return result.filter { it.name == name }
     }
@@ -40,12 +40,10 @@ class CupSymbolReference(element: CupSymbolElement) : PsiPolyVariantReferenceBas
 
     fun isDeclared() = resolve() is CupNamedTerminal || resolve() is CupNamedNonTerminal
 
-    fun isDefined() = resolve() is CupProductionElement
-
-    fun isDeclaredOrDefined() = isDeclared() || isDefined()
+    fun isDefined() = resolve() is CupProductionLine
 
     fun isTerminal() = resolve() is CupNamedTerminal
 
-    fun isNonTerminal() = resolve() is CupNamedNonTerminal || resolve() is CupProductionElement
+    fun isNonTerminal() = resolve() is CupNamedNonTerminal || resolve() is CupProductionLine
 
 }

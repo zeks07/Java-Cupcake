@@ -15,10 +15,6 @@ public class CupVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitCodeParts(@NotNull CupCodeParts o) {
-    visitPsiElement(o);
-  }
-
   public void visitCodeStringBlock(@NotNull CupCodeStringBlock o) {
     visitPsiElement(o);
   }
@@ -44,10 +40,6 @@ public class CupVisitor extends PsiElementVisitor {
   }
 
   public void visitLabel(@NotNull CupLabel o) {
-    visitPsiElement(o);
-  }
-
-  public void visitLine(@NotNull CupLine o) {
     visitPsiElement(o);
   }
 
@@ -95,15 +87,11 @@ public class CupVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitStartSpec(@NotNull CupStartSpec o) {
+  public void visitStartDeclaration(@NotNull CupStartDeclaration o) {
     visitPsiElement(o);
   }
 
   public void visitSymbol(@NotNull CupSymbol o) {
-    visitPsiElement(o);
-  }
-
-  public void visitSymbolDeclaration(@NotNull CupSymbolDeclaration o) {
     visitPsiElement(o);
   }
 

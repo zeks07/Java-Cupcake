@@ -7,7 +7,7 @@ import com.intellij.psi.search.searches.ReferencesSearch
 import com.intellij.util.Processor
 import com.intellij.util.QueryExecutor
 import com.zeks.javacupcake.lang.psi.CupNamedNonTerminal
-import com.zeks.javacupcake.lang.psi.CupProductionElement
+import com.zeks.javacupcake.lang.psi.CupProductionLine
 import com.zeks.javacupcake.lang.psi.CupSymbolElement
 
 class CupReferenceSearcher : QueryExecutor<CupSymbolReference, ReferencesSearch.SearchParameters> {
@@ -19,7 +19,7 @@ class CupReferenceSearcher : QueryExecutor<CupSymbolReference, ReferencesSearch.
             is CupNamedNonTerminal -> {
                 searchNonTerminalUsages(element, scope, consumer)
             }
-            is CupProductionElement -> {
+            is CupProductionLine -> {
                 searchProductionUsages(element, scope, consumer)
             }
             else -> true
@@ -48,13 +48,13 @@ class CupReferenceSearcher : QueryExecutor<CupSymbolReference, ReferencesSearch.
     )
 
     private fun searchProductionUsages(
-        element: CupProductionElement,
+        element: CupProductionLine,
         scope: SearchScope,
         consumer: Processor<in CupSymbolReference>
     ) = PsiSearchHelper.getInstance(element.project).processElementsWithWord(
         {
             foundElement, _ ->
-                if (foundElement is CupProductionElement && foundElement.name == element.name) {
+                if (foundElement is CupProductionLine && foundElement.name == element.name) {
                     val nonTerminal = foundElement.firstChild as? CupSymbolElement ?: return@processElementsWithWord true
                     val reference = nonTerminal.reference
                     if (reference.isReferenceTo(element)) {

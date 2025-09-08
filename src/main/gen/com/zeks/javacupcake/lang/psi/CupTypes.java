@@ -10,7 +10,6 @@ public interface CupTypes {
 
   IElementType ACTION_CODE_PART = new CupElementType("ACTION_CODE_PART");
   IElementType CLASS_NAME = new CupElementType("CLASS_NAME");
-  IElementType CODE_PARTS = new CupElementType("CODE_PARTS");
   IElementType CODE_STRING_BLOCK = new CupElementType("CODE_STRING_BLOCK");
   IElementType DECLARED_NON_TERMINAL = new CupElementType("DECLARED_NON_TERMINAL");
   IElementType DECLARED_TERMINAL = new CupElementType("DECLARED_TERMINAL");
@@ -18,7 +17,6 @@ public interface CupTypes {
   IElementType IMPORT_STATEMENT = new CupElementType("IMPORT_STATEMENT");
   IElementType INIT_CODE_PART = new CupElementType("INIT_CODE_PART");
   IElementType LABEL = new CupElementType("LABEL");
-  IElementType LINE = new CupElementType("LINE");
   IElementType NON_TERMINAL_DECLARATION = new CupElementType("NON_TERMINAL_DECLARATION");
   IElementType OPTIONAL_SEMICOLON = new CupElementType("OPTIONAL_SEMICOLON");
   IElementType PACKAGE_NAME = new CupElementType("PACKAGE_NAME");
@@ -30,9 +28,8 @@ public interface CupTypes {
   IElementType PRODUCTION = new CupElementType("PRODUCTION");
   IElementType RIGHT_HAND_SIDE = new CupElementType("RIGHT_HAND_SIDE");
   IElementType SCAN_CODE_PART = new CupElementType("SCAN_CODE_PART");
-  IElementType START_SPEC = new CupElementType("START_SPEC");
+  IElementType START_DECLARATION = new CupElementType("START_DECLARATION");
   IElementType SYMBOL = new CupElementType("SYMBOL");
-  IElementType SYMBOL_DECLARATION = new CupElementType("SYMBOL_DECLARATION");
   IElementType TERMINAL_DECLARATION = new CupElementType("TERMINAL_DECLARATION");
   IElementType TYPE_NAME = new CupElementType("TYPE_NAME");
 
@@ -80,9 +77,6 @@ public interface CupTypes {
       else if (type == CLASS_NAME) {
         return new CupClassNameImpl(node);
       }
-      else if (type == CODE_PARTS) {
-        return new CupCodePartsImpl(node);
-      }
       else if (type == CODE_STRING_BLOCK) {
         return new CupCodeStringBlockImpl(node);
       }
@@ -103,9 +97,6 @@ public interface CupTypes {
       }
       else if (type == LABEL) {
         return new CupLabelImpl(node);
-      }
-      else if (type == LINE) {
-        return new CupLineImpl(node);
       }
       else if (type == NON_TERMINAL_DECLARATION) {
         return new CupNonTerminalDeclarationImpl(node);
@@ -140,14 +131,11 @@ public interface CupTypes {
       else if (type == SCAN_CODE_PART) {
         return new CupScanCodePartImpl(node);
       }
-      else if (type == START_SPEC) {
-        return new CupStartSpecImpl(node);
+      else if (type == START_DECLARATION) {
+        return new CupStartDeclarationImpl(node);
       }
       else if (type == SYMBOL) {
         return new CupSymbolImpl(node);
-      }
-      else if (type == SYMBOL_DECLARATION) {
-        return new CupSymbolDeclarationImpl(node);
       }
       else if (type == TERMINAL_DECLARATION) {
         return new CupTerminalDeclarationImpl(node);

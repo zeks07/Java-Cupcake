@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
-import com.zeks.javacupcake.lang.psi.CupProductionElement;
+import com.zeks.javacupcake.lang.psi.CupProductionLine;
 import com.zeks.javacupcake.lang.psi.*;
 
-public class CupProductionImpl extends CupProductionElement implements CupProduction {
+public class CupProductionImpl extends CupProductionLine implements CupProduction {
 
   public CupProductionImpl(@NotNull ASTNode node) {
     super(node);

@@ -3,8 +3,8 @@ package com.zeks.javacupcake.lang.psi
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFileFactory
 import com.intellij.psi.util.PsiTreeUtil
-import com.zeks.javacupcake.file.CupFile
-import com.zeks.javacupcake.file.CupFileType
+import com.zeks.javacupcake.lang.file.CupFile
+import com.zeks.javacupcake.lang.file.CupFileType
 
 object CupElementFactory {
     fun createPackageDeclaration(project: Project, packageName: String): CupPackageSpec {

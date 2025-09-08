@@ -14,6 +14,7 @@ import com.zeks.javacupcake.inspection.symbols.CupNonTerminalInPrecedenceDeclara
 import com.zeks.javacupcake.inspection.symbols.CupUndeclaredSymbolInspection
 
 class CupInspectionProvider : InspectionToolProvider {
+
     override fun getInspectionClasses(): Array<out Class<out LocalInspectionTool?>?> =
         arrayOf(
             CupOrderInspection::class.java,

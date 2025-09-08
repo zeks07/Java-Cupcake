@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.search.LocalSearchScope
 import com.intellij.psi.search.searches.ReferencesSearch
 import com.zeks.javacupcake.lang.psi.CupNamedNonTerminal
-import com.zeks.javacupcake.lang.psi.CupProductionElement
+import com.zeks.javacupcake.lang.psi.CupProductionLine
 import com.zeks.javacupcake.lang.psi.CupSymbolElement
 
 class CupLineMarker : RelatedItemLineMarkerProvider() {
@@ -17,7 +17,7 @@ class CupLineMarker : RelatedItemLineMarkerProvider() {
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
         when (element) {
-            is CupProductionElement -> {
+            is CupProductionLine -> {
                 collectNavigationMarkers(element, result)
             }
             is CupNamedNonTerminal -> {
@@ -27,7 +27,7 @@ class CupLineMarker : RelatedItemLineMarkerProvider() {
     }
 
     private fun collectNavigationMarkers(
-        element: CupProductionElement,
+        element: CupProductionLine,
         result: MutableCollection<in RelatedItemLineMarkerInfo<*>>
     ) {
         val symbol = element.firstChild as? CupSymbolElement ?: return
@@ -40,7 +40,7 @@ class CupLineMarker : RelatedItemLineMarkerProvider() {
             .setTargets(reference)
             .setTooltipText("Navigate to declaration")
 
-        result.add(builder.createLineMarkerInfo(symbol))
+        result.add(builder.createLineMarkerInfo(symbol.firstChild))
     }
 
     private fun collectNavigationMarkers(
@@ -56,8 +56,8 @@ class CupLineMarker : RelatedItemLineMarkerProvider() {
         val references = ReferencesSearch.search(searchParameters).findAll()
         if (references.isEmpty()) return
 
-        val targets = references.mapNotNull {
-            it.element.takeIf { (it as? CupSymbolElement)?.isInDefinition() == true }
+        val targets = references.mapNotNull { reference ->
+            reference.element.takeIf { (it as? CupSymbolElement)?.isInDefinition() == true }
         }
         if (targets.isEmpty()) return
 
@@ -66,6 +66,6 @@ class CupLineMarker : RelatedItemLineMarkerProvider() {
             .setTargets(targets)
             .setTooltipText("Navigate to definition")
 
-        result.add(builder.createLineMarkerInfo(element))
+        result.add(builder.createLineMarkerInfo(element.firstChild))
     }
 }

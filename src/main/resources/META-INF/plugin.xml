@@ -25,7 +25,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <fileType
             name="Cup File"
-            implementationClass="com.zeks.javacupcake.file.CupFileType"
+            implementationClass="com.zeks.javacupcake.lang.file.CupFileType"
             fieldName="INSTANCE"
             language="Cup"
             extensions="cup"/>
@@ -76,5 +76,14 @@
             implementationClass="com.zeks.javacupcake.formatter.CupFormattingModelBuilder"/>
         <codeStyleSettingsProvider implementation="com.zeks.javacupcake.formatter.CupCodeStyleSettingsProvider"/>
         <langCodeStyleSettingsProvider implementation="com.zeks.javacupcake.formatter.CupLanguageCodeStyleSettingsProvider"/>
+
+        <defaultLiveTemplates file="/liveTemplates/Cup.xml"/>
+        <liveTemplateContext contextId="CUP" implementation="com.zeks.javacupcake.livetemplates.Generic"/>
+        <liveTemplateContext contextId="CUP_TOPLEVEL_ACTION_CODE" baseContextId="CUP" implementation="com.zeks.javacupcake.livetemplates.TopLevelActionCode"/>
+        <liveTemplateContext contextId="CUP_TOPLEVEL_PARSER_CODE" baseContextId="CUP" implementation="com.zeks.javacupcake.livetemplates.TopLevelParserCode"/>
+        <liveTemplateContext contextId="CUP_TOPLEVEL_SCAN_WITH" baseContextId="CUP" implementation="com.zeks.javacupcake.livetemplates.TopLevelScanWith"/>
+        <liveTemplateContext contextId="CUP_TOPLEVEL_INIT_WITH" baseContextId="CUP" implementation="com.zeks.javacupcake.livetemplates.TopLevelInitWith"/>
+        <liveTemplateContext contextId="CUP_TOPLEVEL_START_WITH" baseContextId="CUP" implementation="com.zeks.javacupcake.livetemplates.TopLevelStartWith"/>
+
     </extensions>
 </idea-plugin>

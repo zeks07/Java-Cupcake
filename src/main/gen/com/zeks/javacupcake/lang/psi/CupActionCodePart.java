@@ -7,4 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface CupActionCodePart extends PsiElement {
 
+  @Nullable
+  CupCodeStringBlock getCodeStringBlock();
+
+  @Nullable
+  CupOptionalSemicolon getOptionalSemicolon();
+
 }

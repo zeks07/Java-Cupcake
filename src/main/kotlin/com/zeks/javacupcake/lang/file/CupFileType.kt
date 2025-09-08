@@ -1,4 +1,4 @@
-package com.zeks.javacupcake.file
+package com.zeks.javacupcake.lang.file
 
 import com.intellij.openapi.fileTypes.LanguageFileType
 import com.zeks.javacupcake.CupIcons

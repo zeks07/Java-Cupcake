@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.zeks"
-version = "1.01-SNAPSHOT"
+version = "1.03-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -41,7 +41,7 @@ intellijPlatform {
             "Enhances Java CUP file editing with smart code completion and language support for easier parser development"
 
         changeNotes = """
-      Initial version
+      Improved completion with context aware suggestions.
     """.trimIndent()
     }
 

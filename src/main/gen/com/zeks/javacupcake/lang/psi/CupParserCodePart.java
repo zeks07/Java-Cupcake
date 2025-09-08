@@ -7,4 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface CupParserCodePart extends PsiElement {
 
+  @Nullable
+  CupCodeStringBlock getCodeStringBlock();
+
+  @Nullable
+  CupOptionalSemicolon getOptionalSemicolon();
+
 }

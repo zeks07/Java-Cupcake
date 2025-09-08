@@ -7,7 +7,7 @@ import com.intellij.psi.PsiNamedElement
 
 abstract class CupNamedTerminal(node: ASTNode) : ASTWrapperPsiElement(node), PsiNamedElement {
 
-    override fun getName(): String = text
+    override fun getName(): String = firstChild.text
 
     override fun setName(newName: String): PsiElement? {
         val newNamedTerminal = CupElementFactory.createDeclaredTerminal(project, newName)

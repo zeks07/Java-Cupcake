@@ -7,7 +7,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.bundle.CupBundle
 import com.zeks.javacupcake.inspection.CupDuplicateElementInspection
-import com.zeks.javacupcake.lang.psi.CupStartSpec
+import com.zeks.javacupcake.lang.psi.CupStartDeclaration
 
 class CupDuplicateStartInspection : CupLinesInspection() {
     override fun isEnabledByDefault() = true
@@ -22,7 +22,7 @@ class CupDuplicateStartInspection : CupLinesInspection() {
 
 private class CupDuplicateStartInspectionVisitor(holder: ProblemsHolder) : CupDuplicateElementInspection(holder, "duplicate_start") {
     override fun visitFile(file: PsiFile) {
-        val startClauses = PsiTreeUtil.findChildrenOfType(file, CupStartSpec::class.java)
+        val startClauses = PsiTreeUtil.findChildrenOfType(file, CupStartDeclaration::class.java)
         inspectElements(startClauses)
     }
 }

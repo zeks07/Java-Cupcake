@@ -44,7 +44,7 @@ class CupFormattingModelBuilder : FormattingModelBuilder {
         val customSettings = settings.getCustomSettings(CupCodeStyleSettings::class.java)
 
         return SpacingBuilder(settings, CupLanguage)
-            .between(CupTypes.LINE, CupTypes.LINE).spacing(
+            .between(CupTokenSets.LINE, CupTokenSets.LINE).spacing(
                 1,
                 1,
                 1,
@@ -55,28 +55,29 @@ class CupFormattingModelBuilder : FormattingModelBuilder {
 
             .between(CupTokenSets.CODE_PART_FIRST, CupTokenSets.CODE_PART_SECOND).spacing(1, 1, 0, false, 0)
 
-            .betweenInside(CupTokenSets.CODE_PART_SECOND, CupTypes.OPEN_CODE_STRING, CupTypes.CODE_PARTS).spacing(
-                if (customSettings.SPACE_BEFORE_LEFT_STRING_CODE_BRACES) 1 else 0,
-                if (customSettings.SPACE_BEFORE_LEFT_STRING_CODE_BRACES) 1 else 0,
-                if (customSettings.LEFT_STRING_CODE_BRACES_ON_NEXT_LINE) 1 else 0,
-                customSettings.LEFT_STRING_CODE_BRACES_ON_NEXT_LINE,
-                0
-            )
-            .afterInside(CupTypes.OPEN_CODE_STRING, CupTypes.CODE_PARTS).spacing(
+
+//            .betweenInside(CupTokenSets.CODE_PART_SECOND, CupTypes.OPEN_CODE_STRING, CupTokenSets.CODE_PARTS).spacing(
+//                if (customSettings.SPACE_BEFORE_LEFT_STRING_CODE_BRACES) 1 else 0,
+//                if (customSettings.SPACE_BEFORE_LEFT_STRING_CODE_BRACES) 1 else 0,
+//                if (customSettings.LEFT_STRING_CODE_BRACES_ON_NEXT_LINE) 1 else 0,
+//                customSettings.LEFT_STRING_CODE_BRACES_ON_NEXT_LINE,
+//                0
+//            )
+            .afterInside(CupTypes.OPEN_CODE_STRING, CupTokenSets.CODE_PARTS).spacing(
                 if (customSettings.SPACE_AFTER_LEFT_STRING_CODE_BRACES) 1 else 0,
                 if (customSettings.SPACE_AFTER_LEFT_STRING_CODE_BRACES) 1 else 0,
                 if (customSettings.LEFT_STRING_CODE_BRACES_ON_NEXT_LINE) 1 else 0,
                 true,
                 1
             )
-            .beforeInside(CupTypes.CLOSE_CODE_STRING, CupTypes.CODE_PARTS).spacing(
+            .beforeInside(CupTypes.CLOSE_CODE_STRING, CupTokenSets.CODE_PARTS).spacing(
                 if (customSettings.SPACE_BEFORE_RIGHT_STRING_CODE_BRACES) 1 else 0,
                 if (customSettings.SPACE_BEFORE_RIGHT_STRING_CODE_BRACES) 1 else 0,
                 0,
                 true,
                 1
             )
-            .afterInside(CupTypes.CLOSE_CODE_STRING, CupTypes.CODE_PARTS).spacing(1, 1, 1, true, 1)
+            .afterInside(CupTypes.CLOSE_CODE_STRING, CupTokenSets.CODE_PARTS).spacing(1, 1, 1, true, 1)
 
 
             .betweenInside(CupTypes.TERMINAL_, CupTypes.TYPE_NAME, CupTypes.TERMINAL_DECLARATION).spacing(
