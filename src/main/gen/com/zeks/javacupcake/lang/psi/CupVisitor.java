@@ -4,6 +4,7 @@ package com.zeks.javacupcake.lang.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiLanguageInjectionHost;
 
 public class CupVisitor extends PsiElementVisitor {
 
@@ -16,7 +17,7 @@ public class CupVisitor extends PsiElementVisitor {
   }
 
   public void visitCodeStringBlock(@NotNull CupCodeStringBlock o) {
-    visitPsiElement(o);
+    visitPsiLanguageInjectionHost(o);
   }
 
   public void visitDeclaredNonTerminal(@NotNull CupDeclaredNonTerminal o) {
@@ -101,6 +102,10 @@ public class CupVisitor extends PsiElementVisitor {
 
   public void visitTypeName(@NotNull CupTypeName o) {
     visitPsiElement(o);
+  }
+
+  public void visitPsiLanguageInjectionHost(@NotNull PsiLanguageInjectionHost o) {
+    visitElement(o);
   }
 
   public void visitPsiElement(@NotNull PsiElement o) {

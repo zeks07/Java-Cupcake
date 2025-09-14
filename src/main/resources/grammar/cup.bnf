@@ -139,7 +139,10 @@ precedenceClause ::= PERCENT_PREC symbol
 private rightHandSide_recovery ::= !(BAR | SEMICOLON)
 
 
-codeStringBlock ::= OPEN_CODE_STRING CODE_STRING* CLOSE_CODE_STRING
+codeStringBlock ::= OPEN_CODE_STRING CODE_STRING* CLOSE_CODE_STRING {
+    extends="com.zeks.javacupcake.lang.psi.CupCodeString"
+    implements="com.intellij.psi.PsiLanguageInjectionHost"
+}
 
 
 packageName ::= IDENTIFIER (DOT IDENTIFIER)*

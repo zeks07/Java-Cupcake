@@ -19,7 +19,6 @@ class CupSyntaxHighlighter : SyntaxHighlighterBase() {
             in CupTokenSets.COMMENTS -> COMMENT_KEYS
             CupTypes.SEMICOLON -> SEMICOLON_KEYS
             TokenType.BAD_CHARACTER -> BAD_CHAR_KEYS
-            CupTypes.CODE_STRING -> CODE_STRING_KEYS
             else -> EMPTY_KEYS
         }
 
@@ -34,8 +33,6 @@ class CupSyntaxHighlighter : SyntaxHighlighterBase() {
         val BAD_CHAR_KEYS = arrayOf<TextAttributesKey>(CupHighlightColors.BAD_CHARACTER)
         @JvmStatic
         val COMMENT_KEYS = arrayOf<TextAttributesKey>(CupHighlightColors.COMMENT)
-        @JvmStatic
-        val CODE_STRING_KEYS = arrayOf<TextAttributesKey>(CupHighlightColors.CODE_STRING)
         @JvmStatic
         val EMPTY_KEYS = arrayOf<TextAttributesKey>()
     }

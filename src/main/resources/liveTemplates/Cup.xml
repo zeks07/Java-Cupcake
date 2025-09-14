@@ -1,15 +1,10 @@
 <templateSet group="Cup">
     <template
             name="ac"
-            value="action code {:$CODE_STRING$:}"
+            value="action code {:$END$:}"
             key="live.template.ac.description"
             resource-bundle="messages.CupBundle"
             toReformat="true">
-        <variable
-                name="CODE_STRING"
-                expression="complete()"
-                defaultValue=""
-                alwaysStopAt="true"/>
         <context>
             <option name="CUP_TOPLEVEL_ACTION_CODE" value="true"/>
         </context>
@@ -18,12 +13,8 @@
     <template
             name="pc"
             key="live.template.pc.description" resource-bundle="messages.CupBundle"
-            value="parser code {:$CODE_STRING$:}"
+            value="parser code {:$END$:}"
             toReformat="true">
-        <variable
-                name="CODE_STRING"
-                defaultValue=""
-                alwaysStopAt="true"/>
         <context>
             <option name="CUP_TOPLEVEL_PARSER_CODE" value="true"/>
         </context>
@@ -31,7 +22,7 @@
 
     <template
             name="iw"
-            value="parser code {:$END$:}" key="live.template.iw.description"
+            value="init with {:$END$:}" key="live.template.iw.description"
             resource-bundle="messages.CupBundle"
             toReformat="true">
         <context>
@@ -42,13 +33,8 @@
     <template
         name="sw"
         key="live.template.sw.description" resource-bundle="messages.CupBundle"
-        value="scan with {:$CODE_STRING$:}"
+        value="scan with {:$END$:}"
         toReformat="true">
-        <variable
-                name="CODE_STRING"
-                expression="complete()"
-                defaultValue=""
-                alwaysStopAt="true"/>
         <context>
             <option name="CUP_TOPLEVEL_SCAN_WITH" value="true"/>
         </context>

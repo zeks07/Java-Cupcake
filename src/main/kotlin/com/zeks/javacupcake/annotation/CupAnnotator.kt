@@ -15,11 +15,13 @@ class CupAnnotator : Annotator {
             is CupDeclaredTerminal -> {
                 holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .textAttributes(CupHighlightColors.TERMINAL)
+                    .range(element.firstChild.textRange)
                     .create()
             }
             is CupDeclaredNonTerminal -> {
                 holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                     .textAttributes(CupHighlightColors.NON_TERMINAL)
+                    .range(element.firstChild.textRange)
                     .create()
             }
             is CupSymbolElement -> {

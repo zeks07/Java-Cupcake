@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.zeks"
-version = "1.03-SNAPSHOT"
+version = "1.04-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -15,15 +15,12 @@ repositories {
     }
 }
 
-// Configure Gradle IntelliJ Plugin
-// Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 dependencies {
     intellijPlatform {
         create("IC", "2024.2.5")
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
 
-        // Add necessary plugin dependencies for compilation here, example:
-        // bundledPlugin("com.intellij.java")
+        bundledPlugin("com.intellij.java")
     }
     testImplementation("io.mockk:mockk:1.13.8")
 }
@@ -41,7 +38,7 @@ intellijPlatform {
             "Enhances Java CUP file editing with smart code completion and language support for easier parser development"
 
         changeNotes = """
-      Improved completion with context aware suggestions.
+      Added Java injection to all code strings (code between {: and :})
     """.trimIndent()
     }
 

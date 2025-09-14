@@ -1,7 +1,9 @@
 package com.zeks.javacupcake.lang.psi
 
 import com.intellij.openapi.project.Project
+import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFileFactory
+import com.intellij.psi.SyntaxTraverser
 import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.lang.file.CupFile
 import com.zeks.javacupcake.lang.file.CupFileType
@@ -35,6 +37,10 @@ object CupElementFactory {
     fun createSymbol(project: Project, name: String): CupSymbolElement {
         val file = createFile(project, "$name ::= ;")
         return PsiTreeUtil.findChildrenOfType(file, CupSymbolElement::class.java).first()
+    }
+
+    fun createJavaCode(project: Project, text: String): PsiElement {
+        return SyntaxTraverser.psiTraverser(createFile(project, text)).first()
     }
 
 

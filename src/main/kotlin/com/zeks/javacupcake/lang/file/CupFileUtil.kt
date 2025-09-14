@@ -13,6 +13,7 @@ import com.zeks.javacupcake.lang.psi.CupProduction
 import com.zeks.javacupcake.lang.psi.CupScanCodePart
 import com.zeks.javacupcake.lang.psi.CupStartDeclaration
 import com.zeks.javacupcake.lang.psi.CupSymbolDeclaration
+import com.zeks.javacupcake.lang.psi.impl.CupPackageSpecImpl
 
 enum class LineType {
     PACKAGE,
@@ -48,6 +49,8 @@ fun CupFile.hasScanCodePart() = this.children.any { it is CupScanCodePart }
 fun CupFile.hasInitCodePart() = this.children.any { it is CupInitCodePart }
 
 fun CupFile.hasStartSpec() = this.children.any { it is CupStartDeclaration }
+
+fun CupFile.getPackage() = (this.children.find { it is CupPackageSpecLine } as? CupPackageSpecImpl)
 
 object CupFileUtil {
     @Deprecated("Use LineType directly instead")

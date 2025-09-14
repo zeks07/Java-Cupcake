@@ -4,7 +4,8 @@ package com.zeks.javacupcake.lang.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiLanguageInjectionHost;
 
-public interface CupCodeStringBlock extends PsiElement {
+public interface CupCodeStringBlock extends PsiLanguageInjectionHost {
 
 }

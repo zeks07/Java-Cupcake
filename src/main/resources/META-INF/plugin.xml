@@ -1,27 +1,17 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
     <id>com.zeks.JavaCupcake</id>
 
-    <!-- Public plugin name should be written in Title Case.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
     <name>JavaCupcake</name>
 
-    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor>Zeks</vendor>
 
-    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
         This plugin introduces support for Java CUP (version 10j)
     ]]></description>
 
-    <!-- Product and plugin compatibility requirements.
-         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
 
-    <!-- Extension points defined by the plugin.
-         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <fileType
             name="Cup File"
@@ -85,5 +75,6 @@
         <liveTemplateContext contextId="CUP_TOPLEVEL_INIT_WITH" baseContextId="CUP" implementation="com.zeks.javacupcake.livetemplates.TopLevelInitWith"/>
         <liveTemplateContext contextId="CUP_TOPLEVEL_START_WITH" baseContextId="CUP" implementation="com.zeks.javacupcake.livetemplates.TopLevelStartWith"/>
 
+        <multiHostInjector implementation="com.zeks.javacupcake.injection.CupInjector" id="CupInjector"/>
     </extensions>
 </idea-plugin>
