@@ -1,19 +1,18 @@
-<html>
+<html lang="en">
 <body>
-Reports name clashing in class names.
-<p>
-    Reports if the class name is already used in the current file or if it has the same name as the production
-    which has more than one right-hand side.
-</p>
-<p>
-    Examples:
-</p>
+Reports class names that may cause conflicts.
 <pre><code>
-    ProductionA ::= (Production)
-    ProductionB ::= (Production)
-</code></pre>
-<pre><code>
-    Production ::= (Production) | (ProductionName) ;
+    // Class name can't have the same name as production if production has more than one items on the right-hand side.
+    ExampleA ::= (ExampleA) Item | Item ;
+    ExampleAFine ::= (ExampleAFine) Item ; // This will not cause a conflict.
+
+    // Class name can't have the same name as different productions.
+    ExampleB1 ::= (OtherName) Item ;
+    ExampleB2 ::= (ExampleB1) Item ;
+
+    // Class names are unique for each item.
+    ExampleC1 ::= (SameName) Item | (SameName) Item ;
+    ExampleC2 ::= (SameName) Item ;
 </code></pre>
 </body>
 </html>

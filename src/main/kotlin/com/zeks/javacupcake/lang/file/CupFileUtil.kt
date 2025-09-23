@@ -15,16 +15,18 @@ import com.zeks.javacupcake.lang.psi.CupStartDeclaration
 import com.zeks.javacupcake.lang.psi.CupSymbolDeclaration
 import com.zeks.javacupcake.lang.psi.impl.CupPackageSpecImpl
 
-enum class LineType {
-    PACKAGE,
-    IMPORT,
-    CODE_PARTS,
-    SYMBOL_DECLARATION,
-    PRECEDENCE_DECLARATION,
-    START_SPEC,
-    PRODUCTION,
-    EMPTY,
-    NULL_VALUE,
+enum class LineType(val text: String) {
+    EMPTY(""),
+    PACKAGE("package declaration"),
+    IMPORT("import statement"),
+    CODE_PARTS("code part"),
+    SYMBOL_DECLARATION("symbol declaration"),
+    PRECEDENCE_DECLARATION("precedence declaration"),
+    START_SPEC("start declaration"),
+    PRODUCTION("production"),
+    NULL_VALUE("null");
+
+    override fun toString() = text
 }
 
 fun CupFile.getLineType(position: PsiElement) = getLineTypeAtOffset(position.textOffset)

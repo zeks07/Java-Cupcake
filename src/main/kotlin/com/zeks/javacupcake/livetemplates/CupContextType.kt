@@ -4,7 +4,7 @@ import com.intellij.codeInsight.template.TemplateActionContext
 import com.intellij.codeInsight.template.TemplateContextType
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiUtilCore
-import com.zeks.javacupcake.bundle.CupBundle
+import com.zeks.javacupcake.CupBundle
 import com.zeks.javacupcake.lang.CupLanguage
 import com.zeks.javacupcake.lang.file.CupFile
 import com.zeks.javacupcake.lang.file.hasActionCodePart

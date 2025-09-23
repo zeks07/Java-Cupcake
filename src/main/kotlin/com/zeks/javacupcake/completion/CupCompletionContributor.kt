@@ -170,7 +170,7 @@ private object CupCompletionProvider : CompletionProvider<CompletionParameters>(
     }
 
     private fun completeProduction(result: CompletionResultSet, context: ProductionContext) {
-        if (!context.isInRightHandSide) return
+        if (!context.isInRightHandSide || context.isInClassName) return
 
         val terminals = PsiTreeUtil.findChildrenOfType(context.position.containingFile, CupNamedTerminal::class.java)
             .map { it.name }.toSet()

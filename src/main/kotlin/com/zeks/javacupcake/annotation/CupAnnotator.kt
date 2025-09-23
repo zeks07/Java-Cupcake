@@ -8,6 +8,7 @@ import com.zeks.javacupcake.highlighting.CupHighlightColors
 import com.zeks.javacupcake.lang.psi.CupDeclaredNonTerminal
 import com.zeks.javacupcake.lang.psi.CupDeclaredTerminal
 import com.zeks.javacupcake.lang.psi.CupSymbolElement
+import com.zeks.javacupcake.lang.psi.isError
 
 class CupAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {
@@ -26,6 +27,12 @@ class CupAnnotator : Annotator {
             }
             is CupSymbolElement -> {
                 when {
+                    element.isError() -> {
+                        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                            .textAttributes(CupHighlightColors.ERROR_TERMINAL)
+                            .create()
+                    }
+
                     element.reference.isTerminal() -> {
                         holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                             .textAttributes(CupHighlightColors.TERMINAL)

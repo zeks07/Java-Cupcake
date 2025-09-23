@@ -1,0 +1,16 @@
+<html lang="en">
+<body>
+Reports symbols used wrongly.
+<p>
+    Examples of wrong usages:
+</p>
+<pre><code>
+    terminal TERMINAL;
+    non terminal nonTerminal;
+
+    precedence left nonTerminal; // Non-terminals can't be used in precedence declarations.
+    start with TERMINAL; // Terminals can't be used in start declarations.
+    TERMINAL ::= ; // Terminals can't be used in the left-hand side of productions.
+</code></pre>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package com.zeks.javacupcake.inspection.quickfix
+package com.zeks.javacupcake.quickfix
 
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor

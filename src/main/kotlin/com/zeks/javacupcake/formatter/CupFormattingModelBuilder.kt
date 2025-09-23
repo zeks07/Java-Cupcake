@@ -102,6 +102,14 @@ class CupFormattingModelBuilder : FormattingModelBuilder {
                 1
             )
 
+            .afterInside(CupTypes.TERMINAL_, CupTypes.TERMINAL_DECLARATION).spacing(
+                1,
+                1,
+                if (customSettings.FORCE_TERMINAL_DECLARATION_IN_SEPARATE_LINE) 1 else 0,
+                customSettings.FORCE_TERMINAL_DECLARATION_IN_SEPARATE_LINE,
+                1
+            )
+
             .beforeInside(CupTypes.COMMA, CupTypes.TERMINAL_DECLARATION)
             .spaces(customSettings.SPACES_BEFORE_COMMA_IN_TERMINAL_DECLARATION)
             .afterInside(CupTypes.COMMA, CupTypes.TERMINAL_DECLARATION).spacing(
@@ -137,14 +145,6 @@ class CupFormattingModelBuilder : FormattingModelBuilder {
                 1,
                 if (customSettings.FORCE_NON_TERMINAL_DECLARATION_IN_SEPARATE_LINE) 1 else 0,
                 true,
-                1
-            )
-            .betweenInside(CupTypes.TERMINAL_, CupTypes.DECLARED_NON_TERMINAL, CupTypes.NON_TERMINAL_DECLARATION)
-            .spacing(
-                1,
-                1,
-                if (customSettings.FORCE_NON_TERMINAL_DECLARATION_IN_SEPARATE_LINE) 1 else 0,
-                customSettings.FORCE_NON_TERMINAL_DECLARATION_IN_SEPARATE_LINE,
                 1
             )
 

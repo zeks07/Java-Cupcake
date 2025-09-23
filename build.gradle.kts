@@ -38,7 +38,9 @@ intellijPlatform {
             "Enhances Java CUP file editing with smart code completion and language support for easier parser development"
 
         changeNotes = """
-      Added Java injection to all code strings (code between {: and :})
+      Added Java injection to all code strings (code between {: and :}).
+      "error" is now shown as a special symbol.
+      Improved inspection.
     """.trimIndent()
     }
 

@@ -19,53 +19,90 @@
             fieldName="INSTANCE"
             language="Cup"
             extensions="cup"/>
-        <lang.parserDefinition
-            language="Cup"
-            implementationClass="com.zeks.javacupcake.lang.parser.CupParserDefinition"/>
-        <lang.syntaxHighlighterFactory
-            language="Cup"
-            implementationClass="com.zeks.javacupcake.highlighting.CupSyntaxHighlighterFactory"/>
-        <annotator
-            language="Cup"
-            implementationClass="com.zeks.javacupcake.annotation.CupAnnotator"/>
-        <completion.contributor
-            language="Cup"
-            implementationClass="com.zeks.javacupcake.completion.CupCompletionContributor"/>
-        <inspectionToolProvider
-            implementation="com.zeks.javacupcake.inspection.CupInspectionProvider"/>
-        <psi.referenceContributor
-            language="Cup"
-            implementation="com.zeks.javacupcake.references.CupReferenceContributor"/>
-        <referencesSearch
-            implementation="com.zeks.javacupcake.references.CupReferenceSearcher"/>
-        <gotoDeclarationHandler
-            implementation="com.zeks.javacupcake.gotodeclaration.CupGoToDeclarationHandler"/>
-        <findUsagesHandlerFactory
-            implementation="com.zeks.javacupcake.usage.CupFindUsagesHandlerFactory"/>
-        <usageTypeProvider
-            implementation="com.zeks.javacupcake.usage.CupUsageTypeProvider"/>
-        <lang.findUsagesProvider
-            language="Cup"
-            implementationClass="com.zeks.javacupcake.usage.CupFindUsagesProvider"/>
-        <lang.namesValidator
-            language="Cup"
-            implementationClass="com.zeks.javacupcake.refactoring.CupNamesValidator"/>
-        <lang.elementManipulator
-            forClass="com.zeks.javacupcake.lang.psi.CupSymbolElement"
-            implementationClass="com.zeks.javacupcake.lang.manipulators.CupSymbolManipulator"/>
-        <lang.braceMatcher
-            language="Cup"
-            implementationClass="com.zeks.javacupcake.lang.braces.CupBraceMatcher"/>
-        <typedHandler
-            implementation="com.zeks.javacupcake.editor.typing.CupTypedHandler"/>
-        <codeInsight.lineMarkerProvider
-            language="Cup"
-            implementationClass="com.zeks.javacupcake.linemarker.CupLineMarker"/>
-        <lang.formatter
-            language="Cup"
-            implementationClass="com.zeks.javacupcake.formatter.CupFormattingModelBuilder"/>
-        <codeStyleSettingsProvider implementation="com.zeks.javacupcake.formatter.CupCodeStyleSettingsProvider"/>
+
+        <lang.parserDefinition language="Cup" implementationClass="com.zeks.javacupcake.lang.parser.CupParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Cup" implementationClass="com.zeks.javacupcake.highlighting.CupSyntaxHighlighterFactory"/>
+        <lang.findUsagesProvider language="Cup" implementationClass="com.zeks.javacupcake.usage.CupFindUsagesProvider"/>
+        <lang.namesValidator language="Cup" implementationClass="com.zeks.javacupcake.refactoring.CupNamesValidator"/>
+        <lang.elementManipulator forClass="com.zeks.javacupcake.lang.psi.CupSymbolElement" implementationClass="com.zeks.javacupcake.lang.manipulators.CupSymbolManipulator"/>
+
+        <lang.formatter language="Cup" implementationClass="com.zeks.javacupcake.formatter.CupFormattingModelBuilder"/>
         <langCodeStyleSettingsProvider implementation="com.zeks.javacupcake.formatter.CupLanguageCodeStyleSettingsProvider"/>
+        <codeStyleSettingsProvider implementation="com.zeks.javacupcake.formatter.CupCodeStyleSettingsProvider"/>
+        <annotator language="Cup" implementationClass="com.zeks.javacupcake.annotation.CupAnnotator"/>
+        <lang.braceMatcher language="Cup" implementationClass="com.zeks.javacupcake.lang.braces.CupBraceMatcher"/>
+        <typedHandler implementation="com.zeks.javacupcake.editor.typing.CupTypedHandler"/>
+
+        <psi.referenceContributor language="Cup" implementation="com.zeks.javacupcake.references.CupReferenceContributor"/>
+        <referencesSearch implementation="com.zeks.javacupcake.references.CupReferenceSearcher"/>
+        <findUsagesHandlerFactory implementation="com.zeks.javacupcake.usage.CupFindUsagesHandlerFactory"/>
+        <usageTypeProvider implementation="com.zeks.javacupcake.usage.CupUsageTypeProvider"/>
+        <completion.contributor language="Cup" implementationClass="com.zeks.javacupcake.completion.CupCompletionContributor"/>
+        <codeInsight.lineMarkerProvider language="Cup" implementationClass="com.zeks.javacupcake.linemarker.CupLineMarker"/>
+        <gotoDeclarationHandler implementation="com.zeks.javacupcake.gotodeclaration.CupGoToDeclarationHandler"/>
+
+        <localInspection implementationClass="com.zeks.javacupcake.inspection.CupRedundantSemicolonInspection"
+                         enabledByDefault="true"
+                         level="WEAK WARNING"
+                         groupBundle="messages.CupBundle" groupKey="group.names.cup"
+                         language="Cup"
+                         key="inspection.redundant_semicolon.display.name" bundle="messages.CupBundle"/>
+
+        <localInspection implementationClass="com.zeks.javacupcake.inspection.CupMissingPackageInspection"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         groupBundle="messages.CupBundle" groupKey="group.names.cup"
+                         language="Cup"
+                         key="inspection.missing_package.display.name" bundle="messages.CupBundle"/>
+
+        <localInspection implementationClass="com.zeks.javacupcake.inspection.CupUnusedSymbolInspection"
+                         enabledByDefault="true"
+                         level="WEAK WARNING"
+                         groupBundle="messages.CupBundle" groupKey="group.names.cup"
+                         language="Cup"
+                         key="inspection.unused_symbol.display.name" bundle="messages.CupBundle"/>
+
+        <localInspection implementationClass="com.zeks.javacupcake.inspection.CupShadowNameInspection"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         groupBundle="messages.CupBundle" groupKey="group.names.cup"
+                         language="Cup"
+                         key="inspection.shadow_name.display.name" bundle="messages.CupBundle"/>
+
+        <localInspection implementationClass="com.zeks.javacupcake.inspection.CupUndeclaredSymbolInspection"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         groupBundle="messages.CupBundle" groupKey="group.names.cup"
+                         language="Cup"
+                         key="inspection.undeclared_symbol.display.name" bundle="messages.CupBundle"/>
+
+        <localInspection implementationClass="com.zeks.javacupcake.inspection.CupSymbolMisuseInspection"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         groupBundle="messages.CupBundle" groupKey="group.names.cup"
+                         language="Cup"
+                         key="inspection.symbol_misuse.display.name" bundle="messages.CupBundle"/>
+
+        <localInspection implementationClass="com.zeks.javacupcake.inspection.CupLineOrderInspection"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         groupBundle="messages.CupBundle" groupKey="group.names.cup"
+                         language="Cup"
+                         key="inspection.line_order.display.name" bundle="messages.CupBundle"/>
+
+        <localInspection implementationClass="com.zeks.javacupcake.inspection.CupDuplicateElementsInspection"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         groupBundle="messages.CupBundle" groupKey="group.names.cup"
+                         language="Cup"
+                         key="inspection.duplicate_elements.display.name" bundle="messages.CupBundle"/>
+
+        <localInspection implementationClass="com.zeks.javacupcake.inspection.CupClassNameInspection"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         groupBundle="messages.CupBundle" groupKey="group.names.cup"
+                         language="Cup"
+                         key="inspection.class_name.display.name" bundle="messages.CupBundle"/>
 
         <defaultLiveTemplates file="/liveTemplates/Cup.xml"/>
         <liveTemplateContext contextId="CUP" implementation="com.zeks.javacupcake.livetemplates.Generic"/>

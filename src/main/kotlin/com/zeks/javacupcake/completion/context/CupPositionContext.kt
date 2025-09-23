@@ -9,6 +9,7 @@ import com.intellij.psi.util.elementType
 import com.zeks.javacupcake.lang.file.CupFile
 import com.zeks.javacupcake.lang.file.LineType
 import com.zeks.javacupcake.lang.file.getLineType
+import com.zeks.javacupcake.lang.psi.CupClassName
 import com.zeks.javacupcake.lang.psi.CupCodePart
 import com.zeks.javacupcake.lang.psi.CupLine
 import com.zeks.javacupcake.lang.psi.CupPrecedenceDeclarationLine
@@ -72,6 +73,15 @@ class ProductionContext(
         get() {
             var current = position
             while (current !is CupRightHandSide) {
+                current = current.parent ?: return false
+            }
+            return true
+        }
+
+    val isInClassName: Boolean
+        get() {
+            var current = position
+            while (current !is CupClassName) {
                 current = current.parent ?: return false
             }
             return true

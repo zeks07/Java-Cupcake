@@ -3,11 +3,13 @@ package com.zeks.javacupcake.inspection
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
-import com.zeks.javacupcake.bundle.CupBundle
-import com.zeks.javacupcake.lang.psi.CupVisitor
+import com.intellij.psi.PsiFile
+import com.zeks.javacupcake.CupBundle
 
-abstract class CupDuplicateElementInspection(private val holder: ProblemsHolder, private val name: String) : CupVisitor() {
-    protected fun inspectElements(elements: Collection<PsiElement>) {
+abstract class CupDuplicateElementVisitor(private val name: String) {
+    open fun inspect(file: PsiFile, holder: ProblemsHolder) {}
+
+    protected fun inspectElements(holder: ProblemsHolder, elements: Collection<PsiElement>) {
         val elementsMap = hashMapOf<String, MutableList<PsiElement>>()
 
         for (element in elements) {
@@ -20,13 +22,13 @@ abstract class CupDuplicateElementInspection(private val holder: ProblemsHolder,
                 .filterNotNull()
                 .toTypedArray()
             for (element in sameElements.value) {
-                reportProblem(element, *arguments)
+                reportProblem(holder, element, *arguments)
             }
         }
     }
 
-    private fun reportProblem(element: PsiElement, vararg arguments: Any) {
-        val message = CupBundle.message("cup.inspection.${name}.description", *arguments)
+    private fun reportProblem(holder: ProblemsHolder, element: PsiElement, vararg arguments: Any) {
+        val message = CupBundle.message("inspection.duplicate.${name}.description", *arguments)
         holder.registerProblem(
             element,
             message,

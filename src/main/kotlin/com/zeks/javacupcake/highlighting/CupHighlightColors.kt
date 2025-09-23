@@ -1,5 +1,6 @@
 package com.zeks.javacupcake.highlighting
 
+import com.intellij.ide.highlighter.JavaHighlightingColors
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors
 import com.intellij.openapi.editor.HighlighterColors
 import com.intellij.openapi.editor.colors.TextAttributesKey
@@ -18,9 +19,7 @@ object CupHighlightColors {
     @JvmStatic
     val BAD_CHARACTER = TextAttributesKey.createTextAttributesKey("CUP_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER)
     @JvmStatic
-    val ERROR_TERMINAL = TextAttributesKey.createTextAttributesKey("CUP_ERROR_TERMINAL", DefaultLanguageHighlighterColors.CONSTANT)
-    @JvmStatic
-    val CODE_STRING = TextAttributesKey.createTextAttributesKey("CUP_CODE_STRING", DefaultLanguageHighlighterColors.TEMPLATE_LANGUAGE_COLOR)
+    val ERROR_TERMINAL = TextAttributesKey.createTextAttributesKey("CUP_ERROR_TERMINAL", JavaHighlightingColors.TYPE_PARAMETER_NAME_ATTRIBUTES)
 
     @JvmStatic
     val TERMINAL = TextAttributesKey.createTextAttributesKey("CUP_TERMINAL", DefaultLanguageHighlighterColors.STRING)
@@ -28,5 +27,5 @@ object CupHighlightColors {
     val NON_TERMINAL = TextAttributesKey.createTextAttributesKey("CUP_NON_TERMINAL", DefaultLanguageHighlighterColors.INSTANCE_FIELD)
 
     @JvmStatic
-    val FIRST_PRODUCTION = TextAttributes(null, null, null, null, Font.BOLD)
+    val FIRST_PRODUCTION = TextAttributes(null, null, null, null, Font.BOLD + Font.ITALIC)
 }

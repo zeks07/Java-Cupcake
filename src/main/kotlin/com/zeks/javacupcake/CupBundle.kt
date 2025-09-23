@@ -1,4 +1,4 @@
-package com.zeks.javacupcake.bundle
+package com.zeks.javacupcake
 
 import org.jetbrains.annotations.PropertyKey
 import java.text.MessageFormat
