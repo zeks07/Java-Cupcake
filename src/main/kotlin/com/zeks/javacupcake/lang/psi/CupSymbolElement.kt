@@ -2,7 +2,7 @@ package com.zeks.javacupcake.lang.psi
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
-import com.zeks.javacupcake.references.CupSymbolReference
+import com.zeks.javacupcake.lang.references.CupSymbolReference
 
 abstract class CupSymbolElement(node: ASTNode) : ASTWrapperPsiElement(node) {
     override fun getReference() = CupSymbolReference(this)

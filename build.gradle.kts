@@ -39,6 +39,7 @@ intellijPlatform {
 
         changeNotes = """
       Added Java injection to all code strings (code between {: and :}).
+      Added folding.
       "error" is now shown as a special symbol.
       Improved inspection.
     """.trimIndent()

@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
-import com.zeks.javacupcake.lang.psi.CupPrecedenceDeclarationLine;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.zeks.javacupcake.lang.psi.*;
 
-public class CupPrecedenceDeclarationImpl extends CupPrecedenceDeclarationLine implements CupPrecedenceDeclaration {
+public class CupImportStatementsImpl extends ASTWrapperPsiElement implements CupImportStatements {
 
-  public CupPrecedenceDeclarationImpl(@NotNull ASTNode node) {
+  public CupImportStatementsImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull CupVisitor visitor) {
-    visitor.visitPrecedenceDeclaration(this);
+    visitor.visitImportStatements(this);
   }
 
   @Override
@@ -29,14 +29,8 @@ public class CupPrecedenceDeclarationImpl extends CupPrecedenceDeclarationLine i
 
   @Override
   @NotNull
-  public List<CupPrecedenceSymbol> getPrecedenceSymbolList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CupPrecedenceSymbol.class);
-  }
-
-  @Override
-  @Nullable
-  public CupPrecedenceType getPrecedenceType() {
-    return findChildByClass(CupPrecedenceType.class);
+  public List<CupImportStatement> getImportStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, CupImportStatement.class);
   }
 
 }

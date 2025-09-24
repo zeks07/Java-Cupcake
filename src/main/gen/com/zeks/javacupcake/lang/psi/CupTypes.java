@@ -9,14 +9,17 @@ import com.zeks.javacupcake.lang.psi.impl.*;
 public interface CupTypes {
 
   IElementType ACTION_CODE_PART = new CupElementType("ACTION_CODE_PART");
+  IElementType ASSIGN = new CupElementType("ASSIGN");
   IElementType CLASS_NAME = new CupElementType("CLASS_NAME");
   IElementType CODE_STRING_BLOCK = new CupElementType("CODE_STRING_BLOCK");
   IElementType DECLARED_NON_TERMINAL = new CupElementType("DECLARED_NON_TERMINAL");
   IElementType DECLARED_TERMINAL = new CupElementType("DECLARED_TERMINAL");
   IElementType IMPORT_NAME = new CupElementType("IMPORT_NAME");
   IElementType IMPORT_STATEMENT = new CupElementType("IMPORT_STATEMENT");
+  IElementType IMPORT_STATEMENTS = new CupElementType("IMPORT_STATEMENTS");
   IElementType INIT_CODE_PART = new CupElementType("INIT_CODE_PART");
   IElementType LABEL = new CupElementType("LABEL");
+  IElementType NON_TERMINAL_ALTERNATIVE = new CupElementType("NON_TERMINAL_ALTERNATIVE");
   IElementType NON_TERMINAL_DECLARATION = new CupElementType("NON_TERMINAL_DECLARATION");
   IElementType OPTIONAL_SEMICOLON = new CupElementType("OPTIONAL_SEMICOLON");
   IElementType PACKAGE_NAME = new CupElementType("PACKAGE_NAME");
@@ -25,6 +28,7 @@ public interface CupTypes {
   IElementType PRECEDENCE_CLAUSE = new CupElementType("PRECEDENCE_CLAUSE");
   IElementType PRECEDENCE_DECLARATION = new CupElementType("PRECEDENCE_DECLARATION");
   IElementType PRECEDENCE_SYMBOL = new CupElementType("PRECEDENCE_SYMBOL");
+  IElementType PRECEDENCE_TYPE = new CupElementType("PRECEDENCE_TYPE");
   IElementType PRODUCTION = new CupElementType("PRODUCTION");
   IElementType RIGHT_HAND_SIDE = new CupElementType("RIGHT_HAND_SIDE");
   IElementType SCAN_CODE_PART = new CupElementType("SCAN_CODE_PART");
@@ -74,6 +78,9 @@ public interface CupTypes {
       if (type == ACTION_CODE_PART) {
         return new CupActionCodePartImpl(node);
       }
+      else if (type == ASSIGN) {
+        return new CupAssignImpl(node);
+      }
       else if (type == CLASS_NAME) {
         return new CupClassNameImpl(node);
       }
@@ -92,11 +99,17 @@ public interface CupTypes {
       else if (type == IMPORT_STATEMENT) {
         return new CupImportStatementImpl(node);
       }
+      else if (type == IMPORT_STATEMENTS) {
+        return new CupImportStatementsImpl(node);
+      }
       else if (type == INIT_CODE_PART) {
         return new CupInitCodePartImpl(node);
       }
       else if (type == LABEL) {
         return new CupLabelImpl(node);
+      }
+      else if (type == NON_TERMINAL_ALTERNATIVE) {
+        return new CupNonTerminalAlternativeImpl(node);
       }
       else if (type == NON_TERMINAL_DECLARATION) {
         return new CupNonTerminalDeclarationImpl(node);
@@ -121,6 +134,9 @@ public interface CupTypes {
       }
       else if (type == PRECEDENCE_SYMBOL) {
         return new CupPrecedenceSymbolImpl(node);
+      }
+      else if (type == PRECEDENCE_TYPE) {
+        return new CupPrecedenceTypeImpl(node);
       }
       else if (type == PRODUCTION) {
         return new CupProductionImpl(node);

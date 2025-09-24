@@ -8,35 +8,23 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
-import com.zeks.javacupcake.lang.psi.CupPrecedenceDeclarationLine;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.zeks.javacupcake.lang.psi.*;
 
-public class CupPrecedenceDeclarationImpl extends CupPrecedenceDeclarationLine implements CupPrecedenceDeclaration {
+public class CupAssignImpl extends ASTWrapperPsiElement implements CupAssign {
 
-  public CupPrecedenceDeclarationImpl(@NotNull ASTNode node) {
+  public CupAssignImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull CupVisitor visitor) {
-    visitor.visitPrecedenceDeclaration(this);
+    visitor.visitAssign(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof CupVisitor) accept((CupVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public List<CupPrecedenceSymbol> getPrecedenceSymbolList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, CupPrecedenceSymbol.class);
-  }
-
-  @Override
-  @Nullable
-  public CupPrecedenceType getPrecedenceType() {
-    return findChildByClass(CupPrecedenceType.class);
   }
 
 }

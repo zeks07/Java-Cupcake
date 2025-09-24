@@ -5,6 +5,7 @@ import com.zeks.javacupcake.lang.psi.CupActionCodePart
 import com.zeks.javacupcake.lang.psi.CupCodePart
 import com.zeks.javacupcake.lang.psi.CupLine
 import com.zeks.javacupcake.lang.psi.CupImportStatement
+import com.zeks.javacupcake.lang.psi.CupImportStatements
 import com.zeks.javacupcake.lang.psi.CupInitCodePart
 import com.zeks.javacupcake.lang.psi.CupPackageSpecLine
 import com.zeks.javacupcake.lang.psi.CupParserCodePart
@@ -53,6 +54,10 @@ fun CupFile.hasInitCodePart() = this.children.any { it is CupInitCodePart }
 fun CupFile.hasStartSpec() = this.children.any { it is CupStartDeclaration }
 
 fun CupFile.getPackage() = (this.children.find { it is CupPackageSpecLine } as? CupPackageSpecImpl)
+
+fun CupFile.getImports() = this.children.filterIsInstance<CupImportStatements>().firstOrNull()
+
+fun CupFile.getProductions() = this.children.filterIsInstance<CupProduction>()
 
 object CupFileUtil {
     @Deprecated("Use LineType directly instead")

@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface CupProduction extends PsiElement {
 
   @NotNull
+  CupAssign getAssign();
+
+  @NotNull
   List<CupRightHandSide> getRightHandSideList();
 
   @NotNull

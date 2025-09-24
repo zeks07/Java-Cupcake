@@ -54,7 +54,7 @@
 }
 
 file ::= line*
-private line ::= packageSpec | importStatement | codeParts | symbolDeclaration | precedenceDeclaration | startDeclarationLine | production { pin=1 recoverWhile=line_recovery }
+private line ::= packageSpec | importStatements | codeParts | symbolDeclaration | precedenceDeclaration | startDeclarationLine | production { pin=1 recoverWhile=line_recovery }
 private line_recovery ::= !(PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR)
 
 
@@ -63,7 +63,7 @@ packageSpec ::= PACKAGE packageName SEMICOLON {
     pin=1
 }
 
-
+importStatements ::= importStatement+ // for folding
 importStatement ::= IMPORT importName SEMICOLON {
     extends="com.zeks.javacupcake.lang.psi.CupImportStatementLine"
     pin=1
@@ -105,7 +105,7 @@ nonTerminalDeclaration ::= (nonTerminalAlternative | NONTERMINAL) (typeName decl
     recoverWhile=symbolDeclaration_recovery
     pin=1
 }
-private nonTerminalAlternative ::= NON TERMINAL_ { pin=1 }
+nonTerminalAlternative ::= NON TERMINAL_ { pin=1 }
 private symbolDeclaration_recovery ::= !(IDENTIFIER | COMMA | SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR)
 
 
@@ -113,7 +113,8 @@ precedenceDeclaration ::= precedence precedenceSymbol (COMMA precedenceSymbol)* 
     extends="com.zeks.javacupcake.lang.psi.CupPrecedenceDeclarationLine"
     pin=1
 }
-private precedence ::= PRECEDENCE (LEFT | RIGHT | NONASSOC) { pin=1 recoverWhile=precedenceDeclaration_recovery }
+private precedence ::= PRECEDENCE precedenceType { pin=1 recoverWhile=precedenceDeclaration_recovery }
+precedenceType ::= LEFT | RIGHT | NONASSOC
 precedenceSymbol ::= symbol { pin=1 recoverWhile=list_recovery }
 private precedenceDeclaration_recovery ::= !(IDENTIFIER | COMMA | SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR)
 
@@ -130,10 +131,11 @@ private startWith ::= START WITH { pin=1 recoverWhile=startWith_recovery}
 private startWith_recovery ::= !(IDENTIFIER | SEMICOLON | PACKAGE | IMPORT | ACTION | PARSER | INIT | SCAN | TERMINAL_ | NON | NONTERMINAL | PRECEDENCE | START | IDENTIFIER ASSIGN_OPERATOR)
 
 
-production ::= symbol ASSIGN_OPERATOR (rightHandSide (BAR rightHandSide)*)? SEMICOLON {
+production ::= symbol assign (rightHandSide (BAR rightHandSide)*)? SEMICOLON {
     extends="com.zeks.javacupcake.lang.psi.CupProductionLine"
     pin=2
 }
+assign ::= ASSIGN_OPERATOR
 rightHandSide ::= (LPAREN className RPAREN)? (symbol (COLON label)? | codeStringBlock)* precedenceClause? { recoverWhile=rightHandSide_recovery }
 precedenceClause ::= PERCENT_PREC symbol
 private rightHandSide_recovery ::= !(BAR | SEMICOLON)

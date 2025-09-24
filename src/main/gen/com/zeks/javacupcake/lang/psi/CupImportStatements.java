@@ -5,12 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface CupPrecedenceDeclaration extends PsiElement {
+public interface CupImportStatements extends PsiElement {
 
   @NotNull
-  List<CupPrecedenceSymbol> getPrecedenceSymbolList();
-
-  @Nullable
-  CupPrecedenceType getPrecedenceType();
+  List<CupImportStatement> getImportStatementList();
 
 }

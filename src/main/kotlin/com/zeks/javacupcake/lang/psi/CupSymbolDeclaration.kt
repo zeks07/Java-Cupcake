@@ -12,4 +12,6 @@ interface CupSymbolDeclaration : CupLine {
         get() = LineType.SYMBOL_DECLARATION
 
     val symbolDeclarationType: CupSymbolDeclarationType
+
+    fun getTypeName(): CupTypeName?
 }

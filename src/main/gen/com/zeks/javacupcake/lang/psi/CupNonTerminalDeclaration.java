@@ -11,6 +11,9 @@ public interface CupNonTerminalDeclaration extends PsiElement {
   List<CupDeclaredNonTerminal> getDeclaredNonTerminalList();
 
   @Nullable
+  CupNonTerminalAlternative getNonTerminalAlternative();
+
+  @Nullable
   CupTypeName getTypeName();
 
 }

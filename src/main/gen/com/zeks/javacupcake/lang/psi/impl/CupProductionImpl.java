@@ -29,6 +29,12 @@ public class CupProductionImpl extends CupProductionLine implements CupProductio
 
   @Override
   @NotNull
+  public CupAssign getAssign() {
+    return findNotNullChildByClass(CupAssign.class);
+  }
+
+  @Override
+  @NotNull
   public List<CupRightHandSide> getRightHandSideList() {
     return PsiTreeUtil.getChildrenOfTypeAsList(this, CupRightHandSide.class);
   }
