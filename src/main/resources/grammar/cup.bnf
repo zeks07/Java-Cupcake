@@ -63,9 +63,10 @@ packageSpec ::= PACKAGE packageName SEMICOLON {
     pin=1
 }
 
-importStatements ::= importStatement+ // for folding
-importStatement ::= IMPORT importName SEMICOLON {
+importStatements ::= importStatement+ {
     extends="com.zeks.javacupcake.lang.psi.CupImportStatementLine"
+}
+importStatement ::= IMPORT importName SEMICOLON {
     pin=1
 }
 

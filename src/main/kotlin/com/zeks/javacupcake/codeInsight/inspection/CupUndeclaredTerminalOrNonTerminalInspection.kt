@@ -1,6 +1,5 @@
 package com.zeks.javacupcake.codeInsight.inspection
 
-import com.intellij.codeHighlighting.HighlightDisplayLevel
 import com.intellij.codeInspection.LocalInspectionTool
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
@@ -14,23 +13,27 @@ import com.zeks.javacupcake.lang.psi.CupVisitor
 import com.zeks.javacupcake.lang.psi.isError
 import com.zeks.javacupcake.lang.references.CupSymbolReference
 
-class CupUndeclaredSymbolInspection : LocalInspectionTool() {
-    override fun getDefaultLevel() = HighlightDisplayLevel.ERROR
-
+class CupUndeclaredTerminalOrNonTerminalInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor = object : CupVisitor() {
         override fun visitSymbol(symbol: CupSymbol) {
             val reference = symbol.reference as? CupSymbolReference ?: return
             val symbol = symbol.node.psi as? CupSymbolElement ?: return
-            if (reference.isDeclared()) return
             if (symbol.isError()) return
-            if (symbol.isInDefinition() || symbol.isInStartClause() || symbol.isInPrecedenceClause()) return
-            holder.registerProblem(
-                symbol,
-                CupBundle.message("inspection.undeclared_symbol.description", symbol.text),
-                ProblemHighlightType.LIKE_UNKNOWN_SYMBOL,
-                InsertSymbolDeclarationFix(symbol.text, CupSymbolDeclarationType.TERMINAL),
-                InsertSymbolDeclarationFix(symbol.text, CupSymbolDeclarationType.NON_TERMINAL)
-            )
+            if (reference.isDeclared()) return
+            when {
+                symbol.isInDefinition() || symbol.isInStartClause() -> holder.registerProblem(
+                    symbol,
+                    CupBundle.message("inspection.undeclared_non_terminal.description", symbol.text),
+                    ProblemHighlightType.WARNING,
+                    InsertSymbolDeclarationFix(symbol.text, CupSymbolDeclarationType.NON_TERMINAL)
+                )
+                symbol.isInPrecedenceClause() -> holder.registerProblem(
+                    symbol,
+                    CupBundle.message("inspection.undeclared_terminal.description", symbol.text),
+                    ProblemHighlightType.WARNING,
+                    InsertSymbolDeclarationFix(symbol.text, CupSymbolDeclarationType.TERMINAL)
+                )
+            }
         }
     }
 }

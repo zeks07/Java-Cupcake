@@ -1,10 +1,12 @@
 package com.zeks.javacupcake.codeInsight.inspection
 
+import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.zeks.javacupcake.CupBundle
+import com.zeks.javacupcake.codeInsight.fixes.RemoveStartDeclarationFix
 import kotlin.collections.iterator
 
 abstract class CupDuplicateElementVisitor(private val name: String) {
@@ -33,11 +35,14 @@ abstract class CupDuplicateElementVisitor(private val name: String) {
         holder.registerProblem(
             element,
             message,
-            getProblemHighlightType()
+            getProblemHighlightType(),
+            *makeFixes().toTypedArray()
         )
     }
 
     protected open fun makeArguments(elements: List<PsiElement>): List<Any?> = emptyList()
+
+    protected open fun makeFixes(): List<LocalQuickFix> = listOf()
 
     protected open fun getProblemHighlightType(): ProblemHighlightType = ProblemHighlightType.GENERIC_ERROR
 }

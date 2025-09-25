@@ -1,11 +1,12 @@
-package com.zeks.javacupcake.codeInsight.quickfix
+package com.zeks.javacupcake.codeInsight.fixes
 
 import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemDescriptor
 import com.intellij.openapi.project.Project
+import com.zeks.javacupcake.CupBundle
 
-class RemoveStartClauseQuickFix : LocalQuickFix {
-    override fun getName() = "Remove start clause"
+object RemoveRedundantSemicolonFix : LocalQuickFix {
+    override fun getName() = CupBundle.message("fix.remove_redundant_semicolon")
 
     override fun getFamilyName() = name
 

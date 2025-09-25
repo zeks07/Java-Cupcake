@@ -7,30 +7,33 @@ import com.intellij.psi.SyntaxTraverser
 import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.lang.file.CupFile
 import com.zeks.javacupcake.lang.file.CupFileType
+import com.zeks.javacupcake.lang.psi.impl.CupNonTerminalDeclarationImpl
+import com.zeks.javacupcake.lang.psi.impl.CupPackageSpecImpl
+import com.zeks.javacupcake.lang.psi.impl.CupTerminalDeclarationImpl
 
 object CupElementFactory {
-    fun createPackageDeclaration(project: Project, packageName: String): CupPackageSpec {
-        val file = createFile(project, "package $packageName ;")
-        return PsiTreeUtil.findChildrenOfType(file, CupPackageSpec::class.java).first()
+    fun createPackageDeclaration(project: Project, packageName: String): CupPackageSpecImpl {
+        val file = createFile(project, "package $packageName;")
+        return PsiTreeUtil.findChildrenOfType(file, CupPackageSpecImpl::class.java).first()
     }
 
-    fun createNonTerminalDeclaration(project: Project, name: String): CupNonTerminalDeclaration {
-        val file = createFile(project, "non terminal $name ;")
-        return PsiTreeUtil.findChildrenOfType(file, CupNonTerminalDeclaration::class.java).first()
+    fun createNonTerminalDeclaration(project: Project, name: String): CupNonTerminalDeclarationImpl {
+        val file = createFile(project, "non terminal $name;")
+        return PsiTreeUtil.findChildrenOfType(file, CupNonTerminalDeclarationImpl::class.java).first()
     }
 
-    fun createTerminalDeclaration(project: Project, name: String): CupTerminalDeclaration {
-        val file = createFile(project, "terminal $name ;")
-        return PsiTreeUtil.findChildrenOfType(file, CupTerminalDeclaration::class.java).first()
+    fun createTerminalDeclaration(project: Project, name: String): CupTerminalDeclarationImpl {
+        val file = createFile(project, "terminal $name;")
+        return PsiTreeUtil.findChildrenOfType(file, CupTerminalDeclarationImpl::class.java).first()
     }
 
     fun createDeclaredNonTerminal(project: Project, name: String): CupNamedNonTerminal {
-        val file = createFile(project, "non terminal $name ;")
+        val file = createFile(project, "non terminal $name;")
         return PsiTreeUtil.findChildrenOfType(file, CupNamedNonTerminal::class.java).first()
     }
 
     fun createDeclaredTerminal(project: Project, name: String): CupNamedTerminal {
-        val file = createFile(project, "terminal $name ;")
+        val file = createFile(project, "terminal $name;")
         return PsiTreeUtil.findChildrenOfType(file, CupNamedTerminal::class.java).first()
     }
 

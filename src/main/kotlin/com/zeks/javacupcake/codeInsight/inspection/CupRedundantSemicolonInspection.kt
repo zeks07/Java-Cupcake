@@ -5,6 +5,7 @@ import com.intellij.codeInspection.ProblemHighlightType
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElementVisitor
 import com.zeks.javacupcake.CupBundle
+import com.zeks.javacupcake.codeInsight.fixes.RemoveRedundantSemicolonFix
 import com.zeks.javacupcake.lang.psi.CupOptionalSemicolon
 import com.zeks.javacupcake.lang.psi.CupTypes
 import com.zeks.javacupcake.lang.psi.CupVisitor
@@ -16,7 +17,8 @@ class CupRedundantSemicolonInspection : LocalInspectionTool() {
             holder.registerProblem(
                 semicolon,
                 CupBundle.message("inspection.redundant_semicolon.description"),
-                ProblemHighlightType.LIKE_UNUSED_SYMBOL
+                ProblemHighlightType.LIKE_UNUSED_SYMBOL,
+                RemoveRedundantSemicolonFix
             )
         }
     }

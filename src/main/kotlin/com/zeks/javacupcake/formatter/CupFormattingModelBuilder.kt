@@ -9,20 +9,11 @@ import com.intellij.formatting.SpacingBuilder
 import com.intellij.formatting.Wrap
 import com.intellij.formatting.WrapType
 import com.intellij.psi.codeStyle.CodeStyleSettings
-import com.intellij.psi.tree.IElementType
-import com.intellij.psi.tree.TokenSet
 import com.zeks.javacupcake.lang.CupLanguage
 import com.zeks.javacupcake.lang.psi.CupTokenSets
 import com.zeks.javacupcake.lang.psi.CupTypes
 
-private fun SpacingBuilder.betweenInside(
-    leftSet: TokenSet,
-    rightType: IElementType,
-    parentType: IElementType
-): SpacingBuilder.RuleBuilder =
-    betweenInside(leftSet, TokenSet.create(rightType), parentType)
-
-
+// This implementation produces bugs
 class CupFormattingModelBuilder : FormattingModelBuilder {
     override fun createModel(formattingContext: FormattingContext): FormattingModel {
         val codeStyleSettings = formattingContext.codeStyleSettings

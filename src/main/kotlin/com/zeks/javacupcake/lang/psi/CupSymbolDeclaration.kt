@@ -2,9 +2,11 @@ package com.zeks.javacupcake.lang.psi
 
 import com.zeks.javacupcake.lang.file.LineType
 
-enum class CupSymbolDeclarationType {
-    NON_TERMINAL,
-    TERMINAL,
+enum class CupSymbolDeclarationType(val text: String) {
+    NON_TERMINAL("non terminal"),
+    TERMINAL("terminal");
+
+    override fun toString() = text
 }
 
 interface CupSymbolDeclaration : CupLine {

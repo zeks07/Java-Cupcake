@@ -1,11 +1,13 @@
 package com.zeks.javacupcake.codeInsight.inspection
 
 import com.intellij.codeInspection.LocalInspectionTool
+import com.intellij.codeInspection.LocalQuickFix
 import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
+import com.zeks.javacupcake.codeInsight.fixes.RemoveStartDeclarationFix
 import com.zeks.javacupcake.lang.psi.CupCodePart
 import com.zeks.javacupcake.lang.psi.CupDeclaredNonTerminal
 import com.zeks.javacupcake.lang.psi.CupDeclaredTerminal
@@ -80,6 +82,8 @@ class CupDuplicateElementsInspection : LocalInspectionTool() {
             val startClauses = PsiTreeUtil.findChildrenOfType(file, CupStartDeclaration::class.java)
             inspectElements(holder, startClauses)
         }
+
+        override fun makeFixes(): List<LocalQuickFix> = listOf(RemoveStartDeclarationFix)
     }
 
     private object DuplicateProductionVisitor : CupDuplicateElementVisitor("production") {

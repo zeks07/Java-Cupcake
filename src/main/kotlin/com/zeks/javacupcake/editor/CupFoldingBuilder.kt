@@ -1,4 +1,4 @@
-package com.zeks.javacupcake.editor.folding
+package com.zeks.javacupcake.editor
 
 import com.intellij.lang.ASTNode
 import com.intellij.lang.folding.CustomFoldingBuilder
@@ -86,7 +86,7 @@ class CupFoldingBuilder : CustomFoldingBuilder(), DumbAware {
         for (precedenceDeclaration in precedenceDeclarations) {
             val type = precedenceDeclaration.precedenceType ?: continue
 
-            val startOffset = type.startOffset + 1
+            val startOffset = type.endOffset + 1
             val endOffset = precedenceDeclaration.endOffset
 
             descriptors.add(FoldingDescriptor(precedenceDeclaration, TextRange(startOffset, endOffset)).apply {

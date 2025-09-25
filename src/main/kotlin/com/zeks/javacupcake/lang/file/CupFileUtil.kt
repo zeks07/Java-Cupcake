@@ -2,18 +2,14 @@ package com.zeks.javacupcake.lang.file
 
 import com.intellij.psi.PsiElement
 import com.zeks.javacupcake.lang.psi.CupActionCodePart
-import com.zeks.javacupcake.lang.psi.CupCodePart
 import com.zeks.javacupcake.lang.psi.CupLine
-import com.zeks.javacupcake.lang.psi.CupImportStatement
 import com.zeks.javacupcake.lang.psi.CupImportStatements
 import com.zeks.javacupcake.lang.psi.CupInitCodePart
 import com.zeks.javacupcake.lang.psi.CupPackageSpecLine
 import com.zeks.javacupcake.lang.psi.CupParserCodePart
-import com.zeks.javacupcake.lang.psi.CupPrecedenceDeclaration
 import com.zeks.javacupcake.lang.psi.CupProduction
 import com.zeks.javacupcake.lang.psi.CupScanCodePart
 import com.zeks.javacupcake.lang.psi.CupStartDeclaration
-import com.zeks.javacupcake.lang.psi.CupSymbolDeclaration
 import com.zeks.javacupcake.lang.psi.impl.CupPackageSpecImpl
 
 enum class LineType(val text: String) {
@@ -53,36 +49,10 @@ fun CupFile.hasInitCodePart() = this.children.any { it is CupInitCodePart }
 
 fun CupFile.hasStartSpec() = this.children.any { it is CupStartDeclaration }
 
+fun CupFile.getLines() = this.children.filterIsInstance<CupLine>()
+
 fun CupFile.getPackage() = (this.children.find { it is CupPackageSpecLine } as? CupPackageSpecImpl)
 
 fun CupFile.getImports() = this.children.filterIsInstance<CupImportStatements>().firstOrNull()
 
 fun CupFile.getProductions() = this.children.filterIsInstance<CupProduction>()
-
-object CupFileUtil {
-    @Deprecated("Use LineType directly instead")
-    @JvmStatic
-    val expectedOrder = listOf(
-        LineType.PACKAGE,
-        LineType.IMPORT,
-        LineType.CODE_PARTS,
-        LineType.SYMBOL_DECLARATION,
-        LineType.PRECEDENCE_DECLARATION,
-        LineType.START_SPEC,
-        LineType.PRODUCTION,
-    )
-
-    @Deprecated("Use CupFile.getLineTypeAtOffset instead")
-    @JvmStatic
-    fun getElementLineType(line: CupLine?): LineType =
-        when (line) {
-            is CupPackageSpecLine -> LineType.PACKAGE
-            is CupImportStatement -> LineType.IMPORT
-            is CupCodePart -> LineType.CODE_PARTS
-            is CupSymbolDeclaration -> LineType.SYMBOL_DECLARATION
-            is CupPrecedenceDeclaration -> LineType.PRECEDENCE_DECLARATION
-            is CupStartDeclaration -> LineType.START_SPEC
-            is CupProduction -> LineType.PRODUCTION
-            else -> LineType.EMPTY
-        }
-}

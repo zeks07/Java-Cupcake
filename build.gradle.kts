@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "com.zeks"
-version = "1.04-SNAPSHOT"
+version = "1.05-SNAPSHOT"
 
 repositories {
     mavenCentral()

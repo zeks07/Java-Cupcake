@@ -17,7 +17,7 @@ class CupSymbolMisuseInspection : LocalInspectionTool() {
             val symbol = symbol.firstChild ?: return
             val reference = symbol.reference as? CupSymbolReference ?: return
 
-            if (reference.isTerminal()) return
+            if (!reference.isNonTerminal()) return
 
             holder.registerProblem(
                 symbol,
@@ -26,11 +26,11 @@ class CupSymbolMisuseInspection : LocalInspectionTool() {
             )
         }
 
-        override fun visitStartDeclaration(symbol: CupStartDeclaration) {
-            val symbol = symbol.firstChild ?: return
+        override fun visitStartDeclaration(declaration: CupStartDeclaration) {
+            val symbol = declaration.symbol ?: return
             val reference = symbol.reference as? CupSymbolReference ?: return
 
-            if (!reference.isNonTerminal()) return
+            if (!reference.isTerminal()) return
 
             holder.registerProblem(
                 symbol,

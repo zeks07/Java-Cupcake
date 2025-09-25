@@ -30,9 +30,8 @@
         <lang.syntaxHighlighterFactory language="Cup" implementationClass="com.zeks.javacupcake.editor.highlighting.CupSyntaxHighlighterFactory"/>
         <annotator language="Cup" implementationClass="com.zeks.javacupcake.editor.CupAnnotator"/>
         <typedHandler implementation="com.zeks.javacupcake.editor.CupTypedHandler"/>
-        <lang.foldingBuilder language="Cup" implementationClass="com.zeks.javacupcake.editor.folding.CupFoldingBuilder"/>
+        <lang.foldingBuilder language="Cup" implementationClass="com.zeks.javacupcake.editor.CupFoldingBuilder"/>
 
-        <lang.formatter language="Cup" implementationClass="com.zeks.javacupcake.formatter.CupFormattingModelBuilder"/>
         <langCodeStyleSettingsProvider implementation="com.zeks.javacupcake.formatter.CupLanguageCodeStyleSettingsProvider"/>
         <codeStyleSettingsProvider implementation="com.zeks.javacupcake.formatter.CupCodeStyleSettingsProvider"/>
 
@@ -70,10 +69,17 @@
 
         <localInspection implementationClass="com.zeks.javacupcake.codeInsight.inspection.CupUndeclaredSymbolInspection"
                          enabledByDefault="true"
-                         level="WARNING"
+                         level="ERROR"
                          groupBundle="messages.CupBundle" groupKey="group.names.cup"
                          language="Cup"
                          key="inspection.undeclared_symbol.display.name" bundle="messages.CupBundle"/>
+
+        <localInspection implementationClass="com.zeks.javacupcake.codeInsight.inspection.CupUndeclaredTerminalOrNonTerminalInspection"
+                         enabledByDefault="true"
+                         level="WARNING"
+                         groupBundle="messages.CupBundle" groupKey="group.names.cup"
+                         language="Cup"
+                         key="inspection.undeclared_non_terminal_or_terminal.display.name" bundle="messages.CupBundle"/>
 
         <localInspection implementationClass="com.zeks.javacupcake.codeInsight.inspection.CupSymbolMisuseInspection"
                          enabledByDefault="true"
