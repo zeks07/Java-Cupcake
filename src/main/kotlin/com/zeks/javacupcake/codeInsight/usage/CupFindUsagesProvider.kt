@@ -5,8 +5,8 @@ import com.intellij.lang.findUsages.FindUsagesProvider
 import com.intellij.psi.PsiElement
 import com.intellij.psi.tree.TokenSet
 import com.zeks.javacupcake.lang.parser.CupLexerAdapter
-import com.zeks.javacupcake.lang.psi.CupNamedNonTerminal
-import com.zeks.javacupcake.lang.psi.CupTokenSets
+import com.zeks.javacupcake.lang.psi.elements.CupNamedNonTerminal
+import com.zeks.javacupcake.lang.psi.util.CupTokenSets
 
 class CupFindUsagesProvider : FindUsagesProvider {
     override fun getWordsScanner() = DefaultWordsScanner(

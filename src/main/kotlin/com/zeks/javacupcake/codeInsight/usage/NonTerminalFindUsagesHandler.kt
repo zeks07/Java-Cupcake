@@ -9,7 +9,7 @@ import com.intellij.psi.search.LocalSearchScope
 import com.intellij.psi.search.searches.ReferencesSearch
 import com.intellij.usageView.UsageInfo
 import com.intellij.util.Processor
-import com.zeks.javacupcake.lang.psi.CupNamedNonTerminal
+import com.zeks.javacupcake.lang.psi.elements.CupNamedNonTerminal
 
 class NonTerminalFindUsagesHandler(private val element: CupNamedNonTerminal) : FindUsagesHandler(element) {
     override fun getFindUsagesOptions(context: DataContext?) =

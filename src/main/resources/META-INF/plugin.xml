@@ -23,7 +23,8 @@
         <lang.parserDefinition language="Cup" implementationClass="com.zeks.javacupcake.lang.parser.CupParserDefinition"/>
         <psi.referenceContributor language="Cup" implementation="com.zeks.javacupcake.lang.references.CupReferenceContributor"/>
         <referencesSearch implementation="com.zeks.javacupcake.lang.references.CupReferenceSearcher"/>
-        <lang.elementManipulator forClass="com.zeks.javacupcake.lang.psi.CupSymbolElement" implementationClass="com.zeks.javacupcake.lang.manipulators.CupSymbolManipulator"/>
+        <lang.elementManipulator forClass="com.zeks.javacupcake.lang.psi.elements.CupSymbolElement" implementationClass="com.zeks.javacupcake.lang.manipulators.CupSymbolManipulator"/>
+        <lang.psiStructureViewFactory language="Cup" implementationClass="com.zeks.javacupcake.lang.structure.CupStructureViewFactory"/>
         <lang.namesValidator language="Cup" implementationClass="com.zeks.javacupcake.codeInsight.usage.refactoring.CupNamesValidator"/>
         <lang.braceMatcher language="Cup" implementationClass="com.zeks.javacupcake.editor.CupBraceMatcher"/>
 

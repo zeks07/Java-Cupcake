@@ -6,15 +6,25 @@ import com.intellij.psi.PsiNamedElement
 import com.intellij.psi.PsiPolyVariantReferenceBase
 import com.intellij.psi.ResolveResult
 import com.intellij.psi.util.PsiTreeUtil
-import com.zeks.javacupcake.lang.psi.CupNamedNonTerminal
-import com.zeks.javacupcake.lang.psi.CupNamedTerminal
-import com.zeks.javacupcake.lang.psi.CupProductionLine
-import com.zeks.javacupcake.lang.psi.CupSymbolElement
+import com.zeks.javacupcake.lang.psi.elements.CupNamedNonTerminal
+import com.zeks.javacupcake.lang.psi.elements.CupNamedTerminal
+import com.zeks.javacupcake.lang.psi.elements.CupProductionLine
+import com.zeks.javacupcake.lang.psi.elements.CupSymbolElement
 
 class CupSymbolReference(element: CupSymbolElement) : PsiPolyVariantReferenceBase<CupSymbolElement>(element) {
     override fun multiResolve(incompleteCode: Boolean): Array<out ResolveResult?> {
         val result =
             findDeclarations(element.text).takeIf { it.isNotEmpty() }
+            ?: findDefinitions(element.text)
+
+        return result.map{ PsiElementResolveResult(it) }.toTypedArray()
+    }
+
+    fun resolveDefinitionFirst(): Array<out ResolveResult?> {
+        if (element.isInDefinition()) return multiResolve(false)
+
+        val result =
+            findDefinitions(element.text).takeIf { it.isNotEmpty() }
             ?: findDefinitions(element.text)
 
         return result.map{ PsiElementResolveResult(it) }.toTypedArray()

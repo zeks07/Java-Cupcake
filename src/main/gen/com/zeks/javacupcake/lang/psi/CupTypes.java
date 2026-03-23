@@ -4,6 +4,8 @@ package com.zeks.javacupcake.lang.psi;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
+import com.zeks.javacupcake.lang.psi.util.CupElementType;
+import com.zeks.javacupcake.lang.psi.util.CupTokenType;
 import com.zeks.javacupcake.lang.psi.impl.*;
 
 public interface CupTypes {
@@ -48,7 +50,7 @@ public interface CupTypes {
   IElementType COMMA = new CupTokenType(",");
   IElementType COMMENT = new CupTokenType("comment");
   IElementType DOT = new CupTokenType(".");
-  IElementType IDENTIFIER = new CupTokenType("identifier");
+  IElementType IDENTIFIER = new CupTokenType("IDENTIFIER");
   IElementType IMPORT = new CupTokenType("import");
   IElementType INIT = new CupTokenType("init");
   IElementType LBRACKET = new CupTokenType("[");
@@ -69,7 +71,6 @@ public interface CupTypes {
   IElementType SEMICOLON = new CupTokenType(";");
   IElementType START = new CupTokenType("start");
   IElementType TERMINAL_ = new CupTokenType("terminal");
-  IElementType WHITE_SPACE = new CupTokenType("whitespace");
   IElementType WITH = new CupTokenType("with");
 
   class Factory {

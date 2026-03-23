@@ -7,8 +7,8 @@ import com.intellij.codeInspection.util.IntentionName
 import com.intellij.openapi.project.Project
 import com.zeks.javacupcake.CupBundle
 import com.zeks.javacupcake.lang.file.CupFile
-import com.zeks.javacupcake.lang.psi.CupElementFactory
-import com.zeks.javacupcake.lang.psi.CupSymbolDeclarationType
+import com.zeks.javacupcake.lang.psi.factory.CupElementFactory
+import com.zeks.javacupcake.lang.psi.base.CupSymbolDeclarationType
 
 class InsertSymbolDeclarationFix(val symbolName: String, val symbolType: CupSymbolDeclarationType) : LocalQuickFix {
     override fun getFamilyName(): @IntentionFamilyName String = CupBundle.message("fix.insert_symbol_declaration.family")

@@ -10,7 +10,7 @@ import com.intellij.lang.ASTNode
 import com.intellij.psi.TokenType
 import com.intellij.psi.codeStyle.CodeStyleSettings
 import com.intellij.psi.formatter.common.AbstractBlock
-import com.zeks.javacupcake.lang.psi.CupTokenSets
+import com.zeks.javacupcake.lang.psi.util.CupTokenSets
 import com.zeks.javacupcake.lang.psi.CupTypes
 
 class CupBlock(

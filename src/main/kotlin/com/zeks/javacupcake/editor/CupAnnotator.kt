@@ -7,8 +7,8 @@ import com.intellij.psi.PsiElement
 import com.zeks.javacupcake.editor.highlighting.CupHighlightColors
 import com.zeks.javacupcake.lang.psi.CupDeclaredNonTerminal
 import com.zeks.javacupcake.lang.psi.CupDeclaredTerminal
-import com.zeks.javacupcake.lang.psi.CupSymbolElement
-import com.zeks.javacupcake.lang.psi.isError
+import com.zeks.javacupcake.lang.psi.elements.CupSymbolElement
+import com.zeks.javacupcake.lang.psi.util.isError
 
 class CupAnnotator : Annotator {
     override fun annotate(element: PsiElement, holder: AnnotationHolder) {

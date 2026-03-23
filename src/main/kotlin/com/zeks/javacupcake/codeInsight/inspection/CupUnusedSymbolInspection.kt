@@ -8,7 +8,7 @@ import com.intellij.psi.search.searches.ReferencesSearch
 import com.zeks.javacupcake.CupBundle
 import com.zeks.javacupcake.lang.psi.CupDeclaredNonTerminal
 import com.zeks.javacupcake.lang.psi.CupDeclaredTerminal
-import com.zeks.javacupcake.lang.psi.CupSymbolElement
+import com.zeks.javacupcake.lang.psi.elements.CupSymbolElement
 import com.zeks.javacupcake.lang.psi.CupVisitor
 
 class CupUnusedSymbolInspection : LocalInspectionTool() {

@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
-import com.zeks.javacupcake.lang.psi.CupTerminalDeclarationLine;
+import com.zeks.javacupcake.lang.psi.elements.CupTerminalDeclarationLine;
 import com.zeks.javacupcake.lang.psi.*;
 
 public class CupTerminalDeclarationImpl extends CupTerminalDeclarationLine implements CupTerminalDeclaration {

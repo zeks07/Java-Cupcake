@@ -5,24 +5,23 @@ import com.intellij.psi.PsiErrorElement
 import com.intellij.psi.PsiWhiteSpace
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.util.childLeafs
-import com.intellij.psi.util.elementType
 import com.zeks.javacupcake.lang.file.CupFile
 import com.zeks.javacupcake.lang.file.LineType
 import com.zeks.javacupcake.lang.file.getLineType
 import com.zeks.javacupcake.lang.psi.CupClassName
-import com.zeks.javacupcake.lang.psi.CupCodePart
-import com.zeks.javacupcake.lang.psi.CupLine
-import com.zeks.javacupcake.lang.psi.CupPrecedenceDeclarationLine
-import com.zeks.javacupcake.lang.psi.CupProductionLine
+import com.zeks.javacupcake.lang.psi.base.CupCodePart
+import com.zeks.javacupcake.lang.psi.base.CupLine
+import com.zeks.javacupcake.lang.psi.elements.CupPrecedenceDeclarationLine
+import com.zeks.javacupcake.lang.psi.elements.CupProductionLine
 import com.zeks.javacupcake.lang.psi.CupRightHandSide
-import com.zeks.javacupcake.lang.psi.CupSymbolDeclaration
+import com.zeks.javacupcake.lang.psi.base.CupSymbolDeclaration
 import com.zeks.javacupcake.lang.psi.impl.CupStartDeclarationImpl
 
 sealed class CupPositionContext {
     abstract val position: PsiElement
 }
 
-sealed class CupLineContext() : CupPositionContext() {
+sealed class CupLineContext : CupPositionContext() {
     abstract val line: CupLine
     val orderInLine: Int
         get() {

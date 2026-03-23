@@ -7,9 +7,9 @@ import com.intellij.icons.AllIcons
 import com.intellij.psi.PsiElement
 import com.intellij.psi.search.LocalSearchScope
 import com.intellij.psi.search.searches.ReferencesSearch
-import com.zeks.javacupcake.lang.psi.CupNamedNonTerminal
-import com.zeks.javacupcake.lang.psi.CupProductionLine
-import com.zeks.javacupcake.lang.psi.CupSymbolElement
+import com.zeks.javacupcake.lang.psi.elements.CupNamedNonTerminal
+import com.zeks.javacupcake.lang.psi.elements.CupProductionLine
+import com.zeks.javacupcake.lang.psi.elements.CupSymbolElement
 
 class CupLineMarker : RelatedItemLineMarkerProvider() {
     override fun collectNavigationMarkers(

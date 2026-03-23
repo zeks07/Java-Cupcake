@@ -3,7 +3,7 @@ package com.zeks.javacupcake.codeInsight.fixes
 import com.intellij.psi.PsiParserFacade
 import com.zeks.javacupcake.lang.file.CupFile
 import com.zeks.javacupcake.lang.file.getLines
-import com.zeks.javacupcake.lang.psi.CupLine
+import com.zeks.javacupcake.lang.psi.base.CupLine
 
 fun insertLine(
     file: CupFile,

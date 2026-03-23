@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
-import com.zeks.javacupcake.lang.psi.CupCodeString;
+import com.zeks.javacupcake.lang.psi.injection.CupCodeString;
 import com.zeks.javacupcake.lang.psi.*;
 
 public class CupCodeStringBlockImpl extends CupCodeString implements CupCodeStringBlock {

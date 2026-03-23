@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.codeInsight.fixes.RemoveStartDeclarationFix
-import com.zeks.javacupcake.lang.psi.CupCodePart
+import com.zeks.javacupcake.lang.psi.base.CupCodePart
 import com.zeks.javacupcake.lang.psi.CupDeclaredNonTerminal
 import com.zeks.javacupcake.lang.psi.CupDeclaredTerminal
-import com.zeks.javacupcake.lang.psi.CupPrecedenceDeclarationLine
+import com.zeks.javacupcake.lang.psi.elements.CupPrecedenceDeclarationLine
 import com.zeks.javacupcake.lang.psi.CupProduction
 import com.zeks.javacupcake.lang.psi.CupStartDeclaration
 import com.zeks.javacupcake.lang.psi.CupSymbol

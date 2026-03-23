@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface CupDeclaredNonTerminal extends PsiElement {
 
+  @NotNull
+  PsiElement getIdentifier();
+
 }

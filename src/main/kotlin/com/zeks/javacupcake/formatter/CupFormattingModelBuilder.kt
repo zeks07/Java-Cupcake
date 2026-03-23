@@ -10,7 +10,7 @@ import com.intellij.formatting.Wrap
 import com.intellij.formatting.WrapType
 import com.intellij.psi.codeStyle.CodeStyleSettings
 import com.zeks.javacupcake.lang.CupLanguage
-import com.zeks.javacupcake.lang.psi.CupTokenSets
+import com.zeks.javacupcake.lang.psi.util.CupTokenSets
 import com.zeks.javacupcake.lang.psi.CupTypes
 
 // This implementation produces bugs

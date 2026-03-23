@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface CupSymbol extends PsiElement {
 
+  @NotNull
+  PsiElement getIdentifier();
+
 }

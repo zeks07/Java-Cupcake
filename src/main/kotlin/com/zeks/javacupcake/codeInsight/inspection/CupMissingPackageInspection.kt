@@ -6,7 +6,6 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElementVisitor
 import com.intellij.psi.PsiFile
-import com.intellij.psi.util.startOffset
 import com.zeks.javacupcake.CupBundle
 import com.zeks.javacupcake.codeInsight.fixes.InsertPackageDeclarationFix
 import com.zeks.javacupcake.lang.file.CupFile

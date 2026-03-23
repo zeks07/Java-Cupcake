@@ -27,4 +27,10 @@ public class CupClassNameImpl extends ASTWrapperPsiElement implements CupClassNa
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
+  }
+
 }

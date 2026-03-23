@@ -8,7 +8,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.CupBundle
 import com.zeks.javacupcake.lang.file.LineType
-import com.zeks.javacupcake.lang.psi.CupLine
+import com.zeks.javacupcake.lang.psi.base.CupLine
 import com.zeks.javacupcake.lang.psi.CupVisitor
 
 class CupLineOrderInspection : LocalInspectionTool() {

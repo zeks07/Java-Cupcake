@@ -6,9 +6,9 @@ import com.intellij.psi.search.UsageSearchContext
 import com.intellij.psi.search.searches.ReferencesSearch
 import com.intellij.util.Processor
 import com.intellij.util.QueryExecutor
-import com.zeks.javacupcake.lang.psi.CupNamedNonTerminal
-import com.zeks.javacupcake.lang.psi.CupProductionLine
-import com.zeks.javacupcake.lang.psi.CupSymbolElement
+import com.zeks.javacupcake.lang.psi.elements.CupNamedNonTerminal
+import com.zeks.javacupcake.lang.psi.elements.CupProductionLine
+import com.zeks.javacupcake.lang.psi.elements.CupSymbolElement
 
 class CupReferenceSearcher : QueryExecutor<CupSymbolReference, ReferencesSearch.SearchParameters> {
     override fun execute(parameters: ReferencesSearch.SearchParameters, consumer: Processor<in CupSymbolReference>): Boolean {

@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
-import com.zeks.javacupcake.lang.psi.CupNamedNonTerminal;
+import com.zeks.javacupcake.lang.psi.elements.CupNamedNonTerminal;
 import com.zeks.javacupcake.lang.psi.*;
 
 public class CupDeclaredNonTerminalImpl extends CupNamedNonTerminal implements CupDeclaredNonTerminal {
@@ -25,6 +25,12 @@ public class CupDeclaredNonTerminalImpl extends CupNamedNonTerminal implements C
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof CupVisitor) accept((CupVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public PsiElement getIdentifier() {
+    return findNotNullChildByType(IDENTIFIER);
   }
 
 }

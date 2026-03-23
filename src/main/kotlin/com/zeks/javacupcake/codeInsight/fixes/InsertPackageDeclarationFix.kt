@@ -7,7 +7,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.psi.util.endOffset
 import com.zeks.javacupcake.CupBundle
 import com.zeks.javacupcake.lang.file.CupFile
-import com.zeks.javacupcake.lang.psi.CupElementFactory
+import com.zeks.javacupcake.lang.psi.factory.CupElementFactory
 
 object InsertPackageDeclarationFix : LocalQuickFix {
     override fun getName() = familyName

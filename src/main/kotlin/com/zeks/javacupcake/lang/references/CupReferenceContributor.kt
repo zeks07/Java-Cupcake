@@ -7,7 +7,7 @@ import com.intellij.psi.PsiReferenceContributor
 import com.intellij.psi.PsiReferenceProvider
 import com.intellij.psi.PsiReferenceRegistrar
 import com.intellij.util.ProcessingContext
-import com.zeks.javacupcake.lang.psi.CupSymbolElement
+import com.zeks.javacupcake.lang.psi.elements.CupSymbolElement
 
 class CupReferenceContributor : PsiReferenceContributor() {
     override fun registerReferenceProviders(registrar: PsiReferenceRegistrar) {

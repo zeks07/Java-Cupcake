@@ -2,7 +2,7 @@ package com.zeks.javacupcake.codeInsight.usage.refactoring
 
 import com.intellij.lang.refactoring.NamesValidator
 import com.intellij.openapi.project.Project
-import com.zeks.javacupcake.lang.psi.CupTokenSets
+import com.zeks.javacupcake.lang.psi.util.CupTokenSets
 
 class CupNamesValidator : NamesValidator {
     override fun isKeyword(name: String, project: Project?): Boolean {

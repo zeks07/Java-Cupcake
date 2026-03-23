@@ -6,10 +6,9 @@ import com.intellij.codeInspection.ProblemsHolder
 import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.zeks.javacupcake.CupBundle
-import com.zeks.javacupcake.codeInsight.fixes.RemoveStartDeclarationFix
 import kotlin.collections.iterator
 
-abstract class CupDuplicateElementVisitor(private val name: String) {
+sealed class CupDuplicateElementVisitor(private val name: String) {
     open fun inspect(file: PsiFile, holder: ProblemsHolder) {}
 
     protected fun inspectElements(holder: ProblemsHolder, elements: Collection<PsiElement>) {

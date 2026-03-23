@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElementVisitor
 import com.zeks.javacupcake.CupBundle
 import com.zeks.javacupcake.codeInsight.fixes.InsertSymbolDeclarationFix
 import com.zeks.javacupcake.lang.psi.CupSymbol
-import com.zeks.javacupcake.lang.psi.CupSymbolDeclarationType
-import com.zeks.javacupcake.lang.psi.CupSymbolElement
+import com.zeks.javacupcake.lang.psi.base.CupSymbolDeclarationType
+import com.zeks.javacupcake.lang.psi.elements.CupSymbolElement
 import com.zeks.javacupcake.lang.psi.CupVisitor
-import com.zeks.javacupcake.lang.psi.isError
+import com.zeks.javacupcake.lang.psi.util.isError
 import com.zeks.javacupcake.lang.references.CupSymbolReference
 
 class CupUndeclaredTerminalOrNonTerminalInspection : LocalInspectionTool() {

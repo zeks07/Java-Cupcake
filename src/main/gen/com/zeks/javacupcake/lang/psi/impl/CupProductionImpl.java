@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
-import com.zeks.javacupcake.lang.psi.CupProductionLine;
+import com.zeks.javacupcake.lang.psi.elements.CupProductionLine;
 import com.zeks.javacupcake.lang.psi.*;
 
 public class CupProductionImpl extends CupProductionLine implements CupProduction {
@@ -28,9 +28,9 @@ public class CupProductionImpl extends CupProductionLine implements CupProductio
   }
 
   @Override
-  @NotNull
+  @Nullable
   public CupAssign getAssign() {
-    return findNotNullChildByClass(CupAssign.class);
+    return findChildByClass(CupAssign.class);
   }
 
   @Override

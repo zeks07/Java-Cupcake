@@ -1,4 +1,4 @@
-package com.zeks.javacupcake.lang.psi
+package com.zeks.javacupcake.lang.psi.base
 
 import com.intellij.psi.PsiElement
 import com.zeks.javacupcake.lang.file.LineType

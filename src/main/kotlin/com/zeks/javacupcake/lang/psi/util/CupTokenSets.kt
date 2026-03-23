@@ -1,6 +1,7 @@
-package com.zeks.javacupcake.lang.psi
+package com.zeks.javacupcake.lang.psi.util
 
 import com.intellij.psi.tree.TokenSet
+import com.zeks.javacupcake.lang.psi.CupTypes
 
 object CupTokenSets {
     val KEYWORDS = TokenSet.create(

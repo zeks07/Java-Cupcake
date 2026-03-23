@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface CupProduction extends PsiElement {
 
-  @NotNull
+  @Nullable
   CupAssign getAssign();
 
   @NotNull

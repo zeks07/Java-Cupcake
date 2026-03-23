@@ -750,9 +750,9 @@ public class CupParser implements PsiParser, LightPsiParser {
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, PRODUCTION, null);
     r = symbol(b, l + 1);
-    r = r && assign(b, l + 1);
-    p = r; // pin = 2
-    r = r && report_error_(b, production_2(b, l + 1));
+    p = r; // pin = 1
+    r = r && report_error_(b, assign(b, l + 1));
+    r = p && report_error_(b, production_2(b, l + 1)) && r;
     r = p && consumeToken(b, SEMICOLON) && r;
     exit_section_(b, l, m, r, p, null);
     return r || p;

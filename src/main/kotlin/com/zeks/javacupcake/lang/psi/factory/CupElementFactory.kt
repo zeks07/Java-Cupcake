@@ -1,4 +1,4 @@
-package com.zeks.javacupcake.lang.psi
+package com.zeks.javacupcake.lang.psi.factory
 
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiElement
@@ -7,6 +7,9 @@ import com.intellij.psi.SyntaxTraverser
 import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.lang.file.CupFile
 import com.zeks.javacupcake.lang.file.CupFileType
+import com.zeks.javacupcake.lang.psi.elements.CupNamedNonTerminal
+import com.zeks.javacupcake.lang.psi.elements.CupNamedTerminal
+import com.zeks.javacupcake.lang.psi.elements.CupSymbolElement
 import com.zeks.javacupcake.lang.psi.impl.CupNonTerminalDeclarationImpl
 import com.zeks.javacupcake.lang.psi.impl.CupPackageSpecImpl
 import com.zeks.javacupcake.lang.psi.impl.CupTerminalDeclarationImpl

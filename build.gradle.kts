@@ -46,7 +46,7 @@ intellijPlatform {
     }
 
     publishing {
-        token = (project.properties["org.jetbrains.intellij.publish.token"] as String)
+        token = providers.gradleProperty("org.jetbrains.intellij.publish.token")
         channels = listOf("beta")
     }
 }

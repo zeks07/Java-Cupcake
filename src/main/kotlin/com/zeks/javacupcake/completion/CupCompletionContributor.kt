@@ -31,15 +31,15 @@ import com.zeks.javacupcake.lang.file.hasPackageDeclaration
 import com.zeks.javacupcake.lang.file.hasParserCodePart
 import com.zeks.javacupcake.lang.file.hasScanCodePart
 import com.zeks.javacupcake.lang.file.hasStartSpec
-import com.zeks.javacupcake.lang.psi.CupCodePartType
+import com.zeks.javacupcake.lang.psi.base.CupCodePartType
 import com.zeks.javacupcake.lang.psi.CupDeclaredNonTerminal
-import com.zeks.javacupcake.lang.psi.CupNamedNonTerminal
-import com.zeks.javacupcake.lang.psi.CupNamedTerminal
+import com.zeks.javacupcake.lang.psi.elements.CupNamedNonTerminal
+import com.zeks.javacupcake.lang.psi.elements.CupNamedTerminal
 import com.zeks.javacupcake.lang.psi.CupPrecedenceDeclaration
 import com.zeks.javacupcake.lang.psi.CupProduction
 import com.zeks.javacupcake.lang.psi.CupSymbol
-import com.zeks.javacupcake.lang.psi.CupSymbolDeclarationType
-import com.zeks.javacupcake.lang.psi.CupTokenSets
+import com.zeks.javacupcake.lang.psi.base.CupSymbolDeclarationType
+import com.zeks.javacupcake.lang.psi.util.CupTokenSets
 import com.zeks.javacupcake.lang.psi.CupTypes
 
 class CupCompletionContributor : CompletionContributor() {
@@ -105,7 +105,7 @@ private object CupCompletionProvider : CompletionProvider<CompletionParameters>(
         val file = context.position.containingFile as? CupFile ?: return
         val declaredNonTerminals = PsiTreeUtil.findChildrenOfType(file, CupDeclaredNonTerminal::class.java)
             .map { it.text }.toSet()
-        val productions = file.children.filter { it is CupProduction }.map { it.firstChild.text }.toSet()
+        val productions = file.children.filterIsInstance<CupProduction>().map { it.firstChild.text }.toSet()
 
         val resultElements = declaredNonTerminals - productions
 

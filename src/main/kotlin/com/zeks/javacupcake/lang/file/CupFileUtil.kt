@@ -2,10 +2,10 @@ package com.zeks.javacupcake.lang.file
 
 import com.intellij.psi.PsiElement
 import com.zeks.javacupcake.lang.psi.CupActionCodePart
-import com.zeks.javacupcake.lang.psi.CupLine
+import com.zeks.javacupcake.lang.psi.base.CupLine
 import com.zeks.javacupcake.lang.psi.CupImportStatements
 import com.zeks.javacupcake.lang.psi.CupInitCodePart
-import com.zeks.javacupcake.lang.psi.CupPackageSpecLine
+import com.zeks.javacupcake.lang.psi.elements.CupPackageSpecLine
 import com.zeks.javacupcake.lang.psi.CupParserCodePart
 import com.zeks.javacupcake.lang.psi.CupProduction
 import com.zeks.javacupcake.lang.psi.CupScanCodePart

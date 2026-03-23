@@ -1,6 +1,7 @@
-package com.zeks.javacupcake.lang.psi
+package com.zeks.javacupcake.lang.psi.base
 
 import com.zeks.javacupcake.lang.file.LineType
+import com.zeks.javacupcake.lang.psi.CupTypeName
 
 enum class CupSymbolDeclarationType(val text: String) {
     NON_TERMINAL("non terminal"),

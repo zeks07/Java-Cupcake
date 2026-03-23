@@ -10,9 +10,11 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.CupBundle
 import com.zeks.javacupcake.lang.psi.CupClassName
 import com.zeks.javacupcake.lang.psi.CupProduction
-import com.zeks.javacupcake.lang.psi.CupRightHandSide
 import com.zeks.javacupcake.lang.psi.CupTypes
 import com.zeks.javacupcake.lang.psi.CupVisitor
+import com.zeks.javacupcake.lang.psi.elements.CupRule
+import com.zeks.javacupcake.lang.psi.impl.CupProductionImpl
+import java.util.Locale.getDefault
 
 class CupClassNameInspection : LocalInspectionTool() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean): PsiElementVisitor = object : CupVisitor() {
@@ -20,12 +22,12 @@ class CupClassNameInspection : LocalInspectionTool() {
             val classNames = PsiTreeUtil.findChildrenOfType(file, CupClassName::class.java)
             DuplicateClassNameVisitor.inspect(classNames, holder)
 
-            val productions = PsiTreeUtil.findChildrenOfType(file, CupProduction::class.java)
-            val productionNames = productions.map { it.firstChild.text }
+            val productions = PsiTreeUtil.findChildrenOfType(file, CupProductionImpl::class.java)
+            val productionNames = productions.map { it.presentation.presentableText?.capitalize() }
 
             for (className in classNames) {
                 if (className.text !in productionNames) continue
-                if (className.text == className.parent.parent.firstChild.text) continue
+                if (className.text == className.parent.parent.firstChild.text.capitalize()) continue
                 holder.registerProblem(
                     className,
                     CupBundle.message("inspection.class_name_extern_conflict.description", className.text),
@@ -35,11 +37,11 @@ class CupClassNameInspection : LocalInspectionTool() {
         }
 
         override fun visitProduction(production: CupProduction) {
-            val rules = PsiTreeUtil.findChildrenOfType(production, CupRightHandSide::class.java)
+            val rules = PsiTreeUtil.findChildrenOfType(production, CupRule::class.java)
                 .takeIf { it.size > 1 } ?: return
             val classNames = rules.mapNotNull { it.node.findChildByType(CupTypes.CLASS_NAME)?.psi as? CupClassName }
 
-            val productionName = production.firstChild.text
+            val productionName = production.firstChild.text.capitalize()
 
             for (className in classNames) {
                 if (className.text != productionName) continue
@@ -60,4 +62,6 @@ class CupClassNameInspection : LocalInspectionTool() {
 
         override fun getProblemHighlightType() = ProblemHighlightType.WARNING
     }
+
+    private fun String.capitalize() = replaceFirstChar { if (it.isLowerCase()) it.titlecase(getDefault()) else it.toString() }
 }

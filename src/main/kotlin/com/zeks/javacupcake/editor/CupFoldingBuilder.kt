@@ -9,14 +9,13 @@ import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiElement
 import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.psi.util.endOffset
-import com.intellij.psi.util.startOffset
 import com.zeks.javacupcake.lang.file.CupFile
 import com.zeks.javacupcake.lang.file.getImports
 import com.zeks.javacupcake.lang.file.getProductions
 import com.zeks.javacupcake.lang.psi.CupCodeStringBlock
 import com.zeks.javacupcake.lang.psi.CupPrecedenceDeclaration
 import com.zeks.javacupcake.lang.psi.CupProduction
-import com.zeks.javacupcake.lang.psi.CupSymbolDeclaration
+import com.zeks.javacupcake.lang.psi.base.CupSymbolDeclaration
 import com.zeks.javacupcake.lang.psi.impl.CupNonTerminalDeclarationImpl
 import com.zeks.javacupcake.lang.psi.impl.CupTerminalDeclarationImpl
 
@@ -99,7 +98,7 @@ class CupFoldingBuilder : CustomFoldingBuilder(), DumbAware {
         val productions = root.getProductions()
 
         for (production in productions) {
-            val startOffset = production.assign.endOffset
+            val startOffset = production.assign?.endOffset ?: continue
             val endOffset = production.endOffset
 
             descriptors.add(FoldingDescriptor(production, TextRange(startOffset, endOffset)).apply {

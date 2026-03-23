@@ -4,7 +4,7 @@ import com.intellij.psi.PsiElement
 import com.intellij.usages.impl.rules.UsageType
 import com.intellij.usages.impl.rules.UsageTypeProvider
 import com.zeks.javacupcake.CupBundle
-import com.zeks.javacupcake.lang.psi.CupSymbolElement
+import com.zeks.javacupcake.lang.psi.elements.CupSymbolElement
 
 class CupUsageTypeProvider : UsageTypeProvider {
     override fun getUsageType(element: PsiElement): UsageType? {

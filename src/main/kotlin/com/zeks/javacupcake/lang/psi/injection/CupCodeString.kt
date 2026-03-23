@@ -1,10 +1,11 @@
-package com.zeks.javacupcake.lang.psi
+package com.zeks.javacupcake.lang.psi.injection
 
 import com.intellij.extapi.psi.ASTWrapperPsiElement
 import com.intellij.lang.ASTNode
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.LiteralTextEscaper
 import com.intellij.psi.PsiLanguageInjectionHost
+import com.zeks.javacupcake.lang.psi.factory.CupElementFactory
 
 abstract class CupCodeString(node: ASTNode) : ASTWrapperPsiElement(node), PsiLanguageInjectionHost {
      override fun isValidHost() = true
