@@ -10,8 +10,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
 import com.zeks.javacupcake.lang.psi.elements.CupProductionLine;
 import com.zeks.javacupcake.lang.psi.*;
+import com.zeks.javacupcake.lang.psi.stubs.CupProductionStub;
+import com.intellij.psi.stubs.IStubElementType;
 
 public class CupProductionImpl extends CupProductionLine implements CupProduction {
+
+  public CupProductionImpl(@NotNull CupProductionStub stub, @NotNull IStubElementType<?, ?> type) {
+    super(stub, type);
+  }
 
   public CupProductionImpl(@NotNull ASTNode node) {
     super(node);
@@ -30,7 +36,7 @@ public class CupProductionImpl extends CupProductionLine implements CupProductio
   @Override
   @Nullable
   public CupAssign getAssign() {
-    return findChildByClass(CupAssign.class);
+    return PsiTreeUtil.getChildOfType(this, CupAssign.class);
   }
 
   @Override
@@ -42,7 +48,7 @@ public class CupProductionImpl extends CupProductionLine implements CupProductio
   @Override
   @NotNull
   public CupSymbol getSymbol() {
-    return findNotNullChildByClass(CupSymbol.class);
+    return notNullChild(PsiTreeUtil.getChildOfType(this, CupSymbol.class));
   }
 
 }

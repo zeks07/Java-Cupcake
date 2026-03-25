@@ -10,8 +10,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
 import com.zeks.javacupcake.lang.psi.elements.CupNamedTerminal;
 import com.zeks.javacupcake.lang.psi.*;
+import com.zeks.javacupcake.lang.psi.stubs.CupNamedTerminalStub;
+import com.intellij.psi.stubs.IStubElementType;
 
 public class CupDeclaredTerminalImpl extends CupNamedTerminal implements CupDeclaredTerminal {
+
+  public CupDeclaredTerminalImpl(@NotNull CupNamedTerminalStub stub, @NotNull IStubElementType<?, ?> type) {
+    super(stub, type);
+  }
 
   public CupDeclaredTerminalImpl(@NotNull ASTNode node) {
     super(node);
@@ -30,7 +36,7 @@ public class CupDeclaredTerminalImpl extends CupNamedTerminal implements CupDecl
   @Override
   @NotNull
   public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+    return notNullChild(findChildByType(IDENTIFIER));
   }
 
 }

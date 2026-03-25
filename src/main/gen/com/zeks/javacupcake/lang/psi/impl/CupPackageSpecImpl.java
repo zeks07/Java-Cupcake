@@ -30,7 +30,7 @@ public class CupPackageSpecImpl extends CupPackageSpecLine implements CupPackage
   @Override
   @Nullable
   public CupPackageName getPackageName() {
-    return findChildByClass(CupPackageName.class);
+    return PsiTreeUtil.getChildOfType(this, CupPackageName.class);
   }
 
 }

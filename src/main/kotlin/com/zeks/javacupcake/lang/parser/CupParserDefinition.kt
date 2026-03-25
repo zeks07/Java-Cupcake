@@ -11,8 +11,7 @@ import com.zeks.javacupcake.lang.CupLanguage
 import com.zeks.javacupcake.lang.file.CupFile
 import com.zeks.javacupcake.lang.psi.util.CupTokenSets
 import com.zeks.javacupcake.lang.psi.CupTypes
-
-val FILE = IFileElementType(CupLanguage)
+import com.zeks.javacupcake.lang.psi.stubs.CupFileStubElementType
 
 class CupParserDefinition : ParserDefinition {
 
@@ -24,7 +23,7 @@ class CupParserDefinition : ParserDefinition {
 
     override fun createParser(project: Project) = CupParser()
 
-    override fun getFileNodeType() = FILE
+    override fun getFileNodeType(): IFileElementType = CupFileStubElementType
 
     override fun createFile(viewProvider: FileViewProvider) = CupFile(viewProvider)
 

@@ -30,7 +30,7 @@ public class CupRightHandSideImpl extends CupRule implements CupRightHandSide {
   @Override
   @Nullable
   public CupClassName getClassName() {
-    return findChildByClass(CupClassName.class);
+    return PsiTreeUtil.getChildOfType(this, CupClassName.class);
   }
 
   @Override
@@ -48,7 +48,7 @@ public class CupRightHandSideImpl extends CupRule implements CupRightHandSide {
   @Override
   @Nullable
   public CupPrecedenceClause getPrecedenceClause() {
-    return findChildByClass(CupPrecedenceClause.class);
+    return PsiTreeUtil.getChildOfType(this, CupPrecedenceClause.class);
   }
 
   @Override

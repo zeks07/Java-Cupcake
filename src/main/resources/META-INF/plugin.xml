@@ -28,6 +28,10 @@
         <lang.namesValidator language="Cup" implementationClass="com.zeks.javacupcake.codeInsight.usage.refactoring.CupNamesValidator"/>
         <lang.braceMatcher language="Cup" implementationClass="com.zeks.javacupcake.editor.CupBraceMatcher"/>
 
+        <stubElementTypeHolder class="com.zeks.javacupcake.lang.psi.CupTypes" externalIdPrefix="cupcake."/>
+        <stubIndex implementation="com.zeks.javacupcake.lang.psi.stubs.CupSymbolIndex"/>
+        <stubIndex implementation="com.zeks.javacupcake.lang.psi.stubs.CupProductionIndex"/>
+
         <lang.syntaxHighlighterFactory language="Cup" implementationClass="com.zeks.javacupcake.editor.highlighting.CupSyntaxHighlighterFactory"/>
         <annotator language="Cup" implementationClass="com.zeks.javacupcake.editor.CupAnnotator"/>
         <typedHandler implementation="com.zeks.javacupcake.editor.CupTypedHandler"/>

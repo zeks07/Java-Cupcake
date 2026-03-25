@@ -36,7 +36,7 @@ public class CupPrecedenceDeclarationImpl extends CupPrecedenceDeclarationLine i
   @Override
   @Nullable
   public CupPrecedenceType getPrecedenceType() {
-    return findChildByClass(CupPrecedenceType.class);
+    return PsiTreeUtil.getChildOfType(this, CupPrecedenceType.class);
   }
 
 }

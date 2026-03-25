@@ -30,13 +30,13 @@ public class CupActionCodePartImpl extends CupAction implements CupActionCodePar
   @Override
   @Nullable
   public CupCodeStringBlock getCodeStringBlock() {
-    return findChildByClass(CupCodeStringBlock.class);
+    return PsiTreeUtil.getChildOfType(this, CupCodeStringBlock.class);
   }
 
   @Override
   @Nullable
   public CupOptionalSemicolon getOptionalSemicolon() {
-    return findChildByClass(CupOptionalSemicolon.class);
+    return PsiTreeUtil.getChildOfType(this, CupOptionalSemicolon.class);
   }
 
 }

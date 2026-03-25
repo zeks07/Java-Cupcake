@@ -30,7 +30,7 @@ public class CupImportStatementImpl extends CupImportStatementLine implements Cu
   @Override
   @Nullable
   public CupImportName getImportName() {
-    return findChildByClass(CupImportName.class);
+    return PsiTreeUtil.getChildOfType(this, CupImportName.class);
   }
 
 }

@@ -36,13 +36,13 @@ public class CupNonTerminalDeclarationImpl extends CupNonTerminalDeclarationLine
   @Override
   @Nullable
   public CupNonTerminalAlternative getNonTerminalAlternative() {
-    return findChildByClass(CupNonTerminalAlternative.class);
+    return PsiTreeUtil.getChildOfType(this, CupNonTerminalAlternative.class);
   }
 
   @Override
   @Nullable
   public CupTypeName getTypeName() {
-    return findChildByClass(CupTypeName.class);
+    return PsiTreeUtil.getChildOfType(this, CupTypeName.class);
   }
 
 }

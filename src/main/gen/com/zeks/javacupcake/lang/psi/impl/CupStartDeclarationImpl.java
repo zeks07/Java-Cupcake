@@ -30,7 +30,7 @@ public class CupStartDeclarationImpl extends CupStartLine implements CupStartDec
   @Override
   @Nullable
   public CupSymbol getSymbol() {
-    return findChildByClass(CupSymbol.class);
+    return PsiTreeUtil.getChildOfType(this, CupSymbol.class);
   }
 
 }

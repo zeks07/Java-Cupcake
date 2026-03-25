@@ -36,7 +36,7 @@ public class CupTerminalDeclarationImpl extends CupTerminalDeclarationLine imple
   @Override
   @Nullable
   public CupTypeName getTypeName() {
-    return findChildByClass(CupTypeName.class);
+    return PsiTreeUtil.getChildOfType(this, CupTypeName.class);
   }
 
 }

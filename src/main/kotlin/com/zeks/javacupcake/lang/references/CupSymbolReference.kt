@@ -5,55 +5,71 @@ import com.intellij.psi.PsiElementResolveResult
 import com.intellij.psi.PsiNamedElement
 import com.intellij.psi.PsiPolyVariantReferenceBase
 import com.intellij.psi.ResolveResult
+import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.psi.stubs.StubIndex
 import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.lang.psi.elements.CupNamedNonTerminal
+import com.zeks.javacupcake.lang.psi.elements.CupNamedSymbol
 import com.zeks.javacupcake.lang.psi.elements.CupNamedTerminal
 import com.zeks.javacupcake.lang.psi.elements.CupProductionLine
 import com.zeks.javacupcake.lang.psi.elements.CupSymbolElement
+import com.zeks.javacupcake.lang.psi.stubs.CupProductionIndex
+import com.zeks.javacupcake.lang.psi.stubs.CupSymbolIndex
 
 class CupSymbolReference(element: CupSymbolElement) : PsiPolyVariantReferenceBase<CupSymbolElement>(element) {
-    override fun multiResolve(incompleteCode: Boolean): Array<out ResolveResult?> {
-        val result =
-            findDeclarations(element.text).takeIf { it.isNotEmpty() }
-            ?: findDefinitions(element.text)
+    override fun multiResolve(incompleteCode: Boolean): Array<out ResolveResult> {
+        val name = element.text
+        val declarations = findDeclarations(name)
+        val definitions = findDefinitions(name)
 
-        return result.map{ PsiElementResolveResult(it) }.toTypedArray()
+        val results = declarations.ifEmpty { definitions } +
+                if (declarations.isEmpty()) definitions else emptyList()
+
+        return results.distinct()
+            .map { PsiElementResolveResult(it) }
+            .toTypedArray()
     }
 
-    fun resolveDefinitionFirst(): Array<out ResolveResult?> {
+    // For "go to definition" navigation
+    fun resolveDefinitionFirst(): Array<out ResolveResult> {
         if (element.isInDefinition()) return multiResolve(false)
 
-        val result =
-            findDefinitions(element.text).takeIf { it.isNotEmpty() }
-            ?: findDefinitions(element.text)
+        val name = element.text
+        val declarations = findDeclarations(name)
+        val definitions = findDefinitions(name)
 
-        return result.map{ PsiElementResolveResult(it) }.toTypedArray()
+        val results = definitions.ifEmpty { declarations } +
+                if (definitions.isEmpty()) declarations else emptyList()
+
+        return results.distinct()
+            .map { PsiElementResolveResult(it) }
+            .toTypedArray()
     }
 
     private fun findDeclarations(name: String): List<PsiNamedElement> {
-        val scope = element.containingFile
-        val nonTerminals = PsiTreeUtil.findChildrenOfType(scope, CupNamedNonTerminal::class.java)
-            .filter { it.name == name }
-        val terminals = PsiTreeUtil.findChildrenOfType(scope, CupNamedTerminal::class.java)
-            .filter { it.name == name }
-        return nonTerminals + terminals
+        val scope = GlobalSearchScope.fileScope(element.containingFile)
+        val project = element.project
+        return buildList {
+            addAll(StubIndex.getElements(CupSymbolIndex.KEY, name, project, scope, CupNamedSymbol::class.java))
+        }
     }
 
     private fun findDefinitions(name: String): List<PsiNamedElement> {
-        val scope = element.containingFile
-        val result = PsiTreeUtil.findChildrenOfType(scope, CupProductionLine::class.java)
-
-        return result.filter { it.name == name }
+        val scope = GlobalSearchScope.fileScope(element.containingFile)
+        return CupProductionIndex.findByName(name, element.project, scope).toList()
     }
 
-    override fun isReferenceTo(element: PsiElement) = element == resolve()
+    fun isDeclared(): Boolean {
+        val resolved = multiResolve(false).map { it.element }
+        return resolved.any { it is CupNamedTerminal || it is CupNamedNonTerminal}
+    }
 
-    fun isDeclared() = resolve() is CupNamedTerminal || resolve() is CupNamedNonTerminal
+    fun isDefined() = multiResolve(false).any { it.element is CupProductionLine }
 
-    fun isDefined() = resolve() is CupProductionLine
+    fun isTerminal() = multiResolve(false).any { it.element is CupNamedTerminal }
 
-    fun isTerminal() = resolve() is CupNamedTerminal
+    fun isNonTerminal() = multiResolve(false).any { it.element is CupNamedNonTerminal || it.element is CupProductionLine }
 
-    fun isNonTerminal() = resolve() is CupNamedNonTerminal || resolve() is CupProductionLine
+    override fun isReferenceTo(element: PsiElement) = multiResolve(false).any { it.element == element }
 
 }

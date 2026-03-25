@@ -21,6 +21,8 @@
     extends("terminalDeclaration")="com.zeks.javacupcake.lang.psi.elements.CupTerminalDeclarationLine"
     extends("nonTerminalDeclaration")="com.zeks.javacupcake.lang.psi.elements.CupNonTerminalDeclarationLine"
     extends("production")="com.zeks.javacupcake.lang.psi.elements.CupProductionLine"
+    stubClass("production")="com.zeks.javacupcake.lang.psi.stubs.CupProductionStub"
+    elementTypeFactory("production")="com.zeks.javacupcake.lang.psi.stubs.CupProductionStubElementType.factory"
     extends("rightHandSide")="com.zeks.javacupcake.lang.psi.elements.CupRule"
 
     extends("actionCodePart")="com.zeks.javacupcake.lang.psi.elements.CupAction"
@@ -29,7 +31,11 @@
     extends("scanCodePart")="com.zeks.javacupcake.lang.psi.elements.CupScan"
 
     extends("declaredTerminal")="com.zeks.javacupcake.lang.psi.elements.CupNamedTerminal"
+    stubClass("declaredTerminal")="com.zeks.javacupcake.lang.psi.stubs.CupNamedTerminalStub"
+    elementTypeFactory("declaredTerminal")="com.zeks.javacupcake.lang.psi.stubs.CupTerminalStubElementType.factory"
     extends("declaredNonTerminal")="com.zeks.javacupcake.lang.psi.elements.CupNamedNonTerminal"
+    stubClass("declaredNonTerminal")="com.zeks.javacupcake.lang.psi.stubs.CupNamedNonTerminalStub"
+    elementTypeFactory("declaredNonTerminal")="com.zeks.javacupcake.lang.psi.stubs.CupNonTerminalStubElementType.factory"
     extends("symbol")="com.zeks.javacupcake.lang.psi.elements.CupSymbolElement"
     implements("codeStringBlock")="com.intellij.psi.PsiLanguageInjectionHost"
     extends("codeStringBlock")="com.zeks.javacupcake.lang.psi.injection.CupCodeString"

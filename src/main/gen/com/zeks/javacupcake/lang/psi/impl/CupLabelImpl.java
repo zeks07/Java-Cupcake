@@ -30,7 +30,7 @@ public class CupLabelImpl extends ASTWrapperPsiElement implements CupLabel {
   @Override
   @NotNull
   public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+    return notNullChild(findChildByType(IDENTIFIER));
   }
 
 }

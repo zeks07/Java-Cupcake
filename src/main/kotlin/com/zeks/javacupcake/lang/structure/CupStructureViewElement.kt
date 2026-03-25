@@ -5,6 +5,8 @@ import com.intellij.ide.structureView.StructureViewTreeElement
 import com.intellij.ide.util.treeView.smartTree.TreeElement
 import com.intellij.navigation.ItemPresentation
 import com.intellij.psi.NavigatablePsiElement
+import com.intellij.psi.search.GlobalSearchScope
+import com.intellij.psi.stubs.StubIndex
 import com.intellij.psi.util.PsiTreeUtil
 import com.zeks.javacupcake.lang.file.CupFile
 import com.zeks.javacupcake.lang.psi.CupProduction
@@ -12,20 +14,32 @@ import com.zeks.javacupcake.lang.psi.elements.CupNamedNonTerminal
 import com.zeks.javacupcake.lang.psi.elements.CupNamedTerminal
 import com.zeks.javacupcake.lang.psi.elements.CupRule
 import com.zeks.javacupcake.lang.psi.impl.CupProductionImpl
+import com.zeks.javacupcake.lang.psi.stubs.CupSymbolIndex
 
 class CupStructureViewElement(
     val element: NavigatablePsiElement,
 ) : StructureViewTreeElement {
+
     override fun getValue(): NavigatablePsiElement = element
-
     override fun getPresentation(): ItemPresentation = element.presentation ?: PresentationData()
-
     override fun navigate(requestFocus: Boolean) = element.navigate(requestFocus)
     override fun canNavigate(): Boolean = element.canNavigate()
     override fun canNavigateToSource(): Boolean = element.canNavigateToSource()
 
     override fun getChildren(): Array<out TreeElement?> {
         if (element !is CupFile) return emptyArray()
+
+        val project = element.project
+        val scope = GlobalSearchScope.fileScope(element)
+        val index = StubIndex.getInstance()
+
+        // All terminal names from the index
+        val terminals = mutableListOf<CupNamedTerminal>()
+        index.getAllKeys(CupSymbolIndex.KEY, project).forEach { key ->
+            index.processElements(CupSymbolIndex.KEY, key, project, scope, CupNamedTerminal::class.java) {
+                terminals.add(it); true
+            }
+        }
 
         val definedNonTerminals = PsiTreeUtil.findChildrenOfType(element, CupProduction::class.java).map { it.symbol.text to it as CupProductionImpl }
         val nonTerminals = PsiTreeUtil.findChildrenOfType(element, CupNamedNonTerminal::class.java)

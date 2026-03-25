@@ -10,8 +10,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.zeks.javacupcake.lang.psi.CupTypes.*;
 import com.zeks.javacupcake.lang.psi.elements.CupNamedNonTerminal;
 import com.zeks.javacupcake.lang.psi.*;
+import com.zeks.javacupcake.lang.psi.stubs.CupNamedNonTerminalStub;
+import com.intellij.psi.stubs.IStubElementType;
 
 public class CupDeclaredNonTerminalImpl extends CupNamedNonTerminal implements CupDeclaredNonTerminal {
+
+  public CupDeclaredNonTerminalImpl(@NotNull CupNamedNonTerminalStub stub, @NotNull IStubElementType<?, ?> type) {
+    super(stub, type);
+  }
 
   public CupDeclaredNonTerminalImpl(@NotNull ASTNode node) {
     super(node);
@@ -30,7 +36,7 @@ public class CupDeclaredNonTerminalImpl extends CupNamedNonTerminal implements C
   @Override
   @NotNull
   public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+    return notNullChild(findChildByType(IDENTIFIER));
   }
 
 }

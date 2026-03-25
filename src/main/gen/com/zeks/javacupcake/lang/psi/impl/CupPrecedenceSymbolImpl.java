@@ -30,7 +30,7 @@ public class CupPrecedenceSymbolImpl extends ASTWrapperPsiElement implements Cup
   @Override
   @NotNull
   public CupSymbol getSymbol() {
-    return findNotNullChildByClass(CupSymbol.class);
+    return notNullChild(PsiTreeUtil.getChildOfType(this, CupSymbol.class));
   }
 
 }

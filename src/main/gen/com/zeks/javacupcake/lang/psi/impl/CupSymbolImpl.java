@@ -30,7 +30,7 @@ public class CupSymbolImpl extends CupSymbolElement implements CupSymbol {
   @Override
   @NotNull
   public PsiElement getIdentifier() {
-    return findNotNullChildByType(IDENTIFIER);
+    return notNullChild(findChildByType(IDENTIFIER));
   }
 
 }

@@ -5,6 +5,9 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
 import com.zeks.javacupcake.lang.psi.util.CupElementType;
+import com.zeks.javacupcake.lang.psi.stubs.CupNonTerminalStubElementType;
+import com.zeks.javacupcake.lang.psi.stubs.CupTerminalStubElementType;
+import com.zeks.javacupcake.lang.psi.stubs.CupProductionStubElementType;
 import com.zeks.javacupcake.lang.psi.util.CupTokenType;
 import com.zeks.javacupcake.lang.psi.impl.*;
 
@@ -14,8 +17,8 @@ public interface CupTypes {
   IElementType ASSIGN = new CupElementType("ASSIGN");
   IElementType CLASS_NAME = new CupElementType("CLASS_NAME");
   IElementType CODE_STRING_BLOCK = new CupElementType("CODE_STRING_BLOCK");
-  IElementType DECLARED_NON_TERMINAL = new CupElementType("DECLARED_NON_TERMINAL");
-  IElementType DECLARED_TERMINAL = new CupElementType("DECLARED_TERMINAL");
+  IElementType DECLARED_NON_TERMINAL = CupNonTerminalStubElementType.factory("DECLARED_NON_TERMINAL");
+  IElementType DECLARED_TERMINAL = CupTerminalStubElementType.factory("DECLARED_TERMINAL");
   IElementType IMPORT_NAME = new CupElementType("IMPORT_NAME");
   IElementType IMPORT_STATEMENT = new CupElementType("IMPORT_STATEMENT");
   IElementType IMPORT_STATEMENTS = new CupElementType("IMPORT_STATEMENTS");
@@ -31,7 +34,7 @@ public interface CupTypes {
   IElementType PRECEDENCE_DECLARATION = new CupElementType("PRECEDENCE_DECLARATION");
   IElementType PRECEDENCE_SYMBOL = new CupElementType("PRECEDENCE_SYMBOL");
   IElementType PRECEDENCE_TYPE = new CupElementType("PRECEDENCE_TYPE");
-  IElementType PRODUCTION = new CupElementType("PRODUCTION");
+  IElementType PRODUCTION = CupProductionStubElementType.factory("PRODUCTION");
   IElementType RIGHT_HAND_SIDE = new CupElementType("RIGHT_HAND_SIDE");
   IElementType SCAN_CODE_PART = new CupElementType("SCAN_CODE_PART");
   IElementType START_DECLARATION = new CupElementType("START_DECLARATION");
